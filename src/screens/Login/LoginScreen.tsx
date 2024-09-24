@@ -1,73 +1,108 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform, TextInput } from 'react-native';
+import mainStyle from '@src/constants/MainStyles';
+import { useAppContext } from '@src/context';
+//@ts-ignore
+import Feather from 'react-native-vector-icons/Feather';
+import { Screen } from '../../navigation/appNavigation.type';
+import Header from '@src/components/Header/Header';
 
-import { Button, Text, TextInput } from '@app/blueprints';
-import { Formik } from 'formik';
-
-import { BaseLayout } from '@src/components';
-import { contents } from '@src/context';
-
-import useLogin from './useLogin';
-
-const LoginScreen = () => {
-  const {
-    disabled,
-    fieldValidation,
-    handleButtonSubmit,
-    initialValues,
-    passwordRef,
-    styles,
-  } = useLogin();
+const LogIn = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [enable, setEnable] = useState(true);
+  const { navigation } = useAppContext();
 
   return (
-    <BaseLayout>
-      <View style={styles.header} />
-      <View style={styles.content}>
-        <Text preset="h1">{contents('login.log_in')}</Text>
-        <Formik
-          validationSchema={fieldValidation}
-          initialValues={initialValues}
-          onSubmit={handleButtonSubmit}>
-          {({ resetForm, submitForm }) => (
-            <View style={styles.fieldContainer}>
-              <TextInput
-                label={contents('login.email')}
-                variant="filled"
-                name={'email'}
-                placeholder={contents('login.yourEmailId')}
-                style={styles.input}
-                onSubmitEditing={() => {
-                  passwordRef.current?.focus();
-                }}
-              />
-              <TextInput
-                label={contents('login.password')}
-                variant="filled"
-                name={'password'}
-                ref={passwordRef}
-                placeholder={contents('login.password')}
-                style={styles.input}
-                onSubmitEditing={submitForm}
-              />
-              <Button
-                title={contents('login.login')}
-                buttonContainerStyle={styles.loginBtn}
-                onPress={submitForm}
-                disabled={disabled}
-              />
-              <Button
-                title={'reset'}
-                buttonContainerStyle={styles.loginBtn}
-                onPress={() => {
-                  resetForm();
-                }}
-              />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView style={{ ...mainStyle.mainView, }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <View style={mainStyle.headerView}>
+          <Header onPress={() => navigation.goBack()} title='Log in' />
+        </View>
+        <View style={mainStyle.subView}>
+          <ScrollView >
+            <View style={{ flex: 1 }}>
+              <View style={{ marginBottom: 16, }}>
+                <Text style={{ ...mainStyle.textField, }}>Email</Text>
+                <View style={{ ...mainStyle.textView }}>
+                  <TextInput
+                    selectTextOnFocus={false} // Prevents text selection
+                    contextMenuHidden={true} style={{ ...mainStyle.inputText }}
+                    keyboardType="email-address"
+                    placeholder="Enter your email"
+                    placeholderTextColor='grey'
+                    editable={true}
+                    value={email} maxLength={10} onChangeText={val => { setEmail(val) }}
+                    blurOnSubmit={false} underlineColorAndroid="transparent" />
+                </View>
+              </View>
+              <View style={{ marginBottom: 16, }}>
+                <Text style={{ ...mainStyle.textField }}>Password</Text>
+                <View style={{ ...mainStyle.textView, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <TextInput selectTextOnFocus={false} // Prevents text selection
+                    contextMenuHidden={true} style={{
+                      ...mainStyle.inputText,
+                      width: '90%'
+                    }}
+                    placeholder="Enter password" placeholderTextColor='grey' editable={true}
+                    value={password} onChangeText={val => { setPassword(val) }} blurOnSubmit={false}
+                    underlineColorAndroid="transparent" secureTextEntry={enable} />
+                  {enable == false ? (
+                    <TouchableOpacity onPress={() => { setEnable(true) }}>
+                      <Feather name="eye" color='#000000' size={20} />
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity onPress={() => { setEnable(false) }}>
+                      <Feather name="eye-off" color='#000000' size={20} />
+                    </TouchableOpacity>
+                  )}
+                </View>
+
+              </View>
+              <View style={{ ...styles.remembermeView, justifyContent: 'flex-end' }}>
+
+                <TouchableOpacity style={{ borderBottomWidth: 1 }} onPress={() => { navigation.navigate(Screen.FORGOT_PASSWORD) }} >
+                  <Text style={{ ...mainStyle.textField }}>Forget password?</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style={{ ...mainStyle.footerBtn, marginTop: 30 }} onPress={() => { }}>
+                <Text style={{ ...mainStyle.footerBtnTxt }}>Sign in</Text>
+              </TouchableOpacity>
+
+              <View style={{ ...styles.DontHaveView, flexDirection: 'row' }}>
+                <Text style={{ ...styles.DontHaveText, }}>Don't have an account? </Text>
+                <TouchableOpacity style={{ borderBottomWidth: 1 }} onPress={() => { navigation.navigate(Screen.SIGNUP) }} >
+                  <Text style={styles.DontHaveText}>Sign Up</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          )}
-        </Formik>
-      </View>
-    </BaseLayout>
+          </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 
-export default React.memo(LoginScreen);
+const styles = StyleSheet.create({
+  remembermeView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  checkBoxView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  DontHaveView: {
+    flexDirection: 'row',
+    alignSelf: 'center',
+  },
+  DontHaveText: {
+    fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Medium' : 'Montserrat-Medium',
+    fontSize: 16,
+    color: '#000000',
+
+  },
+});
+export default LogIn;

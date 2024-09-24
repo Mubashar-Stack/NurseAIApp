@@ -62,7 +62,7 @@ const SettingScreen = () => {
                 onPress={handleChangeLanguage(m)}
                 containerStyle={styles.radio}>
                 {ContentLanguage[m as keyof typeof ContentLanguage] ===
-                language ? (
+                  language ? (
                   <View style={styles.selectedRadio} />
                 ) : null}
               </AnimatedTouchableOpacity>

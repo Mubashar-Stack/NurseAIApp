@@ -11,6 +11,10 @@ export enum Screen {
   SETTING = 'SETTING',
   LOGIN = 'LOGIN',
   SIGNUP = 'SIGNUP',
+  UPLOAD_ID= 'UPLOAD_ID',
+  FORGOT_PASSWORD='FORGOT_PASSWORD',
+  VERIFICATION_CODE='VERIFICATION_CODE',
+  RESET_PASSWORD='RESET_PASSWORD',
 }
 
 export type NavStackParams = {
@@ -21,6 +25,10 @@ export type NavStackParams = {
   [Screen.SETTING]: undefined;
   [Screen.LOGIN]: undefined;
   [Screen.SIGNUP]: undefined;
+  [Screen.UPLOAD_ID]: undefined;
+  [Screen.FORGOT_PASSWORD]: undefined;
+  [Screen.VERIFICATION_CODE]: undefined;
+  [Screen.RESET_PASSWORD]: undefined;
 };
 
 export type NewsDetailParams = {
