@@ -1,108 +1,112 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform, TextInput } from 'react-native';
-import mainStyle from '@src/constants/MainStyles';
-import { useAppContext } from '@src/context';
+import React from 'react';
+import { Keyboard, ScrollView, KeyboardAvoidingView, TextInput, Platform, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
+import { BaseLayout } from '@src/components';
 //@ts-ignore
 import Feather from 'react-native-vector-icons/Feather';
-import { Screen } from '../../navigation/appNavigation.type';
+//@ts-ignore
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useAppContext, useColor } from '@src/context';
+import mainStyle from '@src/constants/MainStyles';
 import Header from '@src/components/Header/Header';
+import { Formik } from 'formik';
+import { Screen } from '../../navigation/appNavigation.type'
+import { Text } from '../../../blueprints/Text/Text';
+import useLogin from './useLogin';  // Import the useLogin hook
 
-const LogIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [enable, setEnable] = useState(true);
+const LoginScreen = () => {
+  const { color } = useColor();
+  const design = mainStyle(color);
   const { navigation } = useAppContext();
+  const { disabled, fieldValidation, initialValues, handleSubmit, passwordRef } = useLogin();
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView style={{ ...mainStyle.mainView, }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <View style={mainStyle.headerView}>
-          <Header onPress={() => navigation.goBack()} title='Log in' />
-        </View>
-        <View style={mainStyle.subView}>
-          <ScrollView >
-            <View style={{ flex: 1 }}>
-              <View style={{ marginBottom: 16, }}>
-                <Text style={{ ...mainStyle.textField, }}>Email</Text>
-                <View style={{ ...mainStyle.textView }}>
-                  <TextInput
-                    selectTextOnFocus={false} // Prevents text selection
-                    contextMenuHidden={true} style={{ ...mainStyle.inputText }}
-                    keyboardType="email-address"
-                    placeholder="Enter your email"
-                    placeholderTextColor='grey'
-                    editable={true}
-                    value={email} maxLength={10} onChangeText={val => { setEmail(val) }}
-                    blurOnSubmit={false} underlineColorAndroid="transparent" />
-                </View>
-              </View>
-              <View style={{ marginBottom: 16, }}>
-                <Text style={{ ...mainStyle.textField }}>Password</Text>
-                <View style={{ ...mainStyle.textView, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <TextInput selectTextOnFocus={false} // Prevents text selection
-                    contextMenuHidden={true} style={{
-                      ...mainStyle.inputText,
-                      width: '90%'
-                    }}
-                    placeholder="Enter password" placeholderTextColor='grey' editable={true}
-                    value={password} onChangeText={val => { setPassword(val) }} blurOnSubmit={false}
-                    underlineColorAndroid="transparent" secureTextEntry={enable} />
-                  {enable == false ? (
-                    <TouchableOpacity onPress={() => { setEnable(true) }}>
-                      <Feather name="eye" color='#000000' size={20} />
+    <BaseLayout>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView style={design.mainView} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <Header onPress={() => navigation.goBack()} title="Log In" />
+          <View style={design.subView}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={fieldValidation}
+                onSubmit={handleSubmit} // Use handleSubmit from the hook
+              >
+                {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                  <View style={{ flex: 1 }}>
+                    <View style={{ marginBottom: 16 }}>
+                      <Text preset="h3">Email</Text>
+                      <View style={design.textView}>
+                        <TextInput
+                          contextMenuHidden={true}
+                          selectTextOnFocus={true}
+                          style={{ ...design.inputText, textAlign: 'left' }}
+                          keyboardType="email-address"
+                          placeholder="Enter your email"
+                          placeholderTextColor={color?.textColor}
+                          editable={true}
+                          value={values.email}
+                          onChangeText={handleChange('email')}
+                          onBlur={handleBlur('email')}
+                          blurOnSubmit={false}
+                          underlineColorAndroid="transparent"
+                        />
+                        <TouchableOpacity>
+                          <Ionicons name="mic-outline" color={color.primaryColor} size={24} />
+                        </TouchableOpacity>
+                      </View>
+                      {touched.email && errors.email ? (
+                        <Text style={design.errorText}>{errors.email}</Text>
+                      ) : null}
+                    </View>
+                    <View style={{ marginBottom: 16 }}>
+                      <Text preset="h3">Password</Text>
+                      <View style={design.textView} >
+                        <TextInput
+                          ref={passwordRef}  // Reference from useLogin hook
+                          contextMenuHidden={true}
+                          style={design.inputText}
+                          placeholder="Enter your password"
+                          editable={true}
+                          value={values.password}
+                          onChangeText={handleChange('password')}
+                          onBlur={handleBlur('password')}
+                          blurOnSubmit={false}
+                          underlineColorAndroid="transparent"
+                          secureTextEntry={true}
+                        />
+                        <TouchableOpacity>
+                          <Feather name="eye-off" color={color.primaryColor} size={20} />
+                        </TouchableOpacity>
+                      </View>
+                      {touched.password && errors.password ? (
+                        <Text style={design.errorText}>{errors.password}</Text>
+                      ) : null}
+                    </View>
+                    <TouchableOpacity onPress={() => navigation.navigate(Screen.FORGOT_PASSWORD)}>
+                      <Text preset='h4' textAlign='right' >Forgot Password?</Text>
                     </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity onPress={() => { setEnable(false) }}>
-                      <Feather name="eye-off" color='#000000' size={20} />
+                    <TouchableOpacity
+                      style={[design.footerBtn, disabled && { opacity: 0.5 }]} // Disable button when submitting
+                      //@ts-ignore
+                      onPress={handleSubmit}
+                      disabled={disabled}
+                    >
+                      <Text style={design.footerBtnTxt}>Log in</Text>
                     </TouchableOpacity>
-                  )}
-                </View>
-
-              </View>
-              <View style={{ ...styles.remembermeView, justifyContent: 'flex-end' }}>
-
-                <TouchableOpacity style={{ borderBottomWidth: 1 }} onPress={() => { navigation.navigate(Screen.FORGOT_PASSWORD) }} >
-                  <Text style={{ ...mainStyle.textField }}>Forget password?</Text>
-                </TouchableOpacity>
-              </View>
-              <TouchableOpacity style={{ ...mainStyle.footerBtn, marginTop: 30 }} onPress={() => { }}>
-                <Text style={{ ...mainStyle.footerBtnTxt }}>Sign in</Text>
-              </TouchableOpacity>
-
-              <View style={{ ...styles.DontHaveView, flexDirection: 'row' }}>
-                <Text style={{ ...styles.DontHaveText, }}>Don't have an account? </Text>
-                <TouchableOpacity style={{ borderBottomWidth: 1 }} onPress={() => { navigation.navigate(Screen.SIGNUP) }} >
-                  <Text style={styles.DontHaveText}>Sign Up</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </ScrollView>
-        </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                      <Text preset="h4">Don't have an account? </Text>
+                      <TouchableOpacity onPress={() => navigation.navigate(Screen.SIGNUP)}>
+                        <Text preset="h3">Sign up</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                )}
+              </Formik>
+            </ScrollView>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </BaseLayout>
   );
 };
-
-const styles = StyleSheet.create({
-  remembermeView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  checkBoxView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  DontHaveView: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-  },
-  DontHaveText: {
-    fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Medium' : 'Montserrat-Medium',
-    fontSize: 16,
-    color: '#000000',
-
-  },
-});
-export default LogIn;
+export default React.memo(LoginScreen);

@@ -1,48 +1,41 @@
-import { useCallback, useRef, useState } from 'react';
-import { TextInput } from 'react-native';
-
+import { useCallback, useState } from 'react';
 import * as yup from 'yup';
-
 import { useAppContext } from '@src/context';
 import { logger } from '@src/utils';
+import { Screen } from '../../navigation/appNavigation.type';
 
-import { loginStyles } from './Login.style';
-
-const useLogin = () => {
+const useVerificationCode = () => {
   const { color, navigation } = useAppContext();
-
   const [disabled, setDisabled] = useState(false);
-  const passwordRef = useRef<TextInput>(null);
 
   const fieldValidation = yup.object().shape({
-    email: yup.string().trim().required('Please enter your Email'),
-    password: yup.string().trim().required('Please enter your Password'),
+    otp: yup.string()
+      .matches(/^[0-9]{4}$/, 'OTP must be exactly 4 digits')
+      .required('OTP is required'),
   });
 
   const initialValues = {
-    email: '',
-    password: '',
+    otp: '',
   };
 
-  const handleButtonSubmit = useCallback(
+  const handleSubmit = useCallback(
     async (values: typeof initialValues) => {
+      navigation.navigate(Screen.RESET_PASSWORD)
       logger('values: ', values);
       setDisabled(true);
       await new Promise(res => setTimeout(res, 3000));
       setDisabled(false);
     },
-    []
+    [navigation]
   );
 
   return {
+    color,
     disabled,
     fieldValidation,
-    handleButtonSubmit,
+    handleSubmit,
     initialValues,
     navigation,
-    passwordRef,
-    styles: loginStyles(color),
   };
 };
-
-export default useLogin;
+export default useVerificationCode;
