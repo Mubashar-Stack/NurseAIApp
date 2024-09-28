@@ -6,7 +6,6 @@ import {
   ForgotPassword,
   LoginScreen,
   NetworkLoggerScreen,
-  NewsDetailScreen,
   NewsListScreen,
   ResetPassword,
   SettingScreen,
@@ -37,7 +36,6 @@ export const AppNavigation = () => {
       ) : (
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen name={Screen.NEWS_LIST} component={NewsListScreen} />
-          <Stack.Screen name={Screen.NEWS_DETAIL} component={NewsDetailScreen} />
           <Stack.Screen name={Screen.SETTING} component={SettingScreen} />
           <Stack.Screen name={Screen.LOGIN} component={LoginScreen} />
           <Stack.Screen name={Screen.SIGNUP} component={SignUp} />
