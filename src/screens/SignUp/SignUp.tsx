@@ -9,7 +9,7 @@ import { useAppContext, useColor } from '@src/context';
 import Header from '@src/components/Header/Header';
 import { BaseLayout } from '@src/components';
 import { Formik } from 'formik';
-import { Text } from '../../../blueprints/Text/Text';
+import { Text } from '@app/blueprints';
 import useSignUp from './useSignUp';
 
 const SignUp = () => {

@@ -6,7 +6,7 @@ import { useAppContext, useColor } from '@src/context';
 import Header from '@src/components/Header/Header';
 import mainStyle from '@src/constants/MainStyles';
 import { BaseLayout } from '@src/components';
-import { Text } from '../../../blueprints/Text/Text';
+import { Text } from '@app/blueprints';
 
 const UploadId = () => {
   const { color } = useColor();

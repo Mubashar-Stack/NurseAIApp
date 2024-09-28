@@ -10,7 +10,7 @@ import mainStyle from '@src/constants/MainStyles';
 import Header from '@src/components/Header/Header';
 import { Formik } from 'formik';
 import { Screen } from '../../navigation/appNavigation.type'
-import { Text } from '../../../blueprints/Text/Text';
+import { Text } from '@app/blueprints';
 import useLogin from './useLogin';  // Import the useLogin hook
 
 const LoginScreen = () => {
@@ -96,7 +96,7 @@ const LoginScreen = () => {
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                       <Text preset="h4">Don't have an account? </Text>
                       <TouchableOpacity onPress={() => navigation.navigate(Screen.SIGNUP)}>
-                        <Text preset="h3">Sign up</Text>
+                        <Text preset="h3" >Sign up</Text>
                       </TouchableOpacity>
                     </View>
                   </View>

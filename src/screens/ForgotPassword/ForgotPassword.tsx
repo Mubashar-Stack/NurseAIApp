@@ -1,7 +1,7 @@
 import React from 'react';
 import { BaseLayout } from '@src/components';
 import mainStyle from '@src/constants/MainStyles';
-import { Text } from '../../../blueprints/Text/Text';
+import { Text } from '@app/blueprints';
 import { useAppContext, useColor } from '@src/context';
 import { Formik } from 'formik'; import Header from '@src/components/Header/Header';
 import { View, ScrollView, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';

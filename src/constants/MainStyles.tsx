@@ -17,6 +17,7 @@ const mainStyle = (color: any) => StyleSheet.create({
   marginBottom: 14,
  },
  textField: {
+  fontFamily: 'Roboto-Medium',
   color: color.textColor,
   fontSize: 16,
  },
@@ -36,15 +37,16 @@ const mainStyle = (color: any) => StyleSheet.create({
   alignItems: 'center', justifyContent: 'space-between'
  },
  inputText: {
-  fontFamily: 'Montserrat-Medium',
   fontSize: 14,
   color: color.textColor,
   width: '90%',
+  fontFamily: 'Roboto-Light'
  },
  errorText: {
   color: color.errorText,
   fontSize: 12,
   marginTop: 4,
+  fontFamily: 'Roboto-Light'
  },
  mainView: {
   flex: 1,
@@ -68,6 +70,7 @@ const mainStyle = (color: any) => StyleSheet.create({
   fontWeight: 'bold',
   fontSize: 16,
   marginBottom: 16,
+  fontFamily: 'Roboto-Medium'
  },
  inputFieldView: {
   marginBottom: 16,
@@ -128,6 +131,7 @@ const mainStyle = (color: any) => StyleSheet.create({
   color: color.secondaryColor,
   fontSize: 16,
   textAlign: 'center',
+  fontFamily: 'Roboto-Bold'
  },
  mainConatainer: {
   paddingHorizontal: 20,
@@ -183,6 +187,7 @@ const mainStyle = (color: any) => StyleSheet.create({
  },
  SignUptext: {
   fontSize: 12,
+  fontFamily: 'Roboto-Bold'
   // color: COLORS.primaryColor,
  },
 });

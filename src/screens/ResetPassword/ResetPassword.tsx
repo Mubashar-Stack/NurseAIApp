@@ -7,7 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { BaseLayout } from '@src/components';
 import mainStyle from '@src/constants/MainStyles';
 import { Formik } from 'formik';
-import { Text } from '../../../blueprints/Text/Text';
+import { Text } from '@app/blueprints';
 import useResetPassword from './useResetPassword';
 
 const ResetPassword = () => {

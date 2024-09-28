@@ -6,7 +6,7 @@ import { useAppContext, useColor } from '@src/context';
 import mainStyle from '@src/constants/MainStyles';
 import { BaseLayout } from '@src/components';
 import { Formik } from 'formik';
-import { Text } from '../../../blueprints/Text/Text';
+import { Text } from '@app/blueprints';
 import useVerificationCode from './useVerificationCode';
 
 const VerificationCode = () => {
@@ -46,7 +46,7 @@ const VerificationCode = () => {
                     }
                     return (
                       <View key={index} style={{ ...design.textView, width: '16%', margin: 4, borderRadius: 16, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text key={index} style={{ ...design.textField, fontFamily: 'Montserrat-Medium', color: '#000000' }} onLayout={getCellOnLayoutHandler(index)}>{textChild}</Text>
+                        <Text key={index} style={{ ...design.textField, color: '#000000' }} onLayout={getCellOnLayoutHandler(index)}>{textChild}</Text>
                       </View>
                     );
                   };
