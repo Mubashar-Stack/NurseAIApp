@@ -11,7 +11,7 @@ import { useColor } from '@src/context';
 import { scaledSize } from '@src/utils';
 
 export enum Fonts {
-  Poppins = 'Poppins',
+  Roboto = 'Roboto-Regular',
 }
 
 const BASE_TEXT: TextStyle = {
@@ -23,68 +23,68 @@ export const presets = {
   font400: {
     ...BASE_TEXT,
     //add your font normal for weight 400
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
   } as TextStyle,
   font500: {
     ...BASE_TEXT,
     //add your font medium for weight 500
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
   } as TextStyle,
   font600: {
     ...BASE_TEXT,
     //add your font semi-bold for weight 600
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
   } as TextStyle,
   font700: {
     ...BASE_TEXT,
     //add your font bold for weight 700
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
   } as TextStyle,
   h1: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
     fontSize: scaledSize(24),
     fontWeight: '700',
   } as TextStyle,
   h2: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
     fontSize: scaledSize(21),
     fontWeight: '700',
   } as TextStyle,
   h3: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Poppins,
+    fontFamily: 'Roboto-Medium',
     fontSize: scaledSize(18),
     fontWeight: '500',
   } as TextStyle,
   h4: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Poppins,
+    fontFamily: 'Roboto-Medium',
     fontSize: scaledSize(15),
     fontWeight: '500',
   } as TextStyle,
   h5: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
     fontSize: scaledSize(12),
     fontWeight: '400',
   } as TextStyle,
   h6: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
     fontSize: scaledSize(9),
     fontWeight: '400',
   } as TextStyle,
   small: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
     fontSize: scaledSize(6),
     fontWeight: '300',
   } as TextStyle,
   title: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Poppins,
+    fontFamily: Fonts.Roboto,
     fontSize: scaledSize(13),
     fontWeight: '700',
   } as TextStyle,

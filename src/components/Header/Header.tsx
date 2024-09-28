@@ -1,27 +1,31 @@
 import React from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 //@ts-ignore
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import mainStyle from '@src/constants/MainStyles';
+import { Text } from '@app/blueprints';
 
 type HeaderBackButtonProps = {
- onPress: () => void;
- headerlogo?: boolean;
- title?: string;
+  onPress: () => void;
+  headerlogo?: boolean;
+  title?: string;
 };
 
 const Header: React.FC<HeaderBackButtonProps> = ({ onPress, title }) => {
- return (
-
-  <View style={{ flexDirection: 'row', marginVertical: 20, alignItems: 'center', width: '100%' }}>
-
-   <TouchableOpacity style={{ width: '16%', justifyContent: 'center', alignItems: 'center' }} onPress={onPress} >
-    <AntDesign size={18} name={"left"} color={'#000000'} />
-   </TouchableOpacity>
-   <Text style={{ ...mainStyle.headerText, color: '#000000', }}>{title}</Text>
-  </View>
-
- );
+  //@ts-ignore
+  const isAuthScreen = ['Sign Up', 'Log In'].includes(title);
+  return (
+    <View style={{ flexDirection: 'row', alignSelf: 'center', marginVertical: 14, alignItems: 'center', width: '90%' }}>
+      {isAuthScreen ? (
+        <Text preset="h1">{title}</Text>
+      ) : (
+        <>
+          <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={onPress} >
+            <AntDesign size={18} name={"left"} color={'#000000'} />
+          </TouchableOpacity>
+          <Text preset="h1" style={{ marginLeft: 10 }}>{title}</Text>
+        </>
+      )}
+    </View>
+  );
 };
-
 export default Header;

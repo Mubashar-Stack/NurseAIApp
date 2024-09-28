@@ -129,11 +129,11 @@ export const Input = React.memo(
             ? focused.value
               ? onFocusBackgroundColor
               : hovered.value
-              ? onHoverBackgroundColor
-              : backgroundColor
+                ? onHoverBackgroundColor
+                : backgroundColor
             : variant === 'outlined'
-            ? backgroundColor
-            : backgroundColor,
+              ? backgroundColor
+              : backgroundColor,
         borderBottomEndRadius: variant !== 'standard' ? 4 : 0,
         borderBottomStartRadius: variant !== 'standard' ? 4 : 0,
         borderTopEndRadius: 4,
@@ -172,8 +172,8 @@ export const Input = React.memo(
         borderColor: focused.value
           ? onFocusBorderColor
           : hovered.value
-          ? onFocusBorderColor
-          : borderColor,
+            ? onFocusBorderColor
+            : borderColor,
         borderTopEndRadius: 4,
         borderTopStartRadius: 4,
         borderWidth: focused.value ? 2 : 1,

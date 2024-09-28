@@ -1,31 +1,23 @@
 import React from 'react';
-
 import { NavigationContainerRef } from '@react-navigation/native';
-import {
-  createNativeStackNavigator,
-  NativeStackNavigationOptions,
-} from '@react-navigation/native-stack';
+import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
-
 import {
+  ForgotPassword,
   LoginScreen,
   NetworkLoggerScreen,
-  NewsDetailScreen,
   NewsListScreen,
+  ResetPassword,
   SettingScreen,
+  SignUp,
+  UploadId,
+  VerificationCode,
 } from '@src/screens';
 import { isForceUpdate } from '@src/store';
-
 import { NavStackParams, Screen } from './appNavigation.type';
 import { ForUpdateStack } from './ForceupdateStack';
-import SignUp from '@src/screens/SignUp/SignUp';
-import UploadId from '@src/screens/UploadId/UploadId';
-import ForgotPassword from '@src/screens/ForgotPassword/ForgotPassword';
-import VerificationCode from '@src/screens/VeificationCode/VerificationCode';
-import ResetPassword from '@src/screens/ResetPassword/ResetPassword';
 
-export const navigationRef =
-  React.createRef<NavigationContainerRef<NavStackParams>>();
+export const navigationRef = React.createRef<NavigationContainerRef<NavStackParams>>();
 
 const Stack = createNativeStackNavigator<NavStackParams>();
 
@@ -44,10 +36,6 @@ export const AppNavigation = () => {
       ) : (
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen name={Screen.NEWS_LIST} component={NewsListScreen} />
-          <Stack.Screen
-            name={Screen.NEWS_DETAIL}
-            component={NewsDetailScreen}
-          />
           <Stack.Screen name={Screen.SETTING} component={SettingScreen} />
           <Stack.Screen name={Screen.LOGIN} component={LoginScreen} />
           <Stack.Screen name={Screen.SIGNUP} component={SignUp} />

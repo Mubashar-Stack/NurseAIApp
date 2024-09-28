@@ -1,10 +1,10 @@
-import { color } from '@src/utils';
-import { StyleSheet, Platform } from 'react-native';
-
-const mainStyle = StyleSheet.create({
+// import { useColor } from '@src/context';
+import { StyleSheet } from 'react-native'
+// const { color } = useColor();
+const mainStyle = (color: any) => StyleSheet.create({
  modalMainView: {
   flex: 1,
-  backgroundColor: color.dark.backgroundColor,
+  backgroundColor: color.primaryColor,
   justifyContent: 'flex-end',
   margin: 0,
  },
@@ -16,40 +16,13 @@ const mainStyle = StyleSheet.create({
   justifyContent: 'space-between',
   marginBottom: 14,
  },
- modalSubContainer: {
-  flex: Platform.OS == 'ios' ? 0.92 : 0.98,
-  backgroundColor: '#ffffff',
-  paddingHorizontal: 20,
-  paddingTop: 20,
- },
- homeTopView: {
-  height: '8%',
-  backgroundColor: color.dark.backgroundColor,
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  paddingHorizontal: 20,
-  elevation: 5,
-  shadowColor: '#000000',
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.1,
-  shadowRadius: 2,
-  marginBottom: 5,
- },
-
- homeTabText: {
-  color: '#000000',
-  fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Medium' : 'Montserrat-Medium',
-  fontSize: 14
- },
  textField: {
-  color: '#000000',
-  fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Bold' : 'Montserrat-SemiBold',
+  fontFamily: 'Roboto-Medium',
+  color: color.textColor,
   fontSize: 16,
  },
  subText: {
-  color: '#000000',
-  fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Medium' : 'Montserrat-Medium',
+  color: color.textColor,
   fontSize: 14,
  },
  textView: {
@@ -58,25 +31,26 @@ const mainStyle = StyleSheet.create({
   flexDirection: 'row',
   alignSelf: 'center',
   borderRadius: 16,
-  backgroundColor: '#ccc',
+  backgroundColor: color.Tertiary,
   paddingHorizontal: 10,
   height: 52,
+  alignItems: 'center', justifyContent: 'space-between'
  },
  inputText: {
-  fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Medium' : 'Montserrat-Medium',
   fontSize: 14,
-  color: '#000000',
-  width: '100%',
+  color: color.textColor,
+  width: '90%',
+  fontFamily: 'Roboto-Light'
  },
  errorText: {
-  color: 'red',
-  fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Medium' : 'Montserrat-Medium',
+  color: color.errorText,
   fontSize: 12,
-  marginTop: 4
+  marginTop: 4,
+  fontFamily: 'Roboto-Light'
  },
  mainView: {
   flex: 1,
-  backgroundColor: '#ffffff',
+  backgroundColor: color.secondaryColor,
   margin: 0,
   height: '100%',
  },
@@ -88,15 +62,15 @@ const mainStyle = StyleSheet.create({
  },
  subView: {
   flex: 1,
-  paddingHorizontal: 20,
+  padding: 20,
  },
  text: {
-  color: '#000000',
+  color: color.textColor,
   textAlign: 'left',
   fontWeight: 'bold',
-  fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Medium' : 'Montserrat-Medium',
   fontSize: 16,
   marginBottom: 16,
+  fontFamily: 'Roboto-Medium'
  },
  inputFieldView: {
   marginBottom: 16,
@@ -108,17 +82,16 @@ const mainStyle = StyleSheet.create({
   justifyContent: 'center',
   alignSelf: 'center',
   paddingTop: 15,
-  paddingBottom: Platform.OS == 'ios' ? 15 : 10,
-  backgroundColor: '#ffffff',
+  paddingBottom: 10,
+  backgroundColor: color.secondaryColor,
   width: '100%',
   position: 'absolute',
   bottom: 0,
  },
  headerText: {
-  // textAlign: 'center',
-  width: '100%',
-  color: '#ffffff',
-  fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Bold' : 'Montserrat-Bold',
+  textAlign: 'center',
+  // width: '100%',
+  color: color.secondaryColor,
   fontSize: 22,
   // paddingVertical: 20
 
@@ -131,15 +104,10 @@ const mainStyle = StyleSheet.create({
   justifyContent: 'space-between',
   alignItems: 'center',
  },
- progressStyle: {
-  height: 60,
-  resizeMode: 'contain',
-  alignSelf: 'center',
- },
  footerBtn: {
   height: 52,
   width: '100%',
-  backgroundColor: color.dark.backgroundColor,
+  backgroundColor: color.primaryColor,
   alignItems: 'center',
   alignSelf: 'center',
   marginBottom: 16,
@@ -152,7 +120,7 @@ const mainStyle = StyleSheet.create({
   height: 52,
   width: '70%',
   borderRadius: 10,
-  backgroundColor: color.dark.backgroundColor,
+  backgroundColor: color.primaryColor,
   alignItems: 'center',
   alignSelf: 'center',
   marginBottom: 16,
@@ -160,36 +128,10 @@ const mainStyle = StyleSheet.create({
 
  },
  footerBtnTxt: {
-  color: '#ffffff',
-  fontFamily: 'Montserrat-SemiBold',
+  color: color.secondaryColor,
   fontSize: 16,
   textAlign: 'center',
- },
- declineBtn: {
-
-  justifyContent: 'center',
-  height: 52,
-  width: '70%',
-  backgroundColor: '#ffffff',
-  alignItems: 'center',
-  alignSelf: 'center',
-  marginBottom: 16,
-  borderTopRightRadius: 16,
-  borderBottomLeftRadius: 16,
-  borderWidth: 1,
-  borderColor: color.dark.backgroundColor
- },
- declineBtnText: {
-  color: color.dark.backgroundColor,
-  fontFamily: 'Montserrat-SemiBold',
-  fontSize: 16,
-  textAlign: 'center',
- },
- appLogo: {
-  height: 50,
-  width: 100,
-  alignSelf: 'center',
-  marginTop: 20,
+  fontFamily: 'Roboto-Bold'
  },
  mainConatainer: {
   paddingHorizontal: 20,
@@ -197,51 +139,13 @@ const mainStyle = StyleSheet.create({
  title: {
   marginTop: 10,
  },
- splashText: {
-  color: '#ffffff',
-  alignSelf: 'center',
-  fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Medium' : 'Montserrat-Medium',
-  fontSize: 18,
-  marginTop: 100,
- },
- splashBtn: {
-  backgroundColor: color.dark.backgroundColor,
-  alignItems: 'center',
-  borderRadius: 10,
-  borderColor: '#ffffff',
-  borderWidth: 1,
-  alignSelf: 'flex-end',
-  justifyContent: 'center',
-  shadowRadius: 2,
-  height: 40,
-  width: 56,
- },
- splashView: {
-  flex: 0.4,
-  justifyContent: 'space-between',
-  padding: 20,
-  elevation: 5,
-  shadowColor: '#000000',
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.1,
-  shadowRadius: 2,
- },
  listView: {
   flexDirection: 'row',
-  borderBottomColor: '#000000',
+  borderBottomColor: color.textColor,
   borderBottomWidth: 0.2,
   justifyContent: 'space-between',
   alignItems: 'center',
   paddingVertical: 10,
-  width: '80%'
- },
- eligibilityList: {
-  padding: 14,
-  justifyContent: 'center',
-  width: '100%',
-  borderRadius: 10,
-  backgroundColor: '#ccc',
-  marginTop: 20
  },
  loadingIndicator: {
   position: 'absolute',
@@ -249,7 +153,7 @@ const mainStyle = StyleSheet.create({
   top: 300,
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: '#ccc',
+  // backgroundColor: COLORS.Quinary,
   height: '15%',
   width: '30%',
   borderRadius: 30,
@@ -282,9 +186,9 @@ const mainStyle = StyleSheet.create({
   backgroundColor: 'white'
  },
  SignUptext: {
-  fontFamily: Platform.OS == 'ios' ? 'GEDinarOne-Bold' : 'Montserrat-SemiBold',
   fontSize: 12,
-  color: color.dark.backgroundColor,
+  fontFamily: 'Roboto-Bold'
+  // color: COLORS.primaryColor,
  },
-})
-export default mainStyle;
+});
+export default mainStyle
