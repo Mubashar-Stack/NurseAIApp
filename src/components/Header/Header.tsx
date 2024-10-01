@@ -12,7 +12,7 @@ type HeaderBackButtonProps = {
 
 const Header: React.FC<HeaderBackButtonProps> = ({ onPress, title }) => {
   //@ts-ignore
-  const isAuthScreen = ['Sign Up', 'Log In'].includes(title);
+  const isAuthScreen = ['Sign Up', 'Log In', 'Home'].includes(title);
   return (
     <View style={{ flexDirection: 'row', alignSelf: 'center', marginVertical: 14, alignItems: 'center', width: '90%' }}>
       {isAuthScreen ? (

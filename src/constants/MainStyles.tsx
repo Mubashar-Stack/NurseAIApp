@@ -1,6 +1,6 @@
-// import { useColor } from '@src/context';
 import { StyleSheet } from 'react-native'
-// const { color } = useColor();
+import { Fonts } from '@app/blueprints';
+
 const mainStyle = (color: any) => StyleSheet.create({
  modalMainView: {
   flex: 1,
@@ -17,7 +17,7 @@ const mainStyle = (color: any) => StyleSheet.create({
   marginBottom: 14,
  },
  textField: {
-  fontFamily: 'Roboto-Medium',
+  fontFamily: Fonts.Roboto_Medium,
   color: color.textColor,
   fontSize: 16,
  },
@@ -38,19 +38,20 @@ const mainStyle = (color: any) => StyleSheet.create({
  },
  inputText: {
   fontSize: 14,
+  fontWeight: '400',
   color: color.textColor,
   width: '90%',
-  fontFamily: 'Roboto-Light'
+  fontFamily: Fonts.Roboto_Light
  },
  errorText: {
   color: color.errorText,
   fontSize: 12,
   marginTop: 4,
-  fontFamily: 'Roboto-Light'
+  fontFamily: Fonts.Roboto_Light
  },
  mainView: {
   flex: 1,
-  backgroundColor: color.secondaryColor,
+  backgroundColor: color.backgroundColor,
   margin: 0,
   height: '100%',
  },
@@ -70,7 +71,7 @@ const mainStyle = (color: any) => StyleSheet.create({
   fontWeight: 'bold',
   fontSize: 16,
   marginBottom: 16,
-  fontFamily: 'Roboto-Medium'
+  fontFamily: Fonts.Roboto_Medium
  },
  inputFieldView: {
   marginBottom: 16,
@@ -112,7 +113,7 @@ const mainStyle = (color: any) => StyleSheet.create({
   alignSelf: 'center',
   marginBottom: 16,
   marginVertical: 40,
-  borderRadius: 16,
+  borderRadius: 8,
   justifyContent: 'center',
 
  },
@@ -131,7 +132,7 @@ const mainStyle = (color: any) => StyleSheet.create({
   color: color.secondaryColor,
   fontSize: 16,
   textAlign: 'center',
-  fontFamily: 'Roboto-Bold'
+  fontFamily: Fonts.Roboto_Bold
  },
  mainConatainer: {
   paddingHorizontal: 20,
@@ -187,8 +188,22 @@ const mainStyle = (color: any) => StyleSheet.create({
  },
  SignUptext: {
   fontSize: 12,
-  fontFamily: 'Roboto-Bold'
+  fontFamily: Fonts.Roboto_Bold
   // color: COLORS.primaryColor,
+ },
+ imagePlaceholder: {
+  width: '100%',
+  height: '50%',
+  backgroundColor: '#e0e0e0',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginBottom: 40,
+ },
+ dividerLine: {
+  flex: 1,
+  margin: 6,
+  height: 2,
+  backgroundColor: color.textColor,
  },
 });
 export default mainStyle

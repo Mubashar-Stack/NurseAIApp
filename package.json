@@ -31,6 +31,7 @@
     "i18n-js": "^4.4.3",
     "react": "18.2.0",
     "react-native": "0.74.2",
+    "react-native-camera": "^4.2.1",
     "react-native-config": "^1.5.1",
     "react-native-confirmation-code-field": "^7.4.0",
     "react-native-fast-image": "^8.6.3",

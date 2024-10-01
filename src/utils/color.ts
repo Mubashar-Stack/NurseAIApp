@@ -14,7 +14,7 @@ export const color = {
     // primaryColor: '#000080', // blue
     // secondaryColor: '#6c757d', // off-white
     // textColor: '#343a40', // dark grey
-    backgroundColor: '#ffffff', // grey screen background color
+    backgroundColor: '#f5f5f5', // grey screen background color
     primaryColor: '#000000', // blue button background color
     secondaryColor: '#ffffff', // off-white button text color
     textColor: '#000000', // dark grey

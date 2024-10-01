@@ -32,12 +32,12 @@ const ResetPassword = () => {
                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset='h3'>New Password</Text>
+                      <Text preset='h2'>New Password</Text>
                       <View style={design.textView}>
                         <TextInput
                           style={design.inputText}
                           placeholder="Enter new password"
-                          placeholderTextColor="grey"
+                          placeholderTextColor={color?.textColor}
                           secureTextEntry={passwordVisible}
                           editable={true}
                           value={values.password}
@@ -55,12 +55,12 @@ const ResetPassword = () => {
                       )}
                     </View>
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset='h3'>Confirm new password</Text>
+                      <Text preset='h2'>Confirm new password</Text>
                       <View style={design.textView}>
                         <TextInput
                           style={design.inputText}
                           placeholder="Enter confirm new password"
-                          placeholderTextColor="grey"
+                          placeholderTextColor={color?.textColor}
                           secureTextEntry={confirmPasswordVisible}
                           editable={true}
                           value={values.confirmPassword}

@@ -6,12 +6,15 @@ import {
   ForgotPassword,
   LoginScreen,
   NetworkLoggerScreen,
-  NewsListScreen,
+  MainScreen,
   ResetPassword,
   SettingScreen,
   SignUp,
   UploadId,
   VerificationCode,
+  SelfiScreen,
+  UploadDocuments,
+  Home,
 } from '@src/screens';
 import { isForceUpdate } from '@src/store';
 import { NavStackParams, Screen } from './appNavigation.type';
@@ -35,7 +38,7 @@ export const AppNavigation = () => {
         <ForUpdateStack />
       ) : (
         <Stack.Navigator screenOptions={screenOptions}>
-          <Stack.Screen name={Screen.NEWS_LIST} component={NewsListScreen} />
+          <Stack.Screen name={Screen.MAIN_SCREEN} component={MainScreen} />
           <Stack.Screen name={Screen.SETTING} component={SettingScreen} />
           <Stack.Screen name={Screen.LOGIN} component={LoginScreen} />
           <Stack.Screen name={Screen.SIGNUP} component={SignUp} />
@@ -43,6 +46,9 @@ export const AppNavigation = () => {
           <Stack.Screen name={Screen.FORGOT_PASSWORD} component={ForgotPassword} />
           <Stack.Screen name={Screen.VERIFICATION_CODE} component={VerificationCode} />
           <Stack.Screen name={Screen.RESET_PASSWORD} component={ResetPassword} />
+          <Stack.Screen name={Screen.SELFI_SCREEN} component={SelfiScreen} />
+          <Stack.Screen name={Screen.UPLOAD_DOCUMENTS} component={UploadDocuments} />
+          <Stack.Screen name={Screen.HOME} component={Home} />
           {__DEV__ && (
             <Stack.Screen
               name={Screen.NETWORK_CHECK}
