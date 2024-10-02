@@ -1,10 +1,14 @@
 import React from 'react';
-import { Keyboard, ScrollView, KeyboardAvoidingView, TextInput, Platform, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
+import { Keyboard, ScrollView, StyleSheet, KeyboardAvoidingView, TextInput, Platform, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 import { BaseLayout } from '@src/components';
 //@ts-ignore
 import Feather from 'react-native-vector-icons/Feather';
 //@ts-ignore
 import Ionicons from 'react-native-vector-icons/Ionicons';
+//@ts-ignore
+import AntDesign from 'react-native-vector-icons/AntDesign';
+//@ts-ignore
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAppContext, useColor } from '@src/context';
 import mainStyle from '@src/constants/MainStyles';
 import Header from '@src/components/Header/Header';
@@ -34,7 +38,7 @@ const LoginScreen = () => {
                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset="h3">Email</Text>
+                      <Text preset="h2">Email</Text>
                       <View style={design.textView}>
                         <TextInput
                           contextMenuHidden={true}
@@ -59,13 +63,14 @@ const LoginScreen = () => {
                       ) : null}
                     </View>
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset="h3">Password</Text>
+                      <Text preset="h2">Password</Text>
                       <View style={design.textView} >
                         <TextInput
                           ref={passwordRef}  // Reference from useLogin hook
                           contextMenuHidden={true}
                           style={design.inputText}
                           placeholder="Enter your password"
+                          placeholderTextColor={color?.textColor}
                           editable={true}
                           value={values.password}
                           onChangeText={handleChange('password')}
@@ -83,7 +88,7 @@ const LoginScreen = () => {
                       ) : null}
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate(Screen.FORGOT_PASSWORD)}>
-                      <Text preset='h4' textAlign='right' >Forgot Password?</Text>
+                      <Text preset='h2' textAlign='right' >Forgot Password?</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={[design.footerBtn, disabled && { opacity: 0.5 }]} // Disable button when submitting
@@ -93,10 +98,26 @@ const LoginScreen = () => {
                     >
                       <Text style={design.footerBtnTxt}>Log in</Text>
                     </TouchableOpacity>
+
+                    <View style={styles.divider}>
+                      <View style={design.dividerLine} />
+                      <Text preset='h2'>Or continue with</Text>
+                      <View style={design.dividerLine} />
+                    </View>
+
+                    <View style={styles.socialButtons}>
+                      <TouchableOpacity style={styles.socialButton}>
+                        <MaterialCommunityIcons size={24} name="google" color={color.textColor} />
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.socialButton}>
+                        <AntDesign size={24} name="apple-o" color={color.textColor} />
+                      </TouchableOpacity>
+                    </View>
+
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                      <Text preset="h4">Don't have an account? </Text>
+                      <Text preset="h3">Don't have an account? </Text>
                       <TouchableOpacity onPress={() => navigation.navigate(Screen.SIGNUP)}>
-                        <Text preset="h3" >Sign up</Text>
+                        <Text preset="h2" >Sign up</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -109,4 +130,25 @@ const LoginScreen = () => {
     </BaseLayout>
   );
 };
+const styles = StyleSheet.create({
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10
+  },
+  socialButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 30,
+  },
+  socialButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 10,
+  },
+});
 export default React.memo(LoginScreen);

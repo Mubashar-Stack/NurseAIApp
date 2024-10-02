@@ -4,7 +4,7 @@ import { useAppContext } from '@src/context';
 import { logger } from '@src/utils';
 import { Screen } from '../../navigation/appNavigation.type';
 
-const useVerificationCode = () => {
+const useVerificationCode = (fromPage: string) => {
   const { color, navigation } = useAppContext();
   const [disabled, setDisabled] = useState(false);
 
@@ -20,13 +20,22 @@ const useVerificationCode = () => {
 
   const handleSubmit = useCallback(
     async (values: typeof initialValues) => {
-      navigation.navigate(Screen.RESET_PASSWORD)
       logger('values: ', values);
+      logger('fromPage: ', fromPage); // Log the fromPage value
+
       setDisabled(true);
-      await new Promise(res => setTimeout(res, 3000));
+      await new Promise(res => setTimeout(res, 3000)); // Simulate async operation
+
+      // Set conditional navigation based on fromPage value
+      if (fromPage === 'document') {
+        navigation.navigate(Screen.HOME); // Navigate to Home if fromPage is 'document'
+      } else {
+        navigation.navigate(Screen.RESET_PASSWORD); // Navigate to Reset Password otherwise
+      }
+
       setDisabled(false);
     },
-    [navigation]
+    [navigation, fromPage]
   );
 
   return {

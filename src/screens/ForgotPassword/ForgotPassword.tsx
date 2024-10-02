@@ -29,7 +29,7 @@ const ForgotPassword = () => {
                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset="h3">Mobile Number</Text>
+                      <Text preset="h4">Mobile Number</Text>
                       <View style={design.textView}>
                         <TextInput
                           style={{ ...design.inputText, textAlign: 'left', width: '90%' }}

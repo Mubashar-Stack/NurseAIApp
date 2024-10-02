@@ -8,13 +8,22 @@ import { BaseLayout } from '@src/components';
 import { Formik } from 'formik';
 import { Text } from '@app/blueprints';
 import useVerificationCode from './useVerificationCode';
+import { scaledSize } from '@src/utils';
+import { RouteProp, useRoute } from '@react-navigation/native';
+
+type RootStackParamList = {
+  VerificationCode: { fromPage: string };
+};
+
+type OtpVerification = RouteProp<RootStackParamList, 'VerificationCode'>;
 
 const VerificationCode = () => {
   const CELL_COUNT = 4;
   const { color } = useColor();
   const design = mainStyle(color);
   const { navigation } = useAppContext();
-  const { initialValues, fieldValidation, handleSubmit } = useVerificationCode();
+  const { params } = useRoute<OtpVerification>(); // Use useRoute to access route params
+  const { initialValues, fieldValidation, handleSubmit } = useVerificationCode(params.fromPage); // Pass the fromPage param
 
   return (
     <BaseLayout>
@@ -46,17 +55,14 @@ const VerificationCode = () => {
                     }
                     return (
                       <View key={index} style={{ ...design.textView, width: '16%', margin: 4, borderRadius: 16, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text key={index} style={{ ...design.textField, color: '#000000' }} onLayout={getCellOnLayoutHandler(index)}>{textChild}</Text>
+                        <Text key={index} preset='h3' onLayout={getCellOnLayoutHandler(index)}>{textChild}</Text>
                       </View>
                     );
                   };
 
                   return (
                     <View style={{ flex: 1, marginTop: 30, alignItems: 'center' }}>
-                      <Text style={{ ...design.textField, paddingHorizontal: 20, textAlign: 'center', marginVertical: 10 }}>
-                        Enter the OTP sent to you by SMS
-                      </Text>
-
+                      <Text preset='h2' style={{ padding: scaledSize(10), textAlign: 'center' }} >Enter the OTP sent to you by SMS 123456789</Text>
                       <CodeField
                         ref={ref}
                         {...props}
@@ -77,9 +83,9 @@ const VerificationCode = () => {
                         <Text style={design.footerBtnTxt}>Verify</Text>
                       </TouchableOpacity>
                       <View style={{ flexDirection: 'row' }}>
-                        <Text preset='h4'>Didn't receive an OTP? </Text>
-                        <TouchableOpacity style={{ borderBottomWidth: 1 }} onPress={() => { }}>
-                          <Text preset='h4'>Resend now</Text>
+                        <Text preset='h2'>Didn't receive an OTP? </Text>
+                        <TouchableOpacity onPress={() => { }}>
+                          <Text preset='h3'>Resend now</Text>
                         </TouchableOpacity>
                       </View>
                     </View>

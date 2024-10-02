@@ -33,12 +33,12 @@ const SignUp = () => {
                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset="h3">Name</Text>
+                      <Text preset="h2">Name</Text>
                       <View style={design.textView}>
                         <TextInput
                           style={design.inputText}
                           placeholder="Enter your name"
-                          placeholderTextColor="grey"
+                          placeholderTextColor={color?.textColor}
                           editable={true}
                           value={values.name}
                           onChangeText={handleChange('name')}
@@ -55,13 +55,13 @@ const SignUp = () => {
                       )}
                     </View>
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset="h3">Mobile Number</Text>
+                      <Text preset="h2">Mobile Number</Text>
                       <View style={design.textView}>
                         <TextInput
                           style={{ ...design.inputText, textAlign: 'left', width: '90%' }}
                           keyboardType="number-pad"
                           placeholder="Enter your phone number"
-                          placeholderTextColor="grey"
+                          placeholderTextColor={color?.textColor}
                           editable={true}
                           value={values.phoneNumber}
                           onChangeText={handleChange('phoneNumber')}
@@ -80,13 +80,13 @@ const SignUp = () => {
 
                     {/* Email Input */}
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset="h3">Email</Text>
+                      <Text preset="h2">Email</Text>
                       <View style={design.textView}>
                         <TextInput
                           style={design.inputText}
                           keyboardType="email-address"
                           placeholder="Enter your email"
-                          placeholderTextColor="grey"
+                          placeholderTextColor={color?.textColor}
                           editable={true}
                           value={values.email}
                           onChangeText={handleChange('email')}
@@ -103,12 +103,12 @@ const SignUp = () => {
                       )}
                     </View>
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset="h3">Password</Text>
+                      <Text preset="h2">Password</Text>
                       <View style={{ ...design.textView, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         <TextInput
                           style={{ ...design.inputText, width: '90%' }}
                           placeholder="Enter your password"
-                          placeholderTextColor="grey"
+                          placeholderTextColor={color?.textColor}
                           secureTextEntry={passwordVisible}
                           editable={true}
                           value={values.password}

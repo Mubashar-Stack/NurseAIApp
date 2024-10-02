@@ -11,7 +11,17 @@ import { useColor } from '@src/context';
 import { scaledSize } from '@src/utils';
 
 export enum Fonts {
-  Roboto = 'Roboto-Regular',
+  Roboto_Black = 'Roboto-Black',
+  Roboto_BlackItalic = 'Roboto-BlackItalic',
+  Roboto_Bold = 'Roboto-Bold',
+  Roboto_BoldItalic = 'Roboto-BoldItalic',
+  Roboto_Italic = 'Roboto-Italic',
+  Roboto_Light = 'Roboto-Light',
+  Roboto_LightItalic = 'Roboto-LightItalic',
+  Roboto_Medium = 'Roboto-MediumItalic',
+  Roboto_Regular = 'Roboto-Regular',
+  Roboto_Thin = 'Roboto-Thin',
+  Roboto_ThinItalic = 'Roboto-ThinItalic',
 }
 
 const BASE_TEXT: TextStyle = {
@@ -23,68 +33,68 @@ export const presets = {
   font400: {
     ...BASE_TEXT,
     //add your font normal for weight 400
-    fontFamily: Fonts.Roboto,
+    fontFamily: Fonts.Roboto_Regular,
   } as TextStyle,
   font500: {
     ...BASE_TEXT,
     //add your font medium for weight 500
-    fontFamily: Fonts.Roboto,
+    fontFamily: Fonts.Roboto_Regular,
   } as TextStyle,
   font600: {
     ...BASE_TEXT,
     //add your font semi-bold for weight 600
-    fontFamily: Fonts.Roboto,
+    fontFamily: Fonts.Roboto_Regular,
   } as TextStyle,
   font700: {
     ...BASE_TEXT,
     //add your font bold for weight 700
-    fontFamily: Fonts.Roboto,
+    fontFamily: Fonts.Roboto_Regular,
   } as TextStyle,
   h1: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Roboto,
-    fontSize: scaledSize(24),
-    fontWeight: '700',
+    fontFamily: Fonts.Roboto_Regular,
+    fontSize: scaledSize(20),
+    fontWeight: '500',
   } as TextStyle,
   h2: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Roboto,
-    fontSize: scaledSize(21),
-    fontWeight: '700',
+    fontFamily: Fonts.Roboto_Regular,
+    fontSize: scaledSize(16),
+    fontWeight: '400',
   } as TextStyle,
   h3: {
     ...BASE_TEXT,
-    fontFamily: 'Roboto-Medium',
-    fontSize: scaledSize(18),
-    fontWeight: '500',
+    fontFamily: Fonts.Roboto_Black,
+    fontSize: scaledSize(16),
+    fontWeight: '300',
   } as TextStyle,
   h4: {
     ...BASE_TEXT,
-    fontFamily: 'Roboto-Medium',
-    fontSize: scaledSize(15),
-    fontWeight: '500',
+    fontFamily: Fonts.Roboto_Regular,
+    fontSize: scaledSize(16),
+    fontWeight: '400',
   } as TextStyle,
   h5: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Roboto,
+    fontFamily: Fonts.Roboto_Regular,
     fontSize: scaledSize(12),
-    fontWeight: '400',
+    fontWeight: '300',
   } as TextStyle,
   h6: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Roboto,
+    fontFamily: Fonts.Roboto_Regular,
     fontSize: scaledSize(9),
     fontWeight: '400',
   } as TextStyle,
   small: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Roboto,
+    fontFamily: Fonts.Roboto_Regular,
     fontSize: scaledSize(6),
     fontWeight: '300',
   } as TextStyle,
   title: {
     ...BASE_TEXT,
-    fontFamily: Fonts.Roboto,
+    fontFamily: Fonts.Roboto_Regular,
     fontSize: scaledSize(13),
     fontWeight: '700',
   } as TextStyle,
