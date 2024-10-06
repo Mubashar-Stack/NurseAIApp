@@ -6,7 +6,6 @@ import { useAppContext, useColor } from '@src/context';
 import { Formik } from 'formik'; import Header from '@src/components/Header/Header';
 import { View, ScrollView, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 import useForgotPassword from './useForgotPassword';
-//@ts-ignore
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ForgotPassword = () => {
@@ -29,7 +28,7 @@ const ForgotPassword = () => {
                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ marginBottom: 16 }}>
-                      <Text preset="h4">Mobile Number</Text>
+                      <Text preset="h2">Mobile Number</Text>
                       <View style={design.textView}>
                         <TextInput
                           style={{ ...design.inputText, textAlign: 'left', width: '90%' }}

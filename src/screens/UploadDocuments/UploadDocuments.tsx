@@ -6,7 +6,6 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Text } from '@app/blueprints';
 import { scaleHeight } from '@src/utils';
-//@ts-ignore
 import Feather from 'react-native-vector-icons/Feather';
 import { Screen } from '../../navigation/appNavigation.type';
 

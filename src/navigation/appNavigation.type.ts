@@ -16,6 +16,9 @@ export enum Screen {
   SELFI_SCREEN='SELFI_SCREEN',
   UPLOAD_DOCUMENTS='UPLOAD_DOCUMENTS',
   HOME='HOME',
+  PROFILE='PROFILE',
+  MESSAGE='MESSAGE',
+  DOCUMENT='DOCUMENT',
 }
 
 export type NavStackParams = {
@@ -32,6 +35,9 @@ export type NavStackParams = {
   [Screen.SELFI_SCREEN]: undefined;
   [Screen.UPLOAD_DOCUMENTS]: undefined;
   [Screen.HOME]: undefined;
+  [Screen.PROFILE]: undefined;
+  [Screen.MESSAGE]: undefined;
+  [Screen.DOCUMENT]: undefined;
 };
 
 export type NewsDetailParams = {

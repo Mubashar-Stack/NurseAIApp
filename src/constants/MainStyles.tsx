@@ -57,9 +57,11 @@ const mainStyle = (color: any) => StyleSheet.create({
  },
  headerView: {
   flexDirection: 'row',
-  width: '100%',
+  width: '90%',
   alignSelf: 'center',
-  paddingVertical: 10,
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginVertical: 14,
  },
  subView: {
   flex: 1,

@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { useAppContext } from '@src/context';
 import { logger } from '@src/utils';
 import { loginStyles } from './Login.style';
+import { Screen } from '../../navigation/appNavigation.type';
 
 const useLogin = () => {
   const { color, navigation } = useAppContext();
@@ -26,6 +27,7 @@ const useLogin = () => {
 
   const handleSubmit = useCallback(
     async (values: typeof initialValues) => {
+      navigation.navigate(Screen.HOME)
       logger('values: ', values);
       setDisabled(true);
       await new Promise(res => setTimeout(res, 3000));

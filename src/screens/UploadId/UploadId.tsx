@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity, Platform, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard } from 'react-native';
-//@ts-ignore
 import Feather from 'react-native-vector-icons/Feather';
 import { useAppContext, useColor } from '@src/context';
 import Header from '@src/components/Header/Header';

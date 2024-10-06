@@ -7,5 +7,10 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "cSpell.words": ["dtos", "Formik", "gradlew", "MMKV", "persistor"],
-  "conventionalCommits.scopes": ["contents"]
+  "conventionalCommits.scopes": [
+    "contents"
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }
