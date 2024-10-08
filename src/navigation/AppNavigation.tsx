@@ -13,6 +13,11 @@ import {
   VerificationCode,
   SelfiScreen,
   UploadDocuments,
+  SettingScreen,
+  AccountSetting,
+  Address,
+  Wallet,
+  ShareProfile,
 } from '@src/screens';
 import { isForceUpdate } from '@src/store';
 import { NavStackParams, Screen } from './appNavigation.type';
@@ -47,6 +52,11 @@ export const AppNavigation = () => {
           <Stack.Screen name={Screen.SELFI_SCREEN} component={SelfiScreen} />
           <Stack.Screen name={Screen.UPLOAD_DOCUMENTS} component={UploadDocuments} />
           <Stack.Screen name={Screen.HOME} component={TabNavigator} />
+          <Stack.Screen name={Screen.ACCOUNT_SETTING} component={AccountSetting} />
+          <Stack.Screen name={Screen.ADDRESS} component={Address} />
+          <Stack.Screen name={Screen.WALLET} component={Wallet} />
+          <Stack.Screen name={Screen.SHARE_PROFILE} component={ShareProfile} />
+          <Stack.Screen name={Screen.SETTING} component={SettingScreen} />
           {__DEV__ && (
             <Stack.Screen
               name={Screen.NETWORK_CHECK}

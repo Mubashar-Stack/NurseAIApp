@@ -9,6 +9,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Text } from '@app/blueprints';
 import { scaleHeight, scaledSize } from '@src/utils';
+import { Screen } from '../../navigation/appNavigation.type';
 
 interface MenuItemProps {
   icon: JSX.Element;
@@ -53,11 +54,11 @@ const Profile = () => {
             </View>
           </View>
           <View style={{ marginTop: scaleHeight(40) }}>
-            <MenuItem icon={<Ionicons name={'person-outline'} size={24} color={'black'} />} title="Account Settings" onPress={() => { }} />
-            <MenuItem icon={<Feather name={'map-pin'} size={24} color={'black'} />} title="Address" onPress={() => { }} />
-            <MenuItem icon={<Ionicons name={'wallet-outline'} size={24} color={'black'} />} title="Wallet" onPress={() => { }} />
-            <MenuItem icon={<AntDesign name={'sharealt'} size={24} color={'black'} />} title="Share profile" onPress={() => { }} />
-            <MenuItem icon={<Feather name={'settings'} size={24} color={'black'} />} title="Settings" onPress={() => { }} />
+            <MenuItem icon={<Ionicons name={'person-outline'} size={24} color={'black'} />} title="Account Settings" onPress={() => { navigation.navigate(Screen.ACCOUNT_SETTING) }} />
+            <MenuItem icon={<Feather name={'map-pin'} size={24} color={'black'} />} title="Address" onPress={() => { navigation.navigate(Screen.ADDRESS) }} />
+            <MenuItem icon={<Ionicons name={'wallet-outline'} size={24} color={'black'} />} title="Wallet" onPress={() => { navigation.navigate(Screen.WALLET) }} />
+            <MenuItem icon={<AntDesign name={'sharealt'} size={24} color={'black'} />} title="Share profile" onPress={() => { navigation.navigate(Screen.SHARE_PROFILE) }} />
+            <MenuItem icon={<Feather name={'settings'} size={24} color={'black'} />} title="Settings" onPress={() => { navigation.navigate(Screen.SETTING) }} />
             <MenuItem icon={<AntDesign name={'logout'} size={24} color={'black'} />} title="Log out" onPress={() => { }} />
           </View>
         </View>

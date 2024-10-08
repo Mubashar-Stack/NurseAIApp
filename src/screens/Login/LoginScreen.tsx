@@ -111,9 +111,9 @@ const LoginScreen = () => {
                     </View>
 
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                      <Text preset="h3">Don't have an account? </Text>
+                      <Text preset="h2">Don't have an account? </Text>
                       <TouchableOpacity onPress={() => navigation.navigate(Screen.SIGNUP)}>
-                        <Text preset="h2" >Sign up</Text>
+                        <Text preset="h3" >Sign up</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
