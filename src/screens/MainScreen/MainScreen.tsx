@@ -24,9 +24,9 @@ const MainScreen = () => {
             <Text style={design.footerBtnTxt}>Get Start</Text>
           </TouchableOpacity>
           <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-            <Text preset="h3">Already have an account? </Text>
+            <Text preset="h2">Already have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate(Screen.LOGIN)}>
-              <Text preset="h2" >Log in</Text>
+              <Text preset="h3" >Log in</Text>
             </TouchableOpacity>
           </View>
         </View>

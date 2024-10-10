@@ -8,17 +8,21 @@ import {
   NetworkLoggerScreen,
   MainScreen,
   ResetPassword,
-  SettingScreen,
   SignUp,
   UploadId,
   VerificationCode,
   SelfiScreen,
   UploadDocuments,
-  Home,
+  SettingScreen,
+  AccountSetting,
+  Address,
+  Wallet,
+  ShareProfile,
 } from '@src/screens';
 import { isForceUpdate } from '@src/store';
 import { NavStackParams, Screen } from './appNavigation.type';
 import { ForUpdateStack } from './ForceupdateStack';
+import TabNavigator from './TabNavigation';
 
 export const navigationRef = React.createRef<NavigationContainerRef<NavStackParams>>();
 
@@ -39,7 +43,6 @@ export const AppNavigation = () => {
       ) : (
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen name={Screen.MAIN_SCREEN} component={MainScreen} />
-          <Stack.Screen name={Screen.SETTING} component={SettingScreen} />
           <Stack.Screen name={Screen.LOGIN} component={LoginScreen} />
           <Stack.Screen name={Screen.SIGNUP} component={SignUp} />
           <Stack.Screen name={Screen.UPLOAD_ID} component={UploadId} />
@@ -48,7 +51,12 @@ export const AppNavigation = () => {
           <Stack.Screen name={Screen.RESET_PASSWORD} component={ResetPassword} />
           <Stack.Screen name={Screen.SELFI_SCREEN} component={SelfiScreen} />
           <Stack.Screen name={Screen.UPLOAD_DOCUMENTS} component={UploadDocuments} />
-          <Stack.Screen name={Screen.HOME} component={Home} />
+          <Stack.Screen name={Screen.HOME} component={TabNavigator} />
+          <Stack.Screen name={Screen.ACCOUNT_SETTING} component={AccountSetting} />
+          <Stack.Screen name={Screen.ADDRESS} component={Address} />
+          <Stack.Screen name={Screen.WALLET} component={Wallet} />
+          <Stack.Screen name={Screen.SHARE_PROFILE} component={ShareProfile} />
+          <Stack.Screen name={Screen.SETTING} component={SettingScreen} />
           {__DEV__ && (
             <Stack.Screen
               name={Screen.NETWORK_CHECK}

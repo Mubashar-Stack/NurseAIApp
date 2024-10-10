@@ -1,13 +1,9 @@
 import React from 'react';
 import { Keyboard, ScrollView, StyleSheet, KeyboardAvoidingView, TextInput, Platform, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 import { BaseLayout } from '@src/components';
-//@ts-ignore
 import Feather from 'react-native-vector-icons/Feather';
-//@ts-ignore
 import Ionicons from 'react-native-vector-icons/Ionicons';
-//@ts-ignore
 import AntDesign from 'react-native-vector-icons/AntDesign';
-//@ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useAppContext, useColor } from '@src/context';
 import mainStyle from '@src/constants/MainStyles';
@@ -115,9 +111,9 @@ const LoginScreen = () => {
                     </View>
 
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                      <Text preset="h3">Don't have an account? </Text>
+                      <Text preset="h2">Don't have an account? </Text>
                       <TouchableOpacity onPress={() => navigation.navigate(Screen.SIGNUP)}>
-                        <Text preset="h2" >Sign up</Text>
+                        <Text preset="h3" >Sign up</Text>
                       </TouchableOpacity>
                     </View>
                   </View>

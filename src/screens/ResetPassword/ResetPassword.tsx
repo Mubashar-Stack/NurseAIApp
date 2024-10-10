@@ -2,7 +2,6 @@ import Header from '@src/components/Header/Header';
 import { useAppContext, useColor } from '@src/context';
 import React, { useState } from 'react';
 import { View, ScrollView, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
-//@ts-ignore
 import Feather from 'react-native-vector-icons/Feather';
 import { BaseLayout } from '@src/components';
 import mainStyle from '@src/constants/MainStyles';
@@ -13,8 +12,8 @@ import useResetPassword from './useResetPassword';
 const ResetPassword = () => {
   const { color } = useColor();
   const design = mainStyle(color);
-  const [passwordVisible, setPasswordVisible] = useState(true); // Controls visibility for password field
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(true); // Controls visibility for confirm password field
+  const [passwordVisible, setPasswordVisible] = useState(true);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(true);
   const { navigation } = useAppContext();
   const { initialValues, fieldValidation, handleSubmit } = useResetPassword();
   return (

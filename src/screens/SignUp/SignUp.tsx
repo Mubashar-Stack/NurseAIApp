@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView, TouchableOpacity, Platform, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, TextInput } from 'react-native';
-//@ts-ignore
 import Feather from 'react-native-vector-icons/Feather';
-//@ts-ignore
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import mainStyle from '@src/constants/MainStyles';
 import { useAppContext, useColor } from '@src/context';

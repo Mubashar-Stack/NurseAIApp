@@ -10,5 +10,12 @@ export { default as ForgotPassword } from './ForgotPassword/ForgotPassword';
 export { default as VerificationCode } from './VeificationCode/VerificationCode';
 export { default as ResetPassword } from './ResetPassword/ResetPassword';
 export { default as SelfiScreen } from './SelfiScreen/SelfiScreen'
-export { default as UploadDocuments} from './UploadDocuments/UploadDocuments';
-export { default as Home} from './Home/Home';
+export { default as UploadDocuments } from './UploadDocuments/UploadDocuments';
+export { default as Home } from './Home/Home';
+export { default as Message } from './Message/Message';
+export { default as Document } from './Document/Document';
+export { default as Profile } from './Profile/Profile';
+export { default as AccountSetting } from './AccountSetting/AccountingSetting';
+export { default as Address } from './Address/Address';
+export { default as Wallet } from './Wallet/Wallet';
+export { default as ShareProfile } from './ShareProfile/ShareProfile'

@@ -71,7 +71,7 @@ export const presets = {
   h4: {
     ...BASE_TEXT,
     fontFamily: Fonts.Roboto_Regular,
-    fontSize: scaledSize(16),
+    fontSize: scaledSize(14),
     fontWeight: '400',
   } as TextStyle,
   h5: {
