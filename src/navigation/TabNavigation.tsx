@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Document, Home, Message, Profile } from '@src/screens';
+import { Home, Message, Profile, TaskList } from '@src/screens';
 import { Screen } from './appNavigation.type';
 import { getFocusedRouteNameFromRoute, useFocusEffect, RouteProp } from '@react-navigation/native';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useColor } from '@src/context';
 
 type TabParamList = {
   [Screen.HOME]: undefined;
   [Screen.MESSAGE]: undefined;
-  [Screen.DOCUMENT]: undefined;
+  [Screen.TASK_LIST]: undefined;
   [Screen.PROFILE]: undefined;
 };
 
@@ -21,6 +22,7 @@ interface TabNavigatorProps {
 }
 
 const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
+  const { color } = useColor();
   const [activeTab, setActiveTab] = useState<string>(Screen.HOME);
 
   useFocusEffect(
@@ -39,7 +41,7 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
           borderTopWidth: 0,
           position: 'absolute',
           elevation: 0,
-          height: 68,
+          height: Platform.OS == 'ios' ? 90 : 50,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           overflow: 'hidden',
@@ -67,10 +69,10 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
                   backgroundColor: activeTab === Screen.HOME ? '#ccc' : '#E6E6E6',
                   borderRadius: 35,
                 }}>
-                <Feather name={'home'} size={24} color={'black'} />
+                <Feather name={'home'} size={22} color={color?.textColor} />
               </View>
             ) : (
-              <Feather name={'home'} size={24} color={'black'} />
+              <Feather name={'home'} size={22} color={color?.textColor} />
             )
           ),
         }}
@@ -98,17 +100,17 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
                   backgroundColor: activeTab === Screen.MESSAGE ? '#ccc' : '#E6E6E6',
                   borderRadius: 35,
                 }}>
-                <Ionicons name={'chatbubble-outline'} size={30} color={'black'} />
+                <Ionicons name={'chatbubble-outline'} size={24} color={color?.textColor} />
               </View>
             ) : (
-              <Ionicons name={'chatbubble-outline'} size={30} color={'black'} />
+              <Ionicons name={'chatbubble-outline'} size={24} color={color?.textColor} />
             )
           ),
         }}
       />
       <Tab.Screen
-        name={Screen.DOCUMENT}
-        component={Document}
+        name={Screen.TASK_LIST}
+        component={TaskList}
         options={{
           unmountOnBlur: true,
           headerShown: false,
@@ -126,13 +128,13 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
                   alignItems: 'center',
                   height: 40,
                   width: 40,
-                  backgroundColor: activeTab === Screen.DOCUMENT ? '#ccc' : '#E6E6E6',
+                  backgroundColor: activeTab === Screen.TASK_LIST ? '#ccc' : '#E6E6E6',
                   borderRadius: 35,
                 }}>
-                <Ionicons name={'document-text-outline'} size={30} color={'black'} />
+                <Ionicons name={'document-text-outline'} size={24} color={color?.textColor} />
               </View>
             ) : (
-              <Ionicons name={'document-text-outline'} size={30} color={'black'} />
+              <Ionicons name={'document-text-outline'} size={24} color={color?.textColor} />
             )
           ),
         }}
@@ -160,10 +162,10 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
                   backgroundColor: activeTab === Screen.PROFILE ? '#ccc' : '#E6E6E6',
                   borderRadius: 35,
                 }}>
-                <Ionicons name={'person-circle-outline'} size={30} color={'black'} />
+                <Ionicons name={'person-circle-outline'} size={24} color={color?.textColor} />
               </View>
             ) : (
-              <Ionicons name={'person-circle-outline'} size={30} color={'black'} />
+              <Ionicons name={'person-circle-outline'} size={24} color={color?.textColor} />
             )
           ),
         }}

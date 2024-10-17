@@ -17,12 +17,16 @@ export enum Screen {
   HOME = 'HOME',
   PROFILE = 'PROFILE',
   MESSAGE = 'MESSAGE',
-  DOCUMENT = 'DOCUMENT',
   ACCOUNT_SETTING = 'ACCOUNT_SETTING',
   ADDRESS = 'ADDRESS',
   WALLET = 'WALLET',
   SHARE_PROFILE = 'SHARE_PROFILE',
   SETTING = 'SETTING',
+  NOTIFICATION = 'NOTIFICATION',
+  HELP_AND_SUPPORT = 'HELP_AND_SUPPORT',
+  TASK_LIST = 'TASK_LIST',
+  ADD_TASK_LIST = 'ADD_TASK_LIST',
+  COMPLETE_TASKS = 'COMPLETE_TASKS',
 }
 
 export type NavStackParams = {
@@ -41,11 +45,15 @@ export type NavStackParams = {
   [Screen.HOME]: undefined;
   [Screen.PROFILE]: undefined;
   [Screen.MESSAGE]: undefined;
-  [Screen.DOCUMENT]: undefined;
   [Screen.ACCOUNT_SETTING]: undefined;
   [Screen.ADDRESS]: undefined;
   [Screen.WALLET]: undefined;
   [Screen.SHARE_PROFILE]: undefined;
+  [Screen.NOTIFICATION]: undefined;
+  [Screen.HELP_AND_SUPPORT]: undefined;
+  [Screen.TASK_LIST]: undefined;
+  [Screen.ADD_TASK_LIST]: undefined;
+  [Screen.COMPLETE_TASKS]: undefined;
 };
 
 export type NewsDetailParams = {

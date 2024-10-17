@@ -148,7 +148,7 @@ const mainStyle = (color: any) => StyleSheet.create({
   borderBottomWidth: 0.2,
   justifyContent: 'space-between',
   alignItems: 'center',
-  paddingVertical: 10,
+  paddingVertical: 16,
  },
  loadingIndicator: {
   position: 'absolute',
