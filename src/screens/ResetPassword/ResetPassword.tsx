@@ -46,7 +46,7 @@ const ResetPassword = () => {
                           underlineColorAndroid="transparent"
                         />
                         <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
-                          <Feather name={passwordVisible ? "eye-off" : "eye"} color='#000000' size={20} />
+                          <Feather name={passwordVisible ? "eye-off" : "eye"} color={color.textColor} size={20} />
                         </TouchableOpacity>
                       </View>
                       {touched.password && errors.password && (
@@ -69,7 +69,7 @@ const ResetPassword = () => {
                           underlineColorAndroid="transparent"
                         />
                         <TouchableOpacity onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
-                          <Feather name={confirmPasswordVisible ? "eye-off" : "eye"} color='#000000' size={20} />
+                          <Feather name={confirmPasswordVisible ? "eye-off" : "eye"} color={color.textColor} size={20} />
                         </TouchableOpacity>
                       </View>
                       {touched.confirmPassword && errors.confirmPassword && (

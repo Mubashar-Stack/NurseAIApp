@@ -43,7 +43,7 @@ const ForgotPassword = () => {
                           underlineColorAndroid="transparent"
                         />
                         <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.primaryColor} size={24} />
+                          <Ionicons name="mic-outline" color={color?.textColor} size={24} />
                         </TouchableOpacity>
                       </View>
                       {touched.phoneNumber && errors.phoneNumber && (

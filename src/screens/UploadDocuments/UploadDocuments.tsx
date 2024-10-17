@@ -22,13 +22,13 @@ const UploadDocuments = () => {
           <View style={{ flex: 1 }}>
             <Text preset='h2'>Professional Practice License</Text>
             <TouchableOpacity style={styles.uploadBox} >
-              <Feather name="upload" color={color.primaryColor} size={24} />
+              <Feather name="upload" color={color.textColor} size={24} />
               <Text preset='h5'>Upload your professional practice license</Text>
             </TouchableOpacity>
 
             <Text preset='h2'>Work Experience</Text>
             <TouchableOpacity style={styles.uploadBox} >
-              <Feather name="upload" color={color.primaryColor} size={24} />
+              <Feather name="upload" color={color.textColor} size={24} />
               <Text preset='h5'>Upload your work experience certificates</Text>
             </TouchableOpacity>
 

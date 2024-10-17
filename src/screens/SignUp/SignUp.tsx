@@ -45,7 +45,7 @@ const SignUp = () => {
                           underlineColorAndroid="transparent"
                         />
                         <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.primaryColor} size={24} />
+                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
                         </TouchableOpacity>
                       </View>
                       {touched.name && errors.name && (
@@ -68,7 +68,7 @@ const SignUp = () => {
                           underlineColorAndroid="transparent"
                         />
                         <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.primaryColor} size={24} />
+                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
                         </TouchableOpacity>
                       </View>
                       {touched.phoneNumber && errors.phoneNumber && (
@@ -93,7 +93,7 @@ const SignUp = () => {
                           underlineColorAndroid="transparent"
                         />
                         <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.primaryColor} size={24} />
+                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
                         </TouchableOpacity>
                       </View>
                       {touched.email && errors.email && (
@@ -116,7 +116,7 @@ const SignUp = () => {
                           underlineColorAndroid="transparent"
                         />
                         <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
-                          <Feather name={passwordVisible ? "eye-off" : "eye"} color={'#000000'} size={20} />
+                          <Feather name={passwordVisible ? "eye-off" : "eye"} color={color.textColor} size={20} />
                         </TouchableOpacity>
                       </View>
                       {touched.password && errors.password && (

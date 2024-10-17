@@ -25,7 +25,7 @@ const UploadId = () => {
               <TouchableOpacity activeOpacity={1} style={{ marginBottom: 16 }}>
                 <View style={{ ...design.textView, justifyContent: 'center', alignItems: 'center', borderRadius: 0, height: 300 }}>
                   <View style={{ alignItems: 'center' }}>
-                    <Feather name="upload" color={color.primaryColor} size={30} />
+                    <Feather name="upload" color={color.textColor} size={30} />
                     <Text preset='h2' style={{ margin: scaledSize(10) }} >Upload your ID to get Verified</Text>
                   </View>
                 </View>

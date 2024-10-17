@@ -51,7 +51,7 @@ const LoginScreen = () => {
                           underlineColorAndroid="transparent"
                         />
                         <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.primaryColor} size={24} />
+                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
                         </TouchableOpacity>
                       </View>
                       {touched.email && errors.email ? (
@@ -76,7 +76,7 @@ const LoginScreen = () => {
                           secureTextEntry={true}
                         />
                         <TouchableOpacity>
-                          <Feather name="eye-off" color={color.primaryColor} size={20} />
+                          <Feather name="eye-off" color={color.textColor} size={20} />
                         </TouchableOpacity>
                       </View>
                       {touched.password && errors.password ? (

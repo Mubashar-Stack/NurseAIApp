@@ -18,6 +18,10 @@ import {
   Address,
   Wallet,
   ShareProfile,
+  Notification,
+  HelpAndSupport,
+  AddTaskScreen,
+  CompleteTasks,
 } from '@src/screens';
 import { isForceUpdate } from '@src/store';
 import { NavStackParams, Screen } from './appNavigation.type';
@@ -57,6 +61,10 @@ export const AppNavigation = () => {
           <Stack.Screen name={Screen.WALLET} component={Wallet} />
           <Stack.Screen name={Screen.SHARE_PROFILE} component={ShareProfile} />
           <Stack.Screen name={Screen.SETTING} component={SettingScreen} />
+          <Stack.Screen name={Screen.NOTIFICATION} component={Notification} />
+          <Stack.Screen name={Screen.HELP_AND_SUPPORT} component={HelpAndSupport} />
+          <Stack.Screen name={Screen.ADD_TASK_LIST} component={AddTaskScreen} />
+          <Stack.Screen name={Screen.COMPLETE_TASKS} component={CompleteTasks} />
           {__DEV__ && (
             <Stack.Screen
               name={Screen.NETWORK_CHECK}

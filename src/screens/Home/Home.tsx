@@ -2,51 +2,50 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { BaseLayout } from '@src/components';
 import mainStyle from '@src/constants/MainStyles';
 import { useColor } from '@src/context';
 import { Text } from '@app/blueprints';
 import { scaleHeight } from '@src/utils';
-
-const VideoThumbnail: React.FC = () => (
-  <View style={styles.videoThumbnail}>
-    <AntDesign name="playcircleo" size={24} color="black" />
-  </View>
-);
 interface UpdateCardProps {
   title: string;
   description: string;
-}
-
-const UpdateCard: React.FC<UpdateCardProps> = ({ title, description }) => {
-  return (
-    <View style={styles.updateCard}>
-      <Text preset='h3'>{title}</Text>
-      <Text preset='h4'>{description}</Text>
-      <TouchableOpacity style={styles.readMoreButton}>
-        <Text style={styles.readMoreText}>Read more</Text>
-      </TouchableOpacity>
-    </View>
-  );
 };
 
 const Home: React.FC = () => {
   const { color } = useColor();
   const design = mainStyle(color);
 
+  const UpdateCard: React.FC<UpdateCardProps> = ({ title, description }) => {
+    return (
+      <View style={styles.updateCard}>
+        <Text preset='h3'>{title}</Text>
+        <Text preset='h4'>{description}</Text>
+        <TouchableOpacity style={styles.readMoreButton}>
+          <Text style={styles.readMoreText}>Read more</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const VideoThumbnail: React.FC = () => (
+    <View style={styles.videoThumbnail}>
+      <AntDesign name="playcircleo" size={24} color={color?.textColor} />
+    </View>
+  );
   return (
     <BaseLayout>
       <View style={design.mainView}>
         <View style={design.headerView}>
           <View style={styles.locationSection}>
-            <Feather name={'map-pin'} size={24} color={'black'} />
+            <Feather name={'map-pin'} size={24} color={color?.textColor} />
             <View>
               <Text preset="h2" style={styles.locationText}>Location</Text>
               <Text preset="h4" style={styles.locationText}>Location of Nurse will be here</Text>
             </View>
           </View>
-          <SimpleLineIcons name={'bell'} size={24} color={'black'} />
+          <Ionicons name={'notifications-outline'} size={24} color={color.textColor} />
         </View>
         <View style={design.subView}>
           <ScrollView showsVerticalScrollIndicator={false}>

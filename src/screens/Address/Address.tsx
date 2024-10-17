@@ -32,14 +32,14 @@ export default function AddressScreen() {
   const renderAddressItem = ({ item }: { item: Address }) => (
     <View style={styles.addressItem}>
       <View style={styles.addressInfo}>
-        <Feather name={'map-pin'} size={24} color={'black'} />
+        <Feather name={'map-pin'} size={24} color={color?.textColor} />
         <View style={{ marginLeft: 16 }}>
           <Text preset='h2'>{item.name}</Text>
           <Text preset='h4'>{item.address}</Text>
         </View>
       </View>
       <TouchableOpacity onPress={() => deleteAddress(item.id)}>
-        <Ionicons name="trash-outline" color={'black'} size={24} />
+        <Ionicons name="trash-outline" color={color?.textColor} size={24} />
       </TouchableOpacity>
     </View>
   );
@@ -57,7 +57,7 @@ export default function AddressScreen() {
               contentContainerStyle={styles.addressList}
             />
             <TouchableOpacity style={styles.addButton}>
-              <Entypo name="plus" color={'black'} size={24} />
+              <Entypo name="plus" color={color?.textColor} size={24} />
               <Text preset='h2'>Add New Location</Text>
             </TouchableOpacity>
           </View>
