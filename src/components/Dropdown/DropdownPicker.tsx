@@ -25,7 +25,7 @@ const DropdownPicker: React.FC<DropdownPickerProps> = ({
 }) => {
   const { color } = useColor();
   const design = mainStyle(color);
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View>

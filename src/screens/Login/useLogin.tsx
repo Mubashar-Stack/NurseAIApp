@@ -2,9 +2,8 @@ import { useCallback, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
 import * as yup from 'yup';
 import { useAppContext } from '@src/context';
-import { logger } from '@src/utils';
 import { loginStyles } from './Login.style';
-import { Screen } from '../../navigation/appNavigation.type';
+import { signinHandler } from '../../api/auth';
 
 const useLogin = () => {
   const { color, navigation } = useAppContext();
@@ -27,11 +26,12 @@ const useLogin = () => {
 
   const handleSubmit = useCallback(
     async (values: typeof initialValues) => {
-      navigation.navigate(Screen.HOME)
-      logger('values: ', values);
-      setDisabled(true);
-      await new Promise(res => setTimeout(res, 3000));
-      setDisabled(false);
+      const data = {
+        email: values.email,
+        password: values.password,
+      };
+      console.log("🚀 ~ data:", data)
+      signinHandler(data, setDisabled, navigation,);
     },
     [navigation]
   );

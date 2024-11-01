@@ -27,7 +27,21 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
+		<true/>
+		<key>NSExceptionDomains</key>
+    <dict>
+        <key>34.72.138.16</key>
+        <dict>
+            <key>NSIncludesSubdomains</key>
+            <true/>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+            <key>NSExceptionRequiresForwardSecrecy</key>
+            <false/>
+            <key>NSRequiresCertificateTransparency</key>
+            <false/>
+        </dict>
+    </dict>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>

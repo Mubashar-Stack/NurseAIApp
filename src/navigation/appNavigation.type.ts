@@ -3,7 +3,6 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NewsResult } from '@src/services';
 
 export enum Screen {
-  FORCE_UPDATE_SCREEN = 'FORCE_UPDATE_SCREEN',
   NETWORK_CHECK = 'NETWORK_CHECK',
   MAIN_SCREEN = 'MAIN_SCREEN',
   LOGIN = 'LOGIN',
@@ -30,7 +29,6 @@ export enum Screen {
 }
 
 export type NavStackParams = {
-  [Screen.FORCE_UPDATE_SCREEN]: undefined;
   [Screen.NETWORK_CHECK]: undefined;
   [Screen.MAIN_SCREEN]: undefined;
   [Screen.SETTING]: undefined;

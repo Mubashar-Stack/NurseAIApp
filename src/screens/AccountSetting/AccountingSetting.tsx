@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, TextInput, TouchableOpacity, StyleSheet, ScrollView, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform } from 'react-native';
 import { Formik } from 'formik';
-import { Picker } from '@react-native-picker/picker';
 import { useAppContext, useColor } from '@src/context';
 import mainStyle from '@src/constants/MainStyles';
 import useAccountSetting from './useAccountSetting';
 import { BaseLayout } from '@src/components';
 import Header from '@src/components/Header/Header';
 import { Text } from '@app/blueprints';
+import DropdownPicker from '@src/components/Dropdown/DropdownPicker';
 
 const AccountSettings = () => {
   const { color } = useColor();
@@ -66,19 +66,16 @@ const AccountSettings = () => {
                       </View>
                     </View>
                     <View style={{ marginBottom: 16 }}>
-                      <View style={design.textView}>
-                        <View style={{ ...design.inputText, width: '100%' }} >
-                          <Picker
-                            selectedValue={values.specialty}
-                            onValueChange={(itemValue) => setFieldValue('specialty', itemValue)}
-                          >
-                            <Picker.Item label="Your specialty" value="" />
-                            <Picker.Item label="Doctor" value="doctor" />
-                            <Picker.Item label="Nurse" value="nurse" />
-                            <Picker.Item label="Therapist" value="therapist" />
-                          </Picker>
-                        </View>
-                      </View>
+                      <DropdownPicker
+                        label="Issue"
+                        options={[
+                          { label: "Kidney issue", value: "Kidney issue" },
+                          { label: "Stomach issue", value: "Stomach issue" },
+                          { label: "Liver issue", value: "Liver issue" }
+                        ]}
+                        selectedValue={values.specialty}
+                        onValueChange={(itemValue) => setFieldValue('specialty', itemValue)}
+                      />
                       {touched.specialty && errors.specialty && (
                         <Text style={design.errorText}>{errors.specialty}</Text>
                       )}
