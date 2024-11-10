@@ -1,35 +1,38 @@
 import React from 'react';
-
 import { IndicatorView } from '@app/blueprints';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-
 import { LocalizationProvider, ThemeProvider } from './context';
 import { AppNavigation, navigationRef } from './navigation/AppNavigation';
-import store, { persistor } from './store';
-import { loader } from './utils';
+import store, { persistor } from './redux/store'; // Ensure named import matches export
+import { loader, toastConfig } from './utils';
+import Toast from 'react-native-toast-message';
+import { createConfig, GluestackUIProvider } from '@gluestack-ui/themed';
+import { config } from '@gluestack-ui/config';
 
-export const MainApp = () => {
-  return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <LocalizationProvider>
+const gluestackUIConfig = createConfig({
+  ...config,
+  fonts: {
+    heading: 'Poppins',
+    body: 'Poppins',
+    mono: 'Poppins',
+  },
+});
+export const MainApp: React.FC = () => (
+  <Provider store={store}>
+    <ThemeProvider>
+      <LocalizationProvider>
+        <GluestackUIProvider config={gluestackUIConfig}>
           <NavigationContainer ref={navigationRef}>
-            {/**
-             * PersistGate delays the rendering of the app's UI until the persisted state has been retrieved
-             * and saved to redux.
-             * The `loading` prop can be `null` or any react instance to show during loading (e.g. a splash screen),
-             * for example `loading={<SplashScreen />}`.
-             * @see https://github.com/rt2zz/redux-persist/blob/master/docs/PersistGate.md
-             */}
-            <PersistGate loading={null} persistor={persistor}>
+            <PersistGate loading={<IndicatorView isLoading={true} />} persistor={persistor}>
               <AppNavigation />
               <IndicatorView isLoading={false} ref={loader} />
             </PersistGate>
+            <Toast config={toastConfig} />
           </NavigationContainer>
-        </LocalizationProvider>
-      </ThemeProvider>
-    </Provider>
-  );
-};
+        </GluestackUIProvider>
+      </LocalizationProvider>
+    </ThemeProvider>
+  </Provider>
+);

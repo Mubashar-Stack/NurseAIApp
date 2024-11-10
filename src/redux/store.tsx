@@ -13,12 +13,10 @@ import {
 } from 'redux-persist';
 
 import { reduxStorage } from '@src/context';
-
-import { newsData, newsDataName, userData } from './reducers';
+import auth from './slices/auth';
 
 const rootReducer = combineReducers({
-  newsData,
-  userData,
+  auth: auth,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -26,14 +24,14 @@ export type RootState = ReturnType<typeof rootReducer>;
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',
   storage: reduxStorage,
-  whitelist: [newsDataName],
+  whitelist: ['auth'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   devTools: true,
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
@@ -49,9 +47,6 @@ export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 
-export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
+export const useAppDispatch: () => AppDispatch = () => useDispatch<AppDispatch>();
 
 export default store;
-
-export * from './reducers';
-export * from './observers';

@@ -2,9 +2,8 @@ import { useCallback, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
 import * as yup from 'yup';
 import { useAppContext } from '@src/context';
-import { logger } from '@src/utils';
-import { Screen } from '../../navigation/appNavigation.type';
 import { specialCharacters } from '@src/services/Env';
+import { signupHandler } from '../../api/auth';
 
 const useSignUp = () => {
   const { color, navigation } = useAppContext();
@@ -34,11 +33,17 @@ const useSignUp = () => {
 
   const handleSubmit = useCallback(
     async (values: typeof initialValues) => {
-      navigation.navigate(Screen.UPLOAD_ID);
-      logger('values: ', values);
-      setDisabled(true);
-      await new Promise(res => setTimeout(res, 3000));
-      setDisabled(false);
+      const data = {
+        name: values.name,
+        email: values.email,
+        mobile_no: values.phoneNumber,
+        password: values.password,
+        user_photo: null,
+        gender: "male",
+        address: "123 Main St",
+        role: "patient"
+      };
+      signupHandler(data, setDisabled, navigation,);
     },
     [navigation]
   );
