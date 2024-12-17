@@ -1,12 +1,18 @@
 import { useCallback, useState } from 'react';
 import * as yup from 'yup';
 import { useAppContext } from '@src/context';
-import { logger } from '@src/utils';
 import { Screen } from '../../navigation/appNavigation.type';
+import { resetPassword } from '../../api/auth';
+import { showSuccessToast, showErrorToast } from '@src/utils';
+import { useSelector } from 'react-redux';
+import { ResetPasswordStyles } from './ResetPassword.style';
 
 const useResetPassword = () => {
   const { color, navigation } = useAppContext();
-  const [disabled, setDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const userInfo = useSelector((state: any) => state.auth.userInfo);
 
   const fieldValidation = yup.object().shape({
     password: yup.string()
@@ -27,22 +33,41 @@ const useResetPassword = () => {
 
   const handleSubmit = useCallback(
     async (values: typeof initialValues) => {
-      navigation.navigate(Screen.LOGIN);
-      logger('values: ', values);
-      setDisabled(true);
-      await new Promise(res => setTimeout(res, 3000));
-      setDisabled(false);
+      if (isLoading || !userInfo.email) return;
+
+      setIsLoading(true);
+      try {
+        const response = await resetPassword(
+          userInfo.email,
+          values.password,
+          values.confirmPassword
+        );
+
+        showSuccessToast('Password reset successfully', 2000);
+        navigation.navigate(Screen.LOGIN);
+      } catch (error: any) {
+        console.error('Reset Password Error:', error);
+        showErrorToast(error?.response?.data?.message || 'Failed to reset password', 2000);
+      } finally {
+        setIsLoading(false);
+      }
     },
-    [navigation]
+    [navigation, isLoading, userInfo.email]
   );
 
   return {
-    color,
-    disabled,
+    styles: ResetPasswordStyles(color),
+    isLoading,
+    passwordVisible,
+    setPasswordVisible,
+    confirmPasswordVisible,
+    setConfirmPasswordVisible,
     fieldValidation,
     handleSubmit,
     initialValues,
     navigation,
   };
 };
+
 export default useResetPassword;
+

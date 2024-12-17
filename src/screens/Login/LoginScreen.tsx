@@ -102,10 +102,10 @@ const LoginScreen = () => {
                     </View>
 
                     <View style={styles.socialButtons}>
-                      <TouchableOpacity style={styles.socialButton}>
+                      <TouchableOpacity style={[styles.socialButton, { backgroundColor: color.backgroundColor, }]}>
                         <MaterialCommunityIcons size={24} name="google" color={color.textColor} />
                       </TouchableOpacity>
-                      <TouchableOpacity style={styles.socialButton}>
+                      <TouchableOpacity style={[styles.socialButton, { backgroundColor: color.backgroundColor, }]}>
                         <AntDesign size={24} name="apple-o" color={color.textColor} />
                       </TouchableOpacity>
                     </View>
@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#f0f0f0',
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 10,

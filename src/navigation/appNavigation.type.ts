@@ -14,8 +14,11 @@ export enum Screen {
   SELFI_SCREEN = 'SELFI_SCREEN',
   UPLOAD_DOCUMENTS = 'UPLOAD_DOCUMENTS',
   HOME = 'HOME',
+  NURSE_HOME = 'NURSE_HOME',
+  TAB_HOME = 'TAB_HOME',
   PROFILE = 'PROFILE',
-  MESSAGE = 'MESSAGE',
+  CHATS = 'CHATS',
+  SINGLE_CHAT = 'SINGLE_CHAT',
   ACCOUNT_SETTING = 'ACCOUNT_SETTING',
   ADDRESS = 'ADDRESS',
   WALLET = 'WALLET',
@@ -26,6 +29,10 @@ export enum Screen {
   TASK_LIST = 'TASK_LIST',
   ADD_TASK_LIST = 'ADD_TASK_LIST',
   COMPLETE_TASKS = 'COMPLETE_TASKS',
+  PATIENT_SET_LOCATION = 'PATIENT_SET_LOCATION',
+  PATIENT_LOCATION_SETUP = 'PATIENT_LOCATION_SETUP',
+  PATIENT_ACCOUNT_SETTINGS = 'PATIENT_ACCOUNT_SETTINGS',
+  MEDICAL_HISTORY = 'MEDICAL_HISTORY',
 }
 
 export type NavStackParams = {
@@ -41,17 +48,26 @@ export type NavStackParams = {
   [Screen.SELFI_SCREEN]: undefined;
   [Screen.UPLOAD_DOCUMENTS]: undefined;
   [Screen.HOME]: undefined;
+  [Screen.NURSE_HOME]: undefined;
+  [Screen.TAB_HOME]: undefined;
   [Screen.PROFILE]: undefined;
-  [Screen.MESSAGE]: undefined;
+  [Screen.CHATS]: undefined;
+  [Screen.SINGLE_CHAT]: undefined;
   [Screen.ACCOUNT_SETTING]: undefined;
   [Screen.ADDRESS]: undefined;
   [Screen.WALLET]: undefined;
+  [Screen.MEDICAL_HISTORY]: undefined;
   [Screen.SHARE_PROFILE]: undefined;
   [Screen.NOTIFICATION]: undefined;
   [Screen.HELP_AND_SUPPORT]: undefined;
   [Screen.TASK_LIST]: undefined;
   [Screen.ADD_TASK_LIST]: undefined;
   [Screen.COMPLETE_TASKS]: undefined;
+  [Screen.PATIENT_SET_LOCATION]: undefined;
+  [Screen.PATIENT_LOCATION_SETUP]: undefined;
+  [Screen.PATIENT_ACCOUNT_SETTINGS]: undefined;
+
+
 };
 
 export type NewsDetailParams = {

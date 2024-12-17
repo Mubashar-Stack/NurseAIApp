@@ -12,8 +12,7 @@ const useSignUp = () => {
 
   const fieldValidation = yup.object().shape({
     name: yup.string().required('Name is required'),
-    phoneNumber: yup.string()
-      .required('Phone number is required'),
+    phoneNumber: yup.string().required('Phone number is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
     password: yup.string()
       .min(8, 'Password must be at least 8 characters')
@@ -22,13 +21,22 @@ const useSignUp = () => {
       .matches(/[0-9]/, 'Password must contain at least one number')
       .matches(specialCharacters, 'Password must contain at least one special character')
       .required('Password is required'),
+    role: yup.string().required('Role is required'),
+    //@ts-ignore
+    // speciality: yup.string().when('role', {
+    //   is: 'nurse',
+    //   then: yup.string().required('Speciality is required for nurses'),
+    // }),
   });
+
 
   const initialValues = {
     name: '',
     phoneNumber: '',
     email: '',
     password: '',
+    role: '',
+    speciality: '',
   };
 
   const handleSubmit = useCallback(
@@ -41,7 +49,8 @@ const useSignUp = () => {
         user_photo: null,
         gender: "male",
         address: "123 Main St",
-        role: "patient"
+        role: values.role,
+        speciality: values.speciality
       };
       signupHandler(data, setDisabled, navigation,);
     },

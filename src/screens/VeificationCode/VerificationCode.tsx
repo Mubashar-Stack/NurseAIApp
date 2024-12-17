@@ -1,15 +1,13 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
-import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell, MaskSymbol, isLastFilledCell } from 'react-native-confirmation-code-field';
-import Header from '@src/components/Header/Header';
-import { useAppContext, useColor } from '@src/context';
-import mainStyle from '@src/constants/MainStyles';
+import { View, ScrollView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
+import { Text } from '@app/blueprints';
 import { BaseLayout } from '@src/components';
 import { Formik } from 'formik';
-import { Text } from '@app/blueprints';
-import useVerificationCode from './useVerificationCode';
-import { scaledSize } from '@src/utils';
+import Feather from 'react-native-vector-icons/Feather';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import useVerificationCode from './useVerificationCode';
+import { useSelector } from 'react-redux';
 
 type RootStackParamList = {
   VerificationCode: { fromPage: string };
@@ -17,52 +15,56 @@ type RootStackParamList = {
 
 type OtpVerification = RouteProp<RootStackParamList, 'VerificationCode'>;
 
+const CELL_COUNT = 6;
+
 const VerificationCode = () => {
-  const CELL_COUNT = 4;
-  const { color } = useColor();
-  const design = mainStyle(color);
-  const { navigation } = useAppContext();
-  const { params } = useRoute<OtpVerification>(); // Use useRoute to access route params
-  const { initialValues, fieldValidation, handleSubmit } = useVerificationCode(params.fromPage); // Pass the fromPage param
+  const { params } = useRoute<OtpVerification>();
+  const {
+    styles,
+    navigation,
+    handleSubmit,
+    initialValues,
+    fieldValidation,
+    isLoading,
+    handleSendOTP,
+  } = useVerificationCode(params.fromPage);
+
+  const userInfo = useSelector((state: any) => state.auth.userInfo);
 
   return (
-    <BaseLayout>
+    <BaseLayout style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView style={design.mainView} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-          <Header onPress={() => navigation.goBack()} title='Verification Code' />
-          <View style={design.subView}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Feather name="arrow-left" size={24} color="#000000" />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Verification Code</Text>
+          </View>
+
+          <View style={styles.content}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <Formik
                 initialValues={initialValues}
                 validationSchema={fieldValidation}
-                onSubmit={handleSubmit} >
+                onSubmit={handleSubmit}
+              >
                 {({ handleChange, handleSubmit, values, errors, touched }) => {
                   const ref = useBlurOnFulfill({ value: values.otp, cellCount: CELL_COUNT });
-                  const [props, getCellOnLayoutHandler] = useClearByFocusCell({ value: values.otp, setValue: handleChange('otp') });
-
-                  const renderCell = ({ index, symbol, isFocused }: any) => {
-                    let textChild = null;
-                    if (symbol) {
-                      textChild = (
-                        <MaskSymbol
-                          maskSymbol="*"
-                          isLastFilledCell={isLastFilledCell({ index, value: values.otp })}>
-                          {symbol}
-                        </MaskSymbol>
-                      );
-                    } else if (isFocused) {
-                      textChild = <Cursor />;
-                    }
-                    return (
-                      <View key={index} style={{ ...design.textView, width: '16%', margin: 4, borderRadius: 16, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text key={index} preset='h3' onLayout={getCellOnLayoutHandler(index)}>{textChild}</Text>
-                      </View>
-                    );
-                  };
+                  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+                    value: values.otp,
+                    setValue: handleChange('otp'),
+                  });
 
                   return (
-                    <View style={{ flex: 1, marginTop: 30, alignItems: 'center' }}>
-                      <Text preset='h2' style={{ padding: scaledSize(10), textAlign: 'center' }} >Enter the OTP sent to you by SMS 123456789</Text>
+                    <View style={{ alignItems: 'center' }}>
+                      <Text style={styles.title}>
+                        OTP sent to you by Email to {userInfo.email}
+                      </Text>
+
                       <CodeField
                         ref={ref}
                         {...props}
@@ -71,21 +73,51 @@ const VerificationCode = () => {
                         cellCount={CELL_COUNT}
                         keyboardType="number-pad"
                         textContentType="oneTimeCode"
-                        renderCell={renderCell}
+                        renderCell={({ index, symbol, isFocused }) => (
+                          <View
+                            key={index}
+                            style={[
+                              styles.otpInput,
+                              isFocused && styles.otpInputFocused,
+                            ]}
+                          >
+                            <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 5 }}>
+                              {symbol || (isFocused ? <Cursor /> : null)}
+                            </Text>
+                          </View>
+                        )}
                       />
+
                       {touched.otp && errors.otp && (
-                        <Text style={design.errorText}>{errors.otp}</Text>
+                        <Text style={styles.errorText}>{errors.otp}</Text>
                       )}
-                      <TouchableOpacity style={{ ...design.footerBtn, marginTop: 50 }}
-                        //@ts-ignore
-                        onPress={handleSubmit}
+
+                      <TouchableOpacity
+                        style={[
+                          styles.verifyButton,
+                          isLoading && styles.verifyButtonDisabled,
+                        ]}
+                        onPress={() => handleSubmit()}
+                        disabled={isLoading}
                       >
-                        <Text style={design.footerBtnTxt}>Verify</Text>
+                        {isLoading ? (
+                          <ActivityIndicator color="#FFFFFF" />
+                        ) : (
+                          <Text style={styles.buttonText}>Verify</Text>
+                        )}
                       </TouchableOpacity>
-                      <View style={{ flexDirection: 'row' }}>
-                        <Text preset='h2'>Didn't receive an OTP? </Text>
-                        <TouchableOpacity onPress={() => { }}>
-                          <Text preset='h3'>Resend now</Text>
+
+                      <View style={styles.resendContainer}>
+                        <Text style={styles.resendText}>
+                          Didn't receive an OTP?
+                        </Text>
+                        <TouchableOpacity
+                          style={styles.resendButton}
+                          onPress={handleSendOTP}
+                        >
+                          <Text style={styles.resendButtonText}>
+                            {'Resend now'}
+                          </Text>
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -99,4 +131,6 @@ const VerificationCode = () => {
     </BaseLayout>
   );
 };
+
 export default VerificationCode;
+

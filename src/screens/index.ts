@@ -5,7 +5,7 @@ export { default as ForceUpdateScreen } from './ForceUpdate/ForceUpdateScreen';
 export { default as SettingScreen } from './Setting/SettingScreen';
 export { default as LoginScreen } from './Login/LoginScreen';
 export { default as SignUp } from './SignUp/SignUp';
-export { default as UploadId } from './UploadId/UploadId';
+export { default as UploadId } from './UploadID/UploadIDScreen';
 export { default as ForgotPassword } from './ForgotPassword/ForgotPassword';
 export { default as VerificationCode } from './VeificationCode/VerificationCode';
 export { default as ResetPassword } from './ResetPassword/ResetPassword';
@@ -23,3 +23,13 @@ export { default as HelpAndSupport } from './HelpAndSupport/HelpAndSupport'
 export { default as TaskList } from './TaskList/TaskList';
 export { default as AddTaskScreen } from './AddTasks/AddTasks';
 export { default as CompleteTasks } from './CompleteTasks/CompleteTasks'
+export { default as PatientSetLocationScreen } from './PatientSetLocation/PatientSetLocationScreen';
+export { default as PatientLocationSetupScreen } from './PatientLocationSetup/PatientLocationSetupScreen';
+export { default as PatientHomeScreen } from './PatientHome/PatientHomeScreen';
+export { default as ChatsScreen } from './Chats/ChatsScreen';
+export { default as SingleChatScreen } from './SingleChat/SingleChatScreen';
+export { default as HospitalsScreen } from './Hospitals/HospitalsScreen';
+export { default as PatientProfileScreen } from './PatientProfile/PatientProfileScreen';
+export { default as PatientAccountSettingsScreen } from './PatientAccountSettings/PatientAccountSettingsScreen';
+export { default as UploadIDScreen } from './UploadID/UploadIDScreen';
+export { default as MedicalHistoryScreen } from './MedicalHistory/MedicalHistoryScreen';

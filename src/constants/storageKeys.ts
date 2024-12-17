@@ -3,6 +3,8 @@ export enum StorageKeys {
   APP_LANGUAGE = 'APP_LANGUAGE',
   FIRST_LAUNCH = 'FIRST_LAUNCH',
   PROFILE_DATA = 'PROFILE_DATA',
+  USER_TOKEN = 'USER_TOKEN',
+  USER_ID = 'USER_ID',
 }
 
 export type STORAGES_KEY = StorageKeys;

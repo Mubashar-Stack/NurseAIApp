@@ -1,69 +1,87 @@
 import React from 'react';
-import { BaseLayout } from '@src/components';
-import mainStyle from '@src/constants/MainStyles';
+import { View, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { Text } from '@app/blueprints';
-import { useAppContext, useColor } from '@src/context';
-import { Formik } from 'formik'; import Header from '@src/components/Header/Header';
-import { View, ScrollView, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
-import useForgotPassword from './useForgotPassword';
+import { BaseLayout } from '@src/components';
+import { Formik } from 'formik';
+import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import useForgotPassword from './useForgotPassword';
 
 const ForgotPassword = () => {
-  const { color } = useColor();
-  const design = mainStyle(color);
-  const { navigation } = useAppContext();
-  const { initialValues, fieldValidation, handleSubmit } = useForgotPassword();
+  const {
+    styles,
+    navigation,
+    initialValues,
+    fieldValidation,
+    handleSubmit,
+    isLoading,
+  } = useForgotPassword();
 
   return (
-    <BaseLayout>
+    <BaseLayout style={styles.container}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView style={design.mainView} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-          <Header onPress={() => navigation.goBack()} title='Forgot Password' />
-          <View style={design.subView}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <Formik
-                initialValues={initialValues}
-                validationSchema={fieldValidation}
-                onSubmit={handleSubmit} >
-                {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-                  <View style={{ flex: 1 }}>
-                    <View style={{ marginBottom: 16 }}>
-                      <Text preset="h2">Mobile Number</Text>
-                      <View style={design.textView}>
-                        <TextInput
-                          style={{ ...design.inputText, textAlign: 'left', width: '90%' }}
-                          keyboardType="number-pad"
-                          placeholder="Enter your phone number"
-                          placeholderTextColor="grey"
-                          editable={true}
-                          value={values.phoneNumber}
-                          onChangeText={handleChange('phoneNumber')}
-                          onBlur={handleBlur('phoneNumber')}
-                          blurOnSubmit={false}
-                          underlineColorAndroid="transparent"
-                        />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color?.textColor} size={24} />
-                        </TouchableOpacity>
-                      </View>
-                      {touched.phoneNumber && errors.phoneNumber && (
-                        <Text style={design.errorText}>{errors.phoneNumber}</Text>
-                      )}
-                    </View>
-                    <TouchableOpacity style={{ ...design.footerBtn, marginTop: 30 }}
-                      //@ts-ignore
-                      onPress={handleSubmit}
-                    >
-                      <Text style={design.footerBtnTxt}>Confirm</Text>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Feather name="arrow-left" size={24} color="#000000" />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Forgotten Password</Text>
+          </View>
+
+          <View style={styles.content}>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={fieldValidation}
+              onSubmit={handleSubmit}
+            >
+              {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.inputLabel}>Email</Text>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      style={styles.input}
+                      // keyboardType="number-pad"
+                      placeholder="Enter your email"
+                      placeholderTextColor="#999999"
+                      value={values.phoneNumber}
+                      onChangeText={handleChange('phoneNumber')}
+                      onBlur={handleBlur('phoneNumber')}
+                      editable={!isLoading}
+                    />
+                    <TouchableOpacity disabled={isLoading}>
+                      <Ionicons name="mic-outline" color="#000000" size={24} />
                     </TouchableOpacity>
                   </View>
-                )}
-              </Formik>
-            </ScrollView>
+                  {touched.phoneNumber && errors.phoneNumber && (
+                    <Text style={styles.errorText}>{errors.phoneNumber}</Text>
+                  )}
+
+                  <TouchableOpacity
+                    style={[
+                      styles.confirmButton,
+                      isLoading && styles.confirmButtonDisabled,
+                    ]}
+                    onPress={() => handleSubmit()}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <ActivityIndicator color="#FFFFFF" />
+                    ) : (
+                      <Text style={styles.buttonText}>Confirm</Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              )}
+            </Formik>
           </View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </BaseLayout>
   );
 };
+
 export default ForgotPassword;
+

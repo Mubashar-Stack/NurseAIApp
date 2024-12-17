@@ -1,68 +1,88 @@
-import { BaseLayout } from '@src/components';
 import React from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import mainStyle from '@src/constants/MainStyles';
-import useCompleteTask from './useCompleteTasks';
-import Header from '@src/components/Header/Header';
+import { View, TouchableOpacity, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import { Text } from '@app/blueprints';
-import { scaleHeight } from '@src/utils';
-interface Task {
-  id: string;
-  patientName: string;
-  medication: string;
-  date: string;
-}
+import { BaseLayout } from '@src/components';
+import useCompleteTask from './useCompleteTasks';
+import { CompleteTaskStyles } from './CompleteTask.style';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
+import { format } from 'date-fns';
 
-const tasks: Task[] = [
-  { id: '1', patientName: 'Patient 1', medication: 'Administer prescribed pain medication (e.g., ibuprofen 400 mg) every 6 hours as needed.', date: '09 Sep 2024' },
-  { id: '2', patientName: 'Patient 2', medication: 'Administer prescribed pain medication (e.g., ibuprofen 400 mg) every 6 hours as needed.', date: '09 Sep 2024' },
-  { id: '3', patientName: 'Patient 3', medication: 'Administer prescribed pain medication (e.g., ibuprofen 400 mg) every 6 hours as needed.', date: '09 Sep 2024' },
-  { id: '4', patientName: 'Patient 4', medication: 'Administer prescribed pain medication (e.g., ibuprofen 400 mg) every 6 hours as needed.', date: '09 Sep 2024' },
-  { id: '5', patientName: 'Patient 5', medication: 'Administer prescribed pain medication (e.g., ibuprofen 400 mg) every 6 hours as needed.', date: '09 Sep 2024' },
-];
 const CompleteTasks = () => {
-  const { navigation, color } = useCompleteTask();
-  const design = mainStyle(color);
+  const {
+    color,
+    navigation,
+    tasks,
+    isLoading,
+    isRefreshing,
+    handleRefresh,
+    clearAll,
+  } = useCompleteTask();
+
+  const styles = CompleteTaskStyles(color);
+
+  if (isLoading) {
+    return (
+      <BaseLayout>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#000000" />
+        </View>
+      </BaseLayout>
+    );
+  }
 
   return (
     <BaseLayout>
-      <View style={design.mainView} >
-        <Header onPress={() => navigation.goBack()} title="Complete tasks" />
-        <View style={design.subView}>
-          <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, marginBottom: scaleHeight(40) }}>
-            {tasks.map((task) => (
-              <TouchableOpacity
-                key={task.id}
-                style={styles.taskItem}
-              >
+      <View style={styles.mainView}>
+        <View style={styles.header}>
+          <View style={styles.headerLeft}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <AntDesign name="left" size={24} color={color.textColor} />
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Complete tasks</Text>
+          </View>
+          {/* <TouchableOpacity style={styles.clearButton} onPress={clearAll}>
+            <Text style={styles.clearButtonText}>Clear all</Text>
+          </TouchableOpacity> */}
+        </View>
+
+        <ScrollView
+          style={styles.content}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
+          }
+        >
+          {tasks.length === 0 ? (
+            <View style={styles.emptyContainer}>
+              <Feather
+                name="clipboard"
+                size={48}
+                color="#666666"
+                style={styles.emptyIcon}
+              />
+              <Text style={styles.emptyText}>No completed tasks found</Text>
+            </View>
+          ) : (
+            tasks.map((task) => (
+              <TouchableOpacity key={task.id} style={styles.taskItem}>
                 <View style={styles.avatar} />
-                <View style={{ flex: 1, }}>
-                  <Text preset='h4'>{task.patientName}</Text>
-                  <Text preset='h5'>{task.medication}</Text>
-                  <Text preset='h5'>{task.date}</Text>
+                <View style={styles.taskDetails}>
+                  <Text style={styles.patientName}>{task.patient_name}</Text>
+                  <Text style={styles.medication}>{task.medication}</Text>
+                  <Text style={styles.date}>
+                    Date: {format(new Date(task.created_at), 'dd MMM yyyy')}
+                  </Text>
                 </View>
               </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
+            ))
+          )}
+        </ScrollView>
+
       </View>
     </BaseLayout>
   );
-}
-const styles = StyleSheet.create({
-  taskItem: {
-    flexDirection: 'row',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-    alignItems: 'center'
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#e0e0e0',
-    marginRight: 16,
-  },
-});
-export default CompleteTasks
+};
+
+export default React.memo(CompleteTasks);
+

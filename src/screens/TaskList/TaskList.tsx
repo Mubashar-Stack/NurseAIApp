@@ -1,99 +1,108 @@
-import { BaseLayout } from '@src/components';
-import mainStyle from '@src/constants/MainStyles';
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, TouchableOpacity, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
 import { Text } from '@app/blueprints';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { scaleHeight, scaleWidth } from '@src/utils';
-import Feather from 'react-native-vector-icons/Feather';
+import { BaseLayout } from '@src/components';
 import useTaskList from './useTaskList';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
+import { TaskListStyles } from './TaskList.style';
 
-interface Task {
-  id: string;
-  patientName: string;
-  medication: string;
-}
+const TaskListScreen = () => {
+  const {
+    color,
+    navigation,
+    addTask,
+    completeTask,
+    tasks,
+    isLoading,
+    loadTasks,
+  } = useTaskList();
 
-const tasks: Task[] = [
-  { id: '1', patientName: 'Patient 1', medication: 'Administer prescribed pain medication (e.g., ibuprofen 400 mg) every 6 hours as needed.' },
-  { id: '2', patientName: 'Patient 2', medication: 'Administer prescribed pain medication (e.g., ibuprofen 400 mg) every 6 hours as needed.' },
-  { id: '3', patientName: 'Patient 3', medication: 'Administer prescribed pain medication (e.g., ibuprofen 400 mg) every 6 hours as needed.' },
-];
+  const styles = TaskListStyles(color);
 
-const TaskList = () => {
-  const { navigation, color, addTask, completeTask } = useTaskList();
-  const design = mainStyle(color);
+  if (isLoading) {
+    return (
+      <BaseLayout>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#000000" />
+        </View>
+      </BaseLayout>
+    );
+  }
 
   return (
     <BaseLayout>
-      <View style={design.mainView} >
-        <View style={{ ...design.listView, width: '90%', alignSelf: 'center' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={{ justifyContent: 'center', alignItems: 'center' }}  >
-              <AntDesign size={18} name={"left"} color={color?.textColor} />
+      <View style={styles.mainView}>
+        <View style={styles.header}>
+          <View style={styles.headerLeft}>
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}
+            >
+              <AntDesign name="left" size={24} color={color.textColor} />
             </TouchableOpacity>
-            <View style={{ marginLeft: scaleWidth(10), flexDirection: 'row', alignItems: 'center' }}>
+
+            <View style={styles.shiftInfo}>
               <Feather name="clock" color={color.textColor} size={24} />
-              <View style={{ marginLeft: scaleWidth(10), }}>
-                <Text preset='h5'>Shift timing</Text>
-                <Text preset='h4'>09:00 AM - 05:00 PM</Text>
+              <View style={styles.shiftDetails}>
+                <Text style={{ color: color.textColor, fontSize: 14 }}>Shift timing</Text>
+                <Text style={{ color: color.textColor, fontSize: 14, fontWeight: '600' }}>
+                  09:00 AM - 05:00 PM
+                </Text>
               </View>
             </View>
           </View>
-          <TouchableOpacity onPress={() => completeTask()} style={{ ...design.footerBtn, marginBottom: 0, marginVertical: 0, height: 30, width: '30%' }}>
-            <Text preset='h5' style={styles.completeTaskButtonText}>Complete Task</Text>
+
+          <TouchableOpacity
+            style={styles.completeTaskButton}
+            onPress={completeTask}
+          >
+            <Text style={styles.completeTaskButtonText}>Complete Task</Text>
           </TouchableOpacity>
         </View>
-        <View style={design.subView}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text preset='h1'>Today's Task</Text>
-            <TouchableOpacity onPress={() => addTask()}>
-              <AntDesign name="pluscircleo" color={color?.textColor} size={24} />
+
+        <View style={styles.content}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Today's Task</Text>
+            <TouchableOpacity onPress={addTask}>
+              <AntDesign name="pluscircleo" color={color.textColor} size={24} />
             </TouchableOpacity>
           </View>
 
-          <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, marginBottom: scaleHeight(40) }}>
-            {tasks.map((task) => (
-              <TouchableOpacity
-                key={task.id}
-                style={styles.taskItem}
-              >
-                <View style={styles.avatar} />
-                <View style={styles.taskDetails}>
-                  <Text preset='h4'>{task.patientName}</Text>
-                  <Text preset='h5'>{task.medication}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
+          <ScrollView
+            style={styles.taskList}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl refreshing={isLoading} onRefresh={loadTasks} />
+            }
+          >
+            {tasks.length === 0 ? (
+              <View style={styles.noTasksContainer}>
+                <Feather name="clipboard" size={48} color={'#666666'} />
+                <Text style={styles.noTasksText}>No tasks found</Text>
+              </View>
+            ) : (
+              tasks.map((task) => (
+                <TouchableOpacity
+                  key={task.id}
+                  style={styles.taskItem}
+                  onPress={() => { }}
+                >
+                  <View style={styles.avatar} />
+                  <View style={styles.taskDetails}>
+                    <Text style={styles.patientName}>{task.patient_name}</Text>
+                    <Text style={styles.medication}>{task.medication}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))
+            )}
           </ScrollView>
-
         </View>
+
       </View>
     </BaseLayout>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  completeTaskButtonText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  taskItem: {
-    flexDirection: 'row',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#e0e0e0',
-    marginRight: 16,
-  },
-  taskDetails: {
-    flex: 1,
-  },
-});
-export default TaskList
+export default React.memo(TaskListScreen);
+

@@ -1,7 +1,7 @@
 import { BaseLayout } from '@src/components';
 import Header from '@src/components/Header/Header';
 import mainStyle from '@src/constants/MainStyles';
-import { useAppContext, useColor } from '@src/context';
+import { storage, useAppContext, useColor } from '@src/context';
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -10,6 +10,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Text } from '@app/blueprints';
 import { scaleHeight, scaledSize } from '@src/utils';
 import { Screen } from '../../navigation/appNavigation.type';
+import store from '../../redux/store';
+import { StorageKeys } from '@src/constants/storageKeys';
+import { setToken, setUserInfo } from '../../redux/slices/auth';
 
 interface MenuItemProps {
   icon: JSX.Element;
@@ -59,7 +62,13 @@ const Profile = () => {
             <MenuItem icon={<Ionicons name={'wallet-outline'} size={24} color={color.textColor} />} title="Wallet" onPress={() => { navigation.navigate(Screen.WALLET) }} />
             <MenuItem icon={<AntDesign name={'sharealt'} size={24} color={color.textColor} />} title="Share profile" onPress={() => { }} />
             <MenuItem icon={<Feather name={'settings'} size={24} color={color.textColor} />} title="Settings" onPress={() => { navigation.navigate(Screen.SETTING) }} />
-            <MenuItem icon={<AntDesign name={'logout'} size={24} color={color.textColor} />} title="Log out" onPress={() => { }} />
+            <MenuItem icon={<AntDesign name={'logout'} size={24} color={color.textColor} />} title="Log out" onPress={() => {
+              store.dispatch(setUserInfo({ userId: null, email: null, role: null }));
+              storage.deleteStorage(StorageKeys.USER_ID);
+              storage.deleteStorage(StorageKeys.USER_TOKEN);
+              store.dispatch(setToken(null));
+              navigation.navigate(Screen.LOGIN);
+            }} />
           </View>
         </View>
       </View>

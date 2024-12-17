@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, Message, Profile, TaskList } from '@src/screens';
+import { ChatsScreen, Home, HospitalsScreen, Message, PatientHomeScreen, PatientProfileScreen, Profile, TaskList } from '@src/screens';
 import { Screen } from './appNavigation.type';
 import { getFocusedRouteNameFromRoute, useFocusEffect, RouteProp } from '@react-navigation/native';
 import { Platform, View } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+
 import { useColor } from '@src/context';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 type TabParamList = {
   [Screen.HOME]: undefined;
-  [Screen.MESSAGE]: undefined;
+  [Screen.CHATS]: undefined;
   [Screen.TASK_LIST]: undefined;
+  [Screen.NOTIFICATION]: undefined;
   [Screen.PROFILE]: undefined;
 };
 
@@ -41,7 +45,7 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
           borderTopWidth: 0,
           position: 'absolute',
           elevation: 0,
-          height: Platform.OS == 'ios' ? 90 : 50,
+          height: Platform.OS == 'ios' ? 90 : 60,
           borderTopLeftRadius: 20,
           borderTopRightRadius: 20,
           overflow: 'hidden',
@@ -49,7 +53,7 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
       }}>
       <Tab.Screen
         name={Screen.HOME}
-        component={Home}
+        component={PatientHomeScreen}
         options={{
           headerShown: false,
           tabBarLabel: () => null,
@@ -64,22 +68,22 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: 40,
-                  width: 40,
+                  height: 45,
+                  width: 45,
                   backgroundColor: activeTab === Screen.HOME ? '#ccc' : '#E6E6E6',
                   borderRadius: 35,
                 }}>
-                <Feather name={'home'} size={22} color={color?.textColor} />
+                <Feather name={'home'} size={25} color={color?.textColor} />
               </View>
             ) : (
-              <Feather name={'home'} size={22} color={color?.textColor} />
+              <Feather name={'home'} size={25} color={color?.textColor} />
             )
           ),
         }}
       />
       <Tab.Screen
-        name={Screen.MESSAGE}
-        component={Message}
+        name={Screen.CHATS}
+        component={ChatsScreen}
         options={{
           unmountOnBlur: true,
           headerShown: false,
@@ -95,15 +99,15 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: 40,
-                  width: 40,
-                  backgroundColor: activeTab === Screen.MESSAGE ? '#ccc' : '#E6E6E6',
+                  height: 48,
+                  width: 48,
+                  backgroundColor: activeTab === Screen.CHATS ? '#ccc' : '#E6E6E6',
                   borderRadius: 35,
                 }}>
-                <Ionicons name={'chatbubble-outline'} size={24} color={color?.textColor} />
+                <Ionicons name={'chatbubbles-outline'} size={30} color={color?.textColor} />
               </View>
             ) : (
-              <Ionicons name={'chatbubble-outline'} size={24} color={color?.textColor} />
+              <Ionicons name={'chatbubbles-outline'} size={30} color={color?.textColor} />
             )
           ),
         }}
@@ -126,22 +130,22 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: 40,
-                  width: 40,
+                  height: 48,
+                  width: 48,
                   backgroundColor: activeTab === Screen.TASK_LIST ? '#ccc' : '#E6E6E6',
                   borderRadius: 35,
                 }}>
-                <Ionicons name={'document-text-outline'} size={24} color={color?.textColor} />
+                <EvilIcons name={'heart'} size={40} color={color?.textColor} />
               </View>
             ) : (
-              <Ionicons name={'document-text-outline'} size={24} color={color?.textColor} />
+              <EvilIcons name={'heart'} size={40} color={color?.textColor} />
             )
           ),
         }}
       />
       <Tab.Screen
-        name={Screen.PROFILE}
-        component={Profile}
+        name={Screen.NOTIFICATION}
+        component={HospitalsScreen}
         options={{
           unmountOnBlur: true,
           headerShown: false,
@@ -157,15 +161,46 @@ const TabNavigator: React.FC<TabNavigatorProps> = ({ route }) => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  height: 40,
-                  width: 40,
+                  height: 50,
+                  width: 50,
+                  backgroundColor: activeTab === Screen.NOTIFICATION ? '#ccc' : '#E6E6E6',
+                  borderRadius: 35,
+                }}>
+                <FontAwesome name={'hospital-o'} size={25} color={color?.textColor} />
+              </View>
+            ) : (
+              <FontAwesome name={'hospital-o'} size={25} color={color?.textColor} />
+            )
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={Screen.PROFILE}
+        component={PatientProfileScreen}
+        options={{
+          unmountOnBlur: true,
+          headerShown: false,
+          tabBarLabel: () => null,
+          tabBarItemStyle: {
+            margin: 0,
+            backgroundColor: '#E6E6E6',
+          },
+          tabBarIcon: ({ focused }) => (
+            focused ? (
+              <View
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 50,
+                  width: 50,
                   backgroundColor: activeTab === Screen.PROFILE ? '#ccc' : '#E6E6E6',
                   borderRadius: 35,
                 }}>
-                <Ionicons name={'person-circle-outline'} size={24} color={color?.textColor} />
+                <EvilIcons name={'user'} size={40} color={color?.textColor} />
               </View>
             ) : (
-              <Ionicons name={'person-circle-outline'} size={24} color={color?.textColor} />
+              <EvilIcons name={'user'} size={40} color={color?.textColor} />
             )
           ),
         }}

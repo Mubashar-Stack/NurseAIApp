@@ -9,6 +9,7 @@ import { BaseLayout } from '@src/components';
 import { Formik } from 'formik';
 import { Text } from '@app/blueprints';
 import useSignUp from './useSignUp';
+import DropdownPicker from '@src/components/Dropdown/DropdownPicker';
 
 const SignUp = () => {
   const { color } = useColor();
@@ -16,7 +17,18 @@ const SignUp = () => {
   const { navigation } = useAppContext();
   const { initialValues, fieldValidation, handleSubmit } = useSignUp();
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const roleOptions = [
+    { label: 'Nurse', value: 'nurse' },
+    { label: 'Patient', value: 'patient' },
+  ];
 
+  const specialityOptions = [
+    { label: 'Pediatrics', value: 'Pediatrics' },
+    { label: 'Geriatrics', value: 'Geriatrics' },
+    { label: 'Critical Care', value: 'Critical Care' },
+    { label: 'Surgical Nursing', value: 'Surgical Nursing' },
+    { label: 'Oncology Nursing', value: 'Oncology Nursing' },
+  ];
   return (
     <BaseLayout>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -28,7 +40,7 @@ const SignUp = () => {
                 initialValues={initialValues}
                 validationSchema={fieldValidation}
                 onSubmit={handleSubmit} >
-                {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+                {({ handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue }) => (
                   <View style={{ flex: 1 }}>
                     <View style={{ marginBottom: 16 }}>
                       <Text preset="h2">Name</Text>
@@ -123,6 +135,34 @@ const SignUp = () => {
                         <Text style={design.errorText}>{errors.password}</Text>
                       )}
                     </View>
+                    {/* Role Dropdown */}
+                    <View style={{ marginBottom: 16 }}>
+
+                      <DropdownPicker
+                        label="Role"
+                        options={roleOptions}
+                        selectedValue={values.role}
+                        onValueChange={(itemValue) => setFieldValue('role', itemValue)}
+                      />
+                      {touched.role && errors.role && (
+                        <Text style={design.errorText}>{errors.role}</Text>
+                      )}
+                    </View>
+
+                    {/* Speciality Dropdown (visible only for nurses) */}
+                    {values.role === 'nurse' && (
+                      <View style={{ marginBottom: 16 }}>
+                        <DropdownPicker
+                          label="Specialty"
+                          options={specialityOptions}
+                          selectedValue={values.speciality}
+                          onValueChange={(itemValue) => setFieldValue('speciality', itemValue)}
+                        />
+                        {touched.speciality && errors.speciality && (
+                          <Text style={design.errorText}>{errors.speciality}</Text>
+                        )}
+                      </View>
+                    )}
                     <TouchableOpacity style={{ ...design.footerBtn, marginTop: 30 }}
                       //@ts-ignore
                       onPress={handleSubmit}

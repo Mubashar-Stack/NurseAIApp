@@ -1,91 +1,77 @@
-import React, { useRef } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { Text } from '@app/blueprints';
 import { BaseLayout } from '@src/components';
-import Header from '@src/components/Header/Header';
-import { useAppContext, useColor } from '@src/context';
-import mainStyle from '@src/constants/MainStyles';
-import { scaleHeight, scaledSize } from '@src/utils';
+import Feather from 'react-native-vector-icons/Feather';
+import useSelfi from './useSelfi';
 import { Screen } from '../../navigation/appNavigation.type';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 
 const SelfiScreen = () => {
-  const { color } = useColor();
-  const design = mainStyle(color);
-  const { navigation } = useAppContext();
-  const cameraRef = useRef(null);
+  const { styles, navigation, cameraRef, takePicture, isUploading } = useSelfi();
 
   return (
-    <BaseLayout>
-      <View style={design.mainView}>
-        <Header onPress={() => navigation.goBack()} title='Your Image' />
-        <View style={design.subView}>
-          <View style={{ flex: 1 }}>
-            <Text preset='h2' style={{ marginBottom: scaleHeight(20) }}>Take a picture</Text>
-            <View style={styles.cameraContainer}>
-              <RNCamera
-                ref={cameraRef}
-                style={styles.camera}
-                type={RNCamera.Constants.Type.front}
-                captureAudio={false}
-              >
-                <View style={styles.gridContainer}>
-                  {[...Array(9)].map((_, index) => (
-                    <View key={index} style={styles.gridItem} />
-                  ))}
-                </View>
-              </RNCamera>
+    <BaseLayout style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <MaterialIcons name="arrow-back-ios-new" size={24} color="#000000" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Your Image</Text>
+      </View>
+
+      <View style={styles.content}>
+        <Text style={styles.title}>Take a picture</Text>
+
+        <View style={styles.cameraContainer}>
+          <RNCamera
+            ref={cameraRef}
+            style={styles.camera}
+            type={RNCamera.Constants.Type.front}
+            captureAudio={false}
+          >
+            <View style={styles.gridContainer}>
+              {[...Array(9)].map((_, index) => (
+                <View key={index} style={styles.gridItem} />
+              ))}
             </View>
-            <View style={styles.cameraButtonContainer}>
-              <TouchableOpacity style={styles.cameraButton}
-              // onPress={takePicture} 
-              />
-            </View>
-            <Text preset='h2' style={{ padding: scaledSize(20) }}>
-              Please upload a clear selfie, ensuring your full face is well-lit and
-              unobstructed for accurate identity verification
-            </Text>
-            <TouchableOpacity style={design.footerBtn} onPress={() => navigation.navigate(Screen.UPLOAD_DOCUMENTS)} >
-              <Text style={design.footerBtnTxt}>Continue</Text>
-            </TouchableOpacity>
-          </View>
+          </RNCamera>
         </View>
+
+        <View style={styles.captureButtonContainer}>
+          <TouchableOpacity
+            style={styles.captureButton}
+            onPress={takePicture}
+            disabled={isUploading}
+          >
+            {isUploading ? (
+              <ActivityIndicator color="#000000" style={{ marginTop: 18 }} />
+            ) : (
+              <View style={styles.captureButtonInner} />
+            )}
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.description}>
+          Please upload a clear selfie, ensuring your full face is well-lit and
+          unobstructed for accurate identity verification
+        </Text>
+
+        <TouchableOpacity
+          style={[
+            styles.continueButton,
+            isUploading && styles.continueButtonDisabled
+          ]}
+          onPress={() => navigation.navigate(Screen.UPLOAD_DOCUMENTS)}
+          disabled={isUploading}
+        >
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
       </View>
     </BaseLayout>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  cameraContainer: {
-    aspectRatio: 1,
-    marginHorizontal: 16,
-    overflow: 'hidden',
-  },
-  camera: {
-    flex: 1,
-  },
-  gridContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  gridItem: {
-    width: '33.33%',
-    height: '33.33%',
-    borderWidth: 0.5,
-    borderColor: 'rgba(255, 255, 255, 0.5)',
-  },
-  cameraButtonContainer: {
-    alignItems: 'center',
-    marginTop: 24,
-  },
-  cameraButton: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    borderWidth: 2,
-    borderColor: 'black',
-  },
-});
+export default React.memo(SelfiScreen);
 
-export default SelfiScreen;
