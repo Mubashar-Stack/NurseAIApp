@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { Text } from '@app/blueprints';
 import { BaseLayout } from '@src/components';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -8,12 +8,12 @@ import usePatientProfile from './usePatientProfile';
 import { Screen } from '../../navigation/appNavigation.type';
 
 const PatientProfileScreen = () => {
-  const { styles, color, handleMenuItemPress, handleLogout } = usePatientProfile();
+  const { profilePhoto, profileData, styles, color, handleMenuItemPress, handleLogout } = usePatientProfile();
 
   const menuItems = [
     { icon: 'person-outline', label: 'Account Settings', screen: Screen.PATIENT_ACCOUNT_SETTINGS },
     { icon: 'history', label: 'Medical History', screen: Screen.MEDICAL_HISTORY },
-    { icon: 'account-balance-wallet', label: 'Wallet', screen: Screen.WALLET },
+    { icon: 'account-balance-wallet', label: 'Credit Cards', screen: Screen.PATIENT_CREDIT_CARD },
     { icon: 'location-on', label: 'Address', screen: Screen.ADDRESS },
     { icon: 'settings', label: 'Settings', screen: Screen.SETTING },
   ];
@@ -27,11 +27,14 @@ const PatientProfileScreen = () => {
           </View>
 
           <View style={styles.profileSection}>
-            <View style={styles.avatar} />
+            <Image
+              source={{ uri: profilePhoto }}
+              style={styles.avatar}
+            />
             <View style={styles.profileInfo}>
-              <Text preset="h2">Patient Profile</Text>
+              <Text preset="h2">{profileData?.name}</Text>
               <Text preset="h4" color={color.textColor}>
-                patient@gmail.com
+                {profileData?.email}
               </Text>
             </View>
           </View>
@@ -45,12 +48,12 @@ const PatientProfileScreen = () => {
               <MaterialIcons
                 name={item.icon}
                 size={24}
-                color={color.textColor}
+                color={'#002A65'}
               />
               <Text preset="h2" style={styles.menuItemText}>
                 {item.label}
               </Text>
-              <Feather name="chevron-right" size={24} color={color.textColor} />
+              <Feather name="chevron-right" size={24} color={'#002A65'} />
             </TouchableOpacity>
           ))}
 
@@ -58,7 +61,7 @@ const PatientProfileScreen = () => {
             <MaterialIcons
               name="logout"
               size={24}
-              color={color.textColor}
+              color={'#BE0B31'}
             />
             <Text preset="h2" style={styles.menuItemText}>
               Log out

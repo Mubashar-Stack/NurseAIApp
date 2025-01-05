@@ -33,6 +33,9 @@ export enum Screen {
   PATIENT_LOCATION_SETUP = 'PATIENT_LOCATION_SETUP',
   PATIENT_ACCOUNT_SETTINGS = 'PATIENT_ACCOUNT_SETTINGS',
   MEDICAL_HISTORY = 'MEDICAL_HISTORY',
+  PATIENT_DETAIL = "PATIENT_DETAIL",
+  PATIENT_CREDIT_CARD = "PATIENT_CREDIT_CARD",
+  FAVORITE_HOSPITALS = "FAVORITE_HOSPITALS"
 }
 
 export type NavStackParams = {
@@ -63,9 +66,12 @@ export type NavStackParams = {
   [Screen.TASK_LIST]: undefined;
   [Screen.ADD_TASK_LIST]: undefined;
   [Screen.COMPLETE_TASKS]: undefined;
+  [Screen.PATIENT_DETAIL]: undefined;
   [Screen.PATIENT_SET_LOCATION]: undefined;
   [Screen.PATIENT_LOCATION_SETUP]: undefined;
   [Screen.PATIENT_ACCOUNT_SETTINGS]: undefined;
+  [Screen.PATIENT_CREDIT_CARD]: undefined;
+  [Screen.FAVORITE_HOSPITALS]: undefined;
 
 
 };

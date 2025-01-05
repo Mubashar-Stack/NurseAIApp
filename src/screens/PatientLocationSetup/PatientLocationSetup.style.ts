@@ -28,7 +28,8 @@ export const PatientLocationSetupStyles = (color: Palette) =>
       backgroundColor: color.Tertiary,
       paddingHorizontal: 10,
       height: 52,
-      alignItems: 'center', justifyContent: 'space-between'
+      alignItems: 'center',
+      justifyContent: 'space-between'
     },
     input: {
       fontSize: 14,
@@ -43,7 +44,7 @@ export const PatientLocationSetupStyles = (color: Palette) =>
       fontSize: 12,
     },
     saveButton: {
-      backgroundColor: '#000000',
+      backgroundColor: '#002A65',
       borderRadius: 8,
       height: 48,
       justifyContent: 'center',
@@ -55,16 +56,9 @@ export const PatientLocationSetupStyles = (color: Palette) =>
       fontSize: 16,
       fontWeight: '600',
     },
-    keypadContainer: {
-      flex: 1,
-      backgroundColor: color.backgroundColor,
+    sectionTitle: {
       marginTop: 24,
-      borderTopWidth: 1,
-      borderTopColor: color.textColor,
-      paddingTop: 16,
-    },
-    keypadLabel: {
-      textAlign: 'center',
       marginBottom: 16,
     },
   });
+

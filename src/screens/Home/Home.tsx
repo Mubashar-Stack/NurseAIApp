@@ -1,135 +1,190 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { BaseLayout } from '@src/components';
-import mainStyle from '@src/constants/MainStyles';
-import { useColor } from '@src/context';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
 import { Text } from '@app/blueprints';
-import { scaleHeight } from '@src/utils';
-interface UpdateCardProps {
-  title: string;
-  description: string;
-};
+import usePatientHome from './useHome';
+import { MapPin, Bell, CheckCircle } from 'lucide-react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import VideoPlayerModal from './VideoPlayerModal';
 
-const Home: React.FC = () => {
-  const { color } = useColor();
-  const design = mainStyle(color);
+const HomeScreen = () => {
+  const {
+    styles,
+    hospitals,
+    defaultAddress,
+    activeSlide,
+    setActiveSlide,
+    userProfile,
+    news,
+    hasLocationPermission,
+    currentLocation,
+    currentAddress,
+    checkins,
+    recommendedVideos,
+    requestLocationPermission,
+    getCurrentLocation,
+    handleCheckIn,
+    refreshLocation,
+  } = usePatientHome();
 
-  const UpdateCard: React.FC<UpdateCardProps> = ({ title, description }) => {
-    return (
-      <View style={styles.updateCard}>
-        <Text preset='h3'>{title}</Text>
-        <Text preset='h4'>{description}</Text>
-        <TouchableOpacity style={styles.readMoreButton}>
-          <Text style={styles.readMoreText}>Read more</Text>
-        </TouchableOpacity>
+  const [isVideoModalVisible, setIsVideoModalVisible] = useState(false);
+  const [selectedVideoUrl, setSelectedVideoUrl] = useState('');
+
+  useEffect(() => {
+    if (!hasLocationPermission) {
+      requestLocationPermission();
+    }
+  }, [hasLocationPermission]);
+
+  const VideoThumbnail: React.FC<{ item: any }> = ({ item }) => (
+    <TouchableOpacity
+      style={styles.videoThumbnail}
+      onPress={() => {
+        setSelectedVideoUrl(item.video_file);
+        setIsVideoModalVisible(true);
+      }}
+    >
+      <Image source={{ uri: item.thumbnail }} style={styles.videoImage} />
+      <View style={styles.playIconOverlay}>
+        <AntDesign name="play" size={24} color={'#FFF'} />
       </View>
-    );
+      {/* <Text style={styles.videoTitle}>{item.title}</Text> */}
+    </TouchableOpacity>
+  );
+
+  const onCheckInPress = async () => {
+    await refreshLocation();
+    handleCheckIn();
   };
 
-  const VideoThumbnail: React.FC = () => (
-    <View style={styles.videoThumbnail}>
-      <AntDesign name="playcircleo" size={24} color={color?.textColor} />
-    </View>
-  );
   return (
-    <BaseLayout>
-      <View style={design.mainView}>
-        <View style={design.headerView}>
-          <View style={styles.locationSection}>
-            <Feather name={'map-pin'} size={24} color={color?.textColor} />
+    <View style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ marginBottom: 60 }}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.locationContainer}>
+            <MapPin size={30} color="#000" />
             <View>
-              <Text preset="h2" style={styles.locationText}>Location</Text>
-              <Text preset="h4" style={styles.locationText}>Location of Nurse will be here</Text>
+              <Text style={styles.locationText}>Location</Text>
+              <Text style={styles.locationText}>
+                {currentAddress || (defaultAddress ? `${defaultAddress.address}, ${defaultAddress.city}, ${defaultAddress.state} ${defaultAddress.postal_code}` : 'No address available')}
+              </Text>
             </View>
           </View>
-          <Ionicons name={'notifications-outline'} size={24} color={color.textColor} />
+          <TouchableOpacity style={styles.notificationContainer}>
+            <Bell size={30} color="#000" />
+            <View style={styles.notificationDot} />
+          </TouchableOpacity>
         </View>
-        <View style={design.subView}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.welcomeSection}>
-              <View style={styles.avatar} />
-              <View>
-                <Text preset='h2'>Welcome</Text>
-                <Text preset='h4'>Name of Nurse</Text>
+
+        {/* Service Type Buttons */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[styles.button, styles.primaryButton]}
+            onPress={onCheckInPress}
+          >
+            <Text style={styles.buttonText}>Check In</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Welcome Section */}
+        <View style={styles.welcomeSection}>
+          <Image
+            //@ts-ignore
+            source={userProfile?.user_photo
+              ? { uri: userProfile.user_photo }
+              : "require('../assets/default-avatar.png')"
+            }
+            style={styles.avatar}
+          />
+          <View style={styles.welcomeInfo}>
+            <Text style={styles.welcomeTitle}>Welcome</Text>
+            <Text style={styles.userName}>{userProfile?.name || 'User'}</Text>
+          </View>
+        </View>
+
+        {/* Updates Section */}
+        <Text style={styles.sectionTitle}>New Updates</Text>
+        <View style={{ backgroundColor: '#fff' }}>
+          <FlatList
+            horizontal
+            style={{ marginRight: 10 }}
+            showsHorizontalScrollIndicator={false}
+            data={news}
+            renderItem={({ item, index }: any) => (
+              <View style={styles.updateCard}>
+                <View style={styles.updateContent}>
+                  <Text style={styles.discountText}>{item.title}</Text>
+                  <Text style={styles.updateDescription}>
+                    {item?.description.length > 50
+                      ? `${item?.description.substring(0, 50)}...`
+                      : item?.description}
+                  </Text>
+                  <TouchableOpacity style={styles.readMoreButton}>
+                    <Text style={styles.readMoreText}>Read more</Text>
+                  </TouchableOpacity>
+                </View>
+                <Image
+                  source={{ uri: item.photo }}
+                  style={styles.updateImage}
+                />
               </View>
-            </View>
-            <TouchableOpacity style={design.footerBtn}>
-              <Text style={design.footerBtnTxt}>Check in</Text>
-            </TouchableOpacity>
-            <Text preset='h2' style={styles.sectionTitle}>New Updates</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
-              <UpdateCard title="20% OFF" description="Updates will be here" />
-              <UpdateCard title="20% OFF" description="Updates will be here" />
-              <UpdateCard title="20% OFF" description="Updates will be here" />
-            </ScrollView>
-            <Text preset='h2' style={styles.sectionTitle}>Recommended Videos</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.horizontalScroll}>
-              <VideoThumbnail />
-              <VideoThumbnail />
-              <VideoThumbnail />
-            </ScrollView>
-          </ScrollView>
+            )}
+            keyExtractor={(item: any) => item?.id.toString()}
+            onMomentumScrollEnd={(e) => {
+              const contentOffset = e.nativeEvent.contentOffset.x;
+              const viewSize = e.nativeEvent.layoutMeasurement.width;
+              setActiveSlide(Math.floor(contentOffset / viewSize));
+            }}
+          />
+          <View style={styles.paginationContainer}>
+            {news.map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.paginationDot,
+                  activeSlide === index && styles.activePaginationDot,
+                ]}
+              />
+            ))}
+          </View>
         </View>
-      </View>
-    </BaseLayout>
+
+        {/* Recent Check-ins */}
+        {/* <Text style={styles.sectionTitle}>Recent Check-ins</Text>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={checkins}
+          renderItem={({ item }: any) => (
+            <View style={styles.checkinCard}>
+              <CheckCircle size={24} color="#002B49" />
+              <Text style={styles.checkinLocation}>{item?.location}</Text>
+              <Text style={styles.checkinDate}>{new Date(item?.created_at).toLocaleDateString()}</Text>
+            </View>
+          )}
+          keyExtractor={(item: any) => item.id.toString()}
+        /> */}
+
+        {/* Recommended Videos */}
+        <Text style={styles.sectionTitle}>Recommended Videos</Text>
+        <FlatList
+          horizontal
+          style={{ marginRight: 10 }}
+          showsHorizontalScrollIndicator={false}
+          data={recommendedVideos}
+          renderItem={({ item }: any) => <VideoThumbnail item={item} />}
+          keyExtractor={(item: any) => item.id.toString()}
+        />
+      </ScrollView>
+
+      <VideoPlayerModal
+        isVisible={isVideoModalVisible}
+        onClose={() => setIsVideoModalVisible(false)}
+        videoUrl={selectedVideoUrl}
+      />
+    </View>
   );
 };
 
-const styles = StyleSheet.create({
-  locationSection: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  locationText: {
-    marginLeft: 10,
-  },
-  welcomeSection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#e0e0e0',
-    marginRight: 16,
-  },
-  sectionTitle: {
-    marginTop: scaleHeight(20),
-  },
-  horizontalScroll: {
-    paddingVertical: scaleHeight(14),
-  },
-  updateCard: {
-    backgroundColor: '#fff',
-    padding: 16,
-    borderRadius: 8,
-    marginRight: 16,
-    width: 200,
-  },
-  readMoreButton: {
-    backgroundColor: '#000',
-    padding: 8,
-    borderRadius: 4,
-    marginVertical: scaleHeight(10),
-    alignSelf: 'flex-start',
-  },
-  readMoreText: {
-    color: '#fff',
-    fontSize: 12,
-  },
-  videoThumbnail: {
-    width: 150,
-    height: 100,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 8,
-    marginRight: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-export default Home;
+export default HomeScreen;
+

@@ -1,16 +1,23 @@
 import React from 'react';
-import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { Text } from '@app/blueprints';
 import { BaseLayout } from '@src/components';
-import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import useSelfi from './useSelfi';
 import { Screen } from '../../navigation/appNavigation.type';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 
 const SelfiScreen = () => {
-  const { styles, navigation, cameraRef, takePicture, isUploading } = useSelfi();
+  const {
+    styles,
+    navigation,
+    cameraRef,
+    takePicture,
+    isUploading,
+    capturedImage,
+    retakePicture,
+    uploadPhoto,
+  } = useSelfi();
 
   return (
     <BaseLayout style={styles.container}>
@@ -25,48 +32,62 @@ const SelfiScreen = () => {
         <Text style={styles.title}>Take a picture</Text>
 
         <View style={styles.cameraContainer}>
-          <RNCamera
-            ref={cameraRef}
-            style={styles.camera}
-            type={RNCamera.Constants.Type.front}
-            captureAudio={false}
-          >
-            <View style={styles.gridContainer}>
-              {[...Array(9)].map((_, index) => (
-                <View key={index} style={styles.gridItem} />
-              ))}
+          {capturedImage ? (
+            <View style={styles.capturedImageContainer}>
+              <Image source={{ uri: capturedImage }} style={styles.capturedImage} />
+              <TouchableOpacity
+                style={styles.retakeButton}
+                onPress={retakePicture}
+              >
+                <MaterialIcons name="close" size={24} color="#FFFFFF" />
+              </TouchableOpacity>
             </View>
-          </RNCamera>
+          ) : (
+            <RNCamera
+              ref={cameraRef}
+              style={styles.camera}
+              type={RNCamera.Constants.Type.front}
+              captureAudio={false}
+            >
+              <View style={styles.gridContainer}>
+                {[...Array(9)].map((_, index) => (
+                  <View key={index} style={styles.gridItem} />
+                ))}
+              </View>
+            </RNCamera>
+          )}
         </View>
 
         <View style={styles.captureButtonContainer}>
           <TouchableOpacity
             style={styles.captureButton}
-            onPress={takePicture}
+            onPress={capturedImage ? uploadPhoto : takePicture}
             disabled={isUploading}
           >
-            {isUploading ? (
-              <ActivityIndicator color="#000000" style={{ marginTop: 18 }} />
-            ) : (
-              <View style={styles.captureButtonInner} />
-            )}
+
+            <View style={styles.captureButtonInner} />
+
           </TouchableOpacity>
         </View>
 
         <Text style={styles.description}>
-          Please upload a clear selfie, ensuring your full face is well-lit and
+          Please upload a clear selfie, ensuring your full face is well-lit
           unobstructed for accurate identity verification
         </Text>
 
         <TouchableOpacity
           style={[
             styles.continueButton,
-            isUploading && styles.continueButtonDisabled
+            (!capturedImage || isUploading) && styles.continueButtonDisabled
           ]}
-          onPress={() => navigation.navigate(Screen.UPLOAD_DOCUMENTS)}
-          disabled={isUploading}
+          onPress={uploadPhoto}
+          disabled={!capturedImage || isUploading}
         >
-          <Text style={styles.buttonText}>Continue</Text>
+          {isUploading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Continue</Text>
+          )}
         </TouchableOpacity>
       </View>
     </BaseLayout>

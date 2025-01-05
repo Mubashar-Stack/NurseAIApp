@@ -29,7 +29,7 @@ export const CompleteTaskStyles = ({ textColor, backgroundColor }: Palette) =>
             fontSize: 20,
             fontWeight: '600',
             color: textColor,
-            marginLeft: 16,
+            marginLeft: 12,
         },
         clearButton: {
             paddingVertical: 8,
@@ -80,6 +80,7 @@ export const CompleteTaskStyles = ({ textColor, backgroundColor }: Palette) =>
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
+            marginTop: 60
         },
         emptyContainer: {
             flex: 1,

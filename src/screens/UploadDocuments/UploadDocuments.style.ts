@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Palette } from '@src/utils';
 import { scaleHeight } from '@src/utils';
 
-export const UploadDocumentsStyles = ({ textColor, backgroundColor }: Palette) =>
+export const UploadDocumentsStyles = ({ textColor, backgroundColor, primaryColor }: Palette) =>
     StyleSheet.create({
         container: {
             flex: 1,
@@ -36,10 +36,11 @@ export const UploadDocumentsStyles = ({ textColor, backgroundColor }: Palette) =
             borderColor: '#CCCCCC',
             borderStyle: 'dashed',
             borderRadius: 8,
-            height: scaleHeight(100),
+            height: scaleHeight(130),
             alignItems: 'center',
             justifyContent: 'center',
             marginVertical: scaleHeight(20),
+            backgroundColor: '#E6E6E6',
             padding: 16,
         },
         uploadBoxSuccess: {
@@ -59,7 +60,7 @@ export const UploadDocumentsStyles = ({ textColor, backgroundColor }: Palette) =
             marginTop: 16,
         },
         saveButton: {
-            backgroundColor: '#000000',
+            backgroundColor: primaryColor,
             padding: 16,
             borderRadius: 8,
             alignItems: 'center',

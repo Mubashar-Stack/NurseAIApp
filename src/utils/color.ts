@@ -15,7 +15,7 @@ export const color = {
     // secondaryColor: '#6c757d', // off-white
     // textColor: '#343a40', // dark grey
     backgroundColor: '#f5f5f5', // grey screen background color
-    primaryColor: '#000000', // blue button background color
+    primaryColor: '#002A65', // blue button background color
     secondaryColor: '#ffffff', // off-white button text color
     textColor: '#000000', // dark grey
     Tertiary: '#E6E6E6', // input background color
@@ -49,7 +49,7 @@ export const color = {
     backgroundColor: '#f5f5f5', // misty rose
     primaryColor: '#663399', // rebecca purple
     secondaryColor: '#ffe4e1', // light grey
-    textColor: '#333333', // dark grey
+    textColor: '#33333', // dark grey
     Tertiary: '#E6E6E6', // input background color
     errorText: 'red'
   },

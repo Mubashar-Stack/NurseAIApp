@@ -24,6 +24,12 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSMicrophoneUsageDescription</key>
     <string>This app needs access to your microphone to record voice messages.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library to allow you to upload photos for profile updates, sharing content, etc.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app needs your location to provide personalized features, like client sites or nearby hospitals.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs your location to provide features while actively using the app, such as showing relevant information based on your current location.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

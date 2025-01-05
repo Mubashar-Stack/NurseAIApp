@@ -20,7 +20,7 @@ export const AddTaskStyles = ({ textColor, backgroundColor, Tertiary }: Palette)
             alignItems: 'center',
         },
         backButton: {
-            padding: 8,
+            // padding: 8,
         },
         shiftInfo: {
             marginLeft: scaleWidth(10),
@@ -30,8 +30,50 @@ export const AddTaskStyles = ({ textColor, backgroundColor, Tertiary }: Palette)
         shiftDetails: {
             marginLeft: scaleWidth(10),
         },
+        searchResults: {
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            backgroundColor: backgroundColor,
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: backgroundColor,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 4,
+            elevation: 3,
+            zIndex: 1000,
+            maxHeight: 200,
+        },
+
+        searchResultItem: {
+            padding: 12,
+            borderBottomWidth: 1,
+            borderBottomColor: backgroundColor,
+        },
+
+        patientName: {
+            fontSize: 16,
+            fontWeight: '500',
+            color: textColor,
+            marginBottom: 4,
+        },
+
+        patientInfo: {
+            fontSize: 12,
+            color: textColor,
+        },
+
+        searchLoader: {
+            position: 'absolute',
+            right: 50,
+            top: '50%',
+            transform: [{ translateY: -10 }],
+        },
         completeTaskButton: {
-            backgroundColor: '#000000',
+            backgroundColor: '#BE0B31',
             borderRadius: 10,
             paddingHorizontal: 16,
             paddingVertical: 8,
@@ -97,7 +139,7 @@ export const AddTaskStyles = ({ textColor, backgroundColor, Tertiary }: Palette)
             marginTop: 4,
         },
         addButton: {
-            backgroundColor: '#000000',
+            backgroundColor: '#002A65',
             borderRadius: 12,
             padding: 16,
             alignItems: 'center',

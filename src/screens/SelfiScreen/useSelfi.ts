@@ -3,7 +3,6 @@ import { useAppContext } from '@src/context';
 import { SelfiScreenStyles } from './SelfiScreen.style';
 import { RNCamera } from 'react-native-camera';
 import axios from 'axios';
-import store from '../../redux/store';
 import { showSuccessToast, showErrorToast } from '@src/utils';
 import { Screen } from '../../navigation/appNavigation.type';
 import { useSelector } from 'react-redux';
@@ -12,12 +11,11 @@ const useSelfi = () => {
     const { color, navigation } = useAppContext();
     const cameraRef = useRef<RNCamera | null>(null);
     const [isUploading, setIsUploading] = useState(false);
+    const [capturedImage, setCapturedImage] = useState<string | null>(null);
     const token = useSelector((state: any) => state.auth.isToken);
-
 
     const takePicture = async () => {
         if (cameraRef.current && !isUploading) {
-            setIsUploading(true);
             try {
                 const options = {
                     quality: 0.8,
@@ -26,26 +24,35 @@ const useSelfi = () => {
                 };
 
                 const data = await cameraRef.current.takePictureAsync(options);
-                await uploadPhoto(data.uri);
+                setCapturedImage(data.uri);
             } catch (error) {
                 console.error('Failed to take picture:', error);
                 showErrorToast('Failed to capture photo', 2000);
-            } finally {
-                setIsUploading(false);
             }
         }
     };
 
-    const uploadPhoto = async (uri: string) => {
+    const retakePicture = () => {
+        setCapturedImage(null);
+    };
+
+    const uploadPhoto = async () => {
+        if (!capturedImage) {
+            showErrorToast('Please capture a photo first', 2000);
+            return;
+        }
+
+        setIsUploading(true);
         const formData = new FormData();
         formData.append('user_photo', {
-            uri: uri,
+            uri: capturedImage,
             type: 'image/jpeg',
             name: 'selfie.jpg',
         });
 
         try {
-            const response = await axios.put('https://technlogics.co/api/update-profile-photo',
+            const response = await axios.put(
+                'https://technlogics.co/api/update-profile-photo',
                 formData,
                 {
                     headers: {
@@ -61,6 +68,8 @@ const useSelfi = () => {
         } catch (error: any) {
             console.error("🚀 ~ uploadPhoto ~ error:", error);
             showErrorToast(error?.response?.data?.message || 'Failed to upload photo', 2000);
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -70,6 +79,9 @@ const useSelfi = () => {
         cameraRef,
         takePicture,
         isUploading,
+        capturedImage,
+        retakePicture,
+        uploadPhoto,
     };
 };
 

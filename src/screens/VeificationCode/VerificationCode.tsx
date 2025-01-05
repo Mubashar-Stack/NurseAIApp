@@ -76,12 +76,13 @@ const VerificationCode = () => {
                         renderCell={({ index, symbol, isFocused }) => (
                           <View
                             key={index}
+                            onLayout={getCellOnLayoutHandler(index)}
                             style={[
                               styles.otpInput,
                               isFocused && styles.otpInputFocused,
                             ]}
                           >
-                            <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 5 }}>
+                            <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 5, color: '#002A65' }}>
                               {symbol || (isFocused ? <Cursor /> : null)}
                             </Text>
                           </View>

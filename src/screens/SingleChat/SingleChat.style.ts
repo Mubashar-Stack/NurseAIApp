@@ -61,7 +61,7 @@ export const SingleChatStyles = ({ textColor, backgroundColor, Tertiary }: Palet
       borderRadius: 20,
     },
     userBubble: {
-      backgroundColor: '#000000',
+      backgroundColor: '#002A65',
       borderBottomRightRadius: 4,
     },
     receiverBubble: {
@@ -83,12 +83,15 @@ export const SingleChatStyles = ({ textColor, backgroundColor, Tertiary }: Palet
       borderTopColor: '#F2F2F2',
     },
     inputWrapper: {
+      width: '99%',
+      marginTop: 10,
       flexDirection: 'row',
-      alignItems: 'center',
+      alignSelf: 'center',
+      borderRadius: 16,
       backgroundColor: Tertiary,
-      borderRadius: 10,
-      paddingHorizontal: 16,
-      paddingVertical: 2,
+      paddingHorizontal: 10,
+      height: 52,
+      alignItems: 'center', justifyContent: 'space-between'
     },
     input: {
       flex: 1,
@@ -103,9 +106,9 @@ export const SingleChatStyles = ({ textColor, backgroundColor, Tertiary }: Palet
       gap: 16,
     },
     sendButton: {
-      backgroundColor: '#000000',
-      borderRadius: 20,
-      padding: 8,
+      backgroundColor: '#002A65',
+      borderRadius: 24,
+      padding: 10,
     },
     attachmentBubble: {
       padding: 16,

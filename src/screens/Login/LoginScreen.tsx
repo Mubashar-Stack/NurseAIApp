@@ -1,5 +1,5 @@
-import React from 'react';
-import { Keyboard, ScrollView, StyleSheet, KeyboardAvoidingView, TextInput, Platform, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { Keyboard, ScrollView, StyleSheet, KeyboardAvoidingView, TextInput, Platform, TouchableWithoutFeedback, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { BaseLayout } from '@src/components';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -17,7 +17,9 @@ const LoginScreen = () => {
   const { color } = useColor();
   const design = mainStyle(color);
   const { navigation } = useAppContext();
-  const { disabled, fieldValidation, initialValues, handleSubmit, passwordRef } = useLogin();
+  const { disabled, loading, fieldValidation, initialValues, handleSubmit, passwordRef } = useLogin();
+  const [passwordVisible, setPasswordVisible] = useState(true);
+
 
   return (
     <BaseLayout>
@@ -73,10 +75,10 @@ const LoginScreen = () => {
                           onBlur={handleBlur('password')}
                           blurOnSubmit={false}
                           underlineColorAndroid="transparent"
-                          secureTextEntry={true}
+                          secureTextEntry={passwordVisible}
                         />
-                        <TouchableOpacity>
-                          <Feather name="eye-off" color={color.textColor} size={20} />
+                        <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+                          <Feather name={passwordVisible ? "eye-off" : "eye"} color={color.textColor} size={20} />
                         </TouchableOpacity>
                       </View>
                       {touched.password && errors.password ? (
@@ -92,7 +94,7 @@ const LoginScreen = () => {
                       onPress={handleSubmit}
                       disabled={disabled}
                     >
-                      <Text style={design.footerBtnTxt}>Log in</Text>
+                      {loading ? <ActivityIndicator size="small" color="#FFF" /> : <Text style={design.footerBtnTxt}>Log in</Text>}
                     </TouchableOpacity>
 
                     <View style={styles.divider}>
@@ -102,18 +104,19 @@ const LoginScreen = () => {
                     </View>
 
                     <View style={styles.socialButtons}>
-                      <TouchableOpacity style={[styles.socialButton, { backgroundColor: color.backgroundColor, }]}>
-                        <MaterialCommunityIcons size={24} name="google" color={color.textColor} />
-                      </TouchableOpacity>
+
                       <TouchableOpacity style={[styles.socialButton, { backgroundColor: color.backgroundColor, }]}>
                         <AntDesign size={24} name="apple-o" color={color.textColor} />
+                      </TouchableOpacity>
+                      <TouchableOpacity style={[styles.socialButton, { backgroundColor: color.backgroundColor, }]}>
+                        <MaterialCommunityIcons size={24} name="google" color={color.textColor} />
                       </TouchableOpacity>
                     </View>
 
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                       <Text preset="h2">Don't have an account? </Text>
                       <TouchableOpacity onPress={() => navigation.navigate(Screen.SIGNUP)}>
-                        <Text preset="h3" >Sign up</Text>
+                        <Text preset="h3" color={color.primaryColor}>Sign up</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -135,7 +138,7 @@ const styles = StyleSheet.create({
   socialButtons: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   socialButton: {
     width: 50,
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: -5,
   },
 });
 export default React.memo(LoginScreen);

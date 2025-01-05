@@ -64,16 +64,9 @@ const PatientSetLocationScreen = () => {
     requestLocationPermission,
     currentLocation,
     selectedPlace,
+    handleCurrentLocationClick
   } = usePatientSetLocation();
-  console.log("🚀 ~ PatientSetLocationScreen ~ selectedPlace:", selectedPlace)
 
-  if (isLoading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#000000" />
-      </View>
-    );
-  }
 
   if (!hasLocationPermission) {
     return (
@@ -126,20 +119,26 @@ const PatientSetLocationScreen = () => {
           initialRegion={currentLocation || initialRegion}
           onRegionChangeComplete={handleRegionChange}
           showsUserLocation
-          showsMyLocationButton
+        // showsMyLocationButton
+        // onUserLocationChange={handleCurrentLocationClick}
         >
-
-          {selectedPlace && (
+          {selectedPlace && selectedPlace.location && (
             <Marker
               coordinate={{
-                latitude: selectedPlace.location?.latitude || 0,
-                longitude: selectedPlace.location?.longitude || 0,
+                latitude: selectedPlace.location.latitude,
+                longitude: selectedPlace.location.longitude,
               }}
               title={selectedPlace.mainText}
               description={selectedPlace.secondaryText}
             />
           )}
         </MapView>
+        <TouchableOpacity
+          style={styles.currentLocationButton}
+          onPress={handleCurrentLocationClick}
+        >
+          <Ionicons name="arrow-undo-outline" size={24} color={color.primaryColor} />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.buttonContainer}>
@@ -147,7 +146,7 @@ const PatientSetLocationScreen = () => {
           style={styles.setLocationButton}
           onPress={handleSetLocation}
         >
-          <Text style={styles.buttonText}>Set location</Text>
+          {isLoading ? <ActivityIndicator size="small" color="#FFF" /> : <Text style={styles.buttonText}>Set location</Text>}
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -155,3 +154,4 @@ const PatientSetLocationScreen = () => {
 };
 
 export default React.memo(PatientSetLocationScreen);
+

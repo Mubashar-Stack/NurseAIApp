@@ -21,6 +21,7 @@ export const PatientAccountSettingsStyles = (color: Palette) =>
       borderRadius: 50,
       backgroundColor: color.Tertiary,
       overflow: 'hidden',
+      marginLeft: 10
     },
     editText: {
       marginTop: 12,
@@ -38,9 +39,9 @@ export const PatientAccountSettingsStyles = (color: Palette) =>
       marginTop: 8,
     },
     saveButton: {
-      backgroundColor: '#000',
+      backgroundColor: '#002A65',
       borderRadius: 8,
-      padding: 16,
+      padding: 12,
       alignItems: 'center',
       marginTop: 24,
     },

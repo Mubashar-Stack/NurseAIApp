@@ -31,13 +31,15 @@ const useVerificationCode = (fromPage: string) => {
   }, []);
 
   const handleSendOTP = async () => {
-
+    setIsLoading(true)
     try {
       const response = await sendOTP(userInfo.email, token);
       showSuccessToast(response.message, 2000);
     } catch (error: any) {
       console.error('Send OTP Error:', error.response);
       showErrorToast(error?.response?.data?.message || 'Failed to send OTP', 2000);
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -41,14 +41,14 @@ export const MedicalHistoryStyles = ({ textColor, backgroundColor, Tertiary }: P
       marginBottom: 12,
     },
     uploadContainer: {
-      flexDirection: 'row',
+      // flexDirection: 'co',
       alignItems: 'center',
       justifyContent: 'center',
       borderWidth: 1,
       borderStyle: 'dashed',
       borderColor: '#000',
       borderRadius: 12,
-      padding: 40,
+      padding: 60,
     },
     uploadContainerSuccess: {
       borderColor: '#4CAF50',
@@ -63,7 +63,7 @@ export const MedicalHistoryStyles = ({ textColor, backgroundColor, Tertiary }: P
       marginLeft: 12,
     },
     saveButton: {
-      backgroundColor: '#000000',
+      backgroundColor: '#002A65',
       borderRadius: 12,
       padding: 16,
       alignItems: 'center',

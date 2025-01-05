@@ -46,7 +46,7 @@ const DropdownPicker: React.FC<DropdownPickerProps> = ({
                 setModalVisible(false);
               }}>
               {options.map((option, index) => (
-                <Picker.Item key={index} label={option.label} value={option.value} />
+                <Picker.Item key={index} label={option.label} value={label === "Specialty" ? option.label : option.value} />
               ))}
             </Picker>
           </View>

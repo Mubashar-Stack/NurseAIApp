@@ -5540,6 +5540,7 @@ __metadata:
     i18n-js: ^4.4.3
     jest: ^29.6.3
     lodash: ^4.17.21
+    lucide-react-native: ^0.469.0
     prettier: 2.8.8
     react: 18.2.0
     react-native: 0.74.2
@@ -5564,6 +5565,7 @@ __metadata:
     react-native-svg-transformer: ^1.4.0
     react-native-toast-message: ^2.2.1
     react-native-vector-icons: ^10.2.0
+    react-native-video: ^6.8.2
     react-redux: ^9.1.2
     react-test-renderer: 18.2.0
     redux: ^5.0.1
@@ -12727,6 +12729,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lucide-react-native@npm:^0.469.0":
+  version: 0.469.0
+  resolution: "lucide-react-native@npm:0.469.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0
+    react-native: "*"
+    react-native-svg: ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0
+  checksum: 6228e7e12b67e528a62a07487b13ba630e1cc5027cd1288a7e1f34503fc414c23bea25b570e05c4404d55ba8d09937ac08ef8dd106ec3f192782754388ff7cb4
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^2.0.0, make-dir@npm:^2.1.0":
   version: 2.1.0
   resolution: "make-dir@npm:2.1.0"
@@ -14765,6 +14778,16 @@ __metadata:
     fa6-upgrade: bin/fa6-upgrade.sh
     generate-icon: bin/generate-icon.js
   checksum: fda930df4e63f12533268f5b339ebe4c77c691eae43503328466b3087ed868a06a4593fd246e75ac6b5ec955543eec35608c7922191bdcc3b3a94ed7f3575ef0
+  languageName: node
+  linkType: hard
+
+"react-native-video@npm:^6.8.2":
+  version: 6.8.2
+  resolution: "react-native-video@npm:6.8.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: a6b8db987f163ecb7a32382f7b185660722c7bd71394de776009c10a180457f813d9c37b4083ab2ec20143ef1fc9d2186ed9f4fdd48eb2142ae85ef8ad4e1cf0
   languageName: node
   linkType: hard
 

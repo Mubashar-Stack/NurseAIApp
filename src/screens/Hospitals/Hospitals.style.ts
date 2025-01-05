@@ -1,11 +1,12 @@
 import { Dimensions, StyleSheet } from 'react-native';
 import { Palette } from '@src/utils';
 
-const { height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
+
 export const hospitalsStyles = (color: Palette) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: color.backgroundColor,
+    backgroundColor: '#fff',
   },
   tabContainer: {
     flexDirection: 'row',
@@ -20,7 +21,7 @@ export const hospitalsStyles = (color: Palette) => StyleSheet.create({
     alignItems: 'center',
   },
   activeTab: {
-    backgroundColor: '#000',
+    backgroundColor: '#002A65',
   },
   inactiveTab: {
     backgroundColor: color.Tertiary,
@@ -33,40 +34,50 @@ export const hospitalsStyles = (color: Palette) => StyleSheet.create({
   hospitalCard: {
     flexDirection: 'row',
     padding: 16,
-    marginHorizontal: 16,
-    marginBottom: 16,
     backgroundColor: '#fff',
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
   },
   hospitalImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 8,
-    backgroundColor: color.Tertiary,
+    width: 88,
+    height: 88,
+    borderRadius: 12,
+    marginRight: 16,
   },
   hospitalInfo: {
     flex: 1,
-    marginLeft: 16,
+    justifyContent: 'space-between',
+  },
+  hospitalName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#000',
+    marginBottom: 4,
+  },
+  hospitalDistance: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 8,
   },
   ratingContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 4,
+    gap: 4,
+    marginBottom: 4,
+  },
+  bookButton: {
+    backgroundColor: '#002B49',
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    borderRadius: 4,
+    alignSelf: 'flex-start',
+  },
+  bookButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '500',
   },
   star: {
     marginRight: 2,
-  },
-  bookButton: {
-    backgroundColor: '#000',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    alignSelf: 'flex-start',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -89,48 +100,47 @@ export const hospitalsStyles = (color: Palette) => StyleSheet.create({
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: color.Tertiary,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    minHeight: height * 0.3,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 24,
+    minHeight: 300,
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: color.textColor,
+    fontWeight: '600',
+    marginBottom: 24,
+    color: '#000',
   },
   selectButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: color.backgroundColor,
-    borderRadius: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    backgroundColor: '#F5F5F5',
+    borderRadius: 8,
     marginBottom: 16,
   },
   selectButtonText: {
     flex: 1,
     marginLeft: 12,
-    color: color.textColor,
+    color: '#000',
+    fontSize: 16,
   },
   confirmButton: {
-    backgroundColor: '#000',
-    padding: 16,
-    borderRadius: 12,
+    backgroundColor: '#002B5B',
+    paddingVertical: 16,
+    borderRadius: 8,
     alignItems: 'center',
-    marginTop: 8,
   },
   confirmButtonText: {
-    color: color.secondaryColor,
+    color: '#fff',
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   calendar: {
-    backgroundColor: color.Tertiary,
-    padding: 16,
-    marginTop: 8,
-    borderRadius: 12,
+    backgroundColor: '#fff',
+    marginBottom: 16,
   },
   calendarHeader: {
     flexDirection: 'row',
@@ -140,56 +150,53 @@ export const hospitalsStyles = (color: Palette) => StyleSheet.create({
   },
   weekDaysRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     marginBottom: 8,
   },
   weekDay: {
     width: 40,
     textAlign: 'center',
-    color: color.textColor,
-    opacity: 0.6,
+    color: '#666',
+    fontSize: 12,
   },
   daysGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
   },
   dayCell: {
-    width: 40,
-    height: 40,
+    width: '14.28%',
+    height: 47,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
   },
   selectedDay: {
-    backgroundColor: color.Tertiary,
-    borderRadius: 20,
+    backgroundColor: '#002B5B',
+    borderRadius: 50,
   },
   dayText: {
-    textAlign: 'center',
-    color: color.textColor,
+    color: '#002B5B',
+    fontSize: 15,
   },
   selectedDayText: {
-    color: color.secondaryColor,
+    color: '#fff',
+    fontSize: 15,
+  },
+  specialtyList: {
+    backgroundColor: '#fff',
+    marginBottom: 16,
   },
   specialtyItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: color.textColor,
-  },
-  specialtyList: {
-    backgroundColor: color.Tertiary,
-    marginTop: 8,
-    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   radioButton: {
     width: 20,
     height: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: color.textColor,
+    borderColor: '#002B5B',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -197,7 +204,7 @@ export const hospitalsStyles = (color: Palette) => StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: color.textColor,
+    backgroundColor: '#002B5B',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -206,17 +213,18 @@ export const hospitalsStyles = (color: Palette) => StyleSheet.create({
   },
   editButton: {
     flex: 1,
-    padding: 12,
+    padding: 5,
     borderWidth: 1,
     borderColor: color.textColor,
     borderRadius: 8,
-    marginRight: 8,
+    marginRight: 10,
     alignItems: 'center',
   },
   cancelButton: {
     flex: 1,
-    padding: 12,
-    backgroundColor: '#000',
+    padding: 5,
+    backgroundColor: '#002B5B',
+    color: '#fff',
     borderRadius: 8,
     alignItems: 'center',
   },
@@ -241,7 +249,7 @@ export const hospitalsStyles = (color: Palette) => StyleSheet.create({
   historyHospitalImage: {
     width: 80,
     height: 80,
-    backgroundColor: '#D3D3D3', // Light gray color for placeholder
+    backgroundColor: '#D3D3D3',
   },
   historyHospitalInfo: {
     flex: 1,
@@ -302,4 +310,74 @@ export const hospitalsStyles = (color: Palette) => StyleSheet.create({
     fontSize: 12,
     color: '#000000',
   },
+  bookedHospitalsContainer: {
+    marginVertical: 16,
+  },
+  bookedHospitalsTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#000',
+    marginLeft: 16,
+    marginBottom: 12,
+  },
+  horizontalCard: {
+    width: 300,
+    marginHorizontal: 20,
+    marginVertical: 10,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    gap: 12
+  },
+  horizontalCardImage: {
+    width: '100%',
+    height: 120,
+    borderRadius: 8,
+    backgroundColor: '#F5F5F5',
+    marginBottom: 12,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 16,
+  },
+  calendarContainer: {
+    marginBottom: 16,
+  },
+  calendarNavigation: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    marginBottom: 8,
+  },
+  currentMonthYear: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#002B5B',
+  },
+  monthContainer: {
+    width: width - 32,
+    paddingHorizontal: 16,
+  },
+  monthTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#002B5B',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  disabledDay: {
+    opacity: 0.3,
+  },
+  disabledDayText: {
+    color: '#999',
+  },
 });
+

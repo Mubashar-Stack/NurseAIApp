@@ -31,7 +31,7 @@ const mainStyle = (color: any) => StyleSheet.create({
         flexDirection: 'row',
         alignSelf: 'center',
         borderRadius: 16,
-        backgroundColor: color.backgroundColor,
+        backgroundColor: color.Tertiary,
         paddingHorizontal: 10,
         height: 52,
         alignItems: 'center', justifyContent: 'space-between'
@@ -149,6 +149,8 @@ const mainStyle = (color: any) => StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingVertical: 16,
+        borderTopColor: '#E8E8E8',
+        borderTopWidth: 1,
     },
     loadingIndicator: {
         position: 'absolute',

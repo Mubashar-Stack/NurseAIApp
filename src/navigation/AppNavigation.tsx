@@ -26,6 +26,8 @@ import {
   SingleChatScreen,
   PatientAccountSettingsScreen,
   MedicalHistoryScreen,
+  PatientDetail,
+  PatientCreditCardsScreen
 } from '@src/screens';
 import { NavStackParams, Screen } from './appNavigation.type';
 import TabNavigator from './TabNavigation';
@@ -68,6 +70,10 @@ export const AppNavigation = () => {
       <Stack.Screen name={Screen.HELP_AND_SUPPORT} component={HelpAndSupport} />
       <Stack.Screen name={Screen.ADD_TASK_LIST} component={AddTaskScreen} />
       <Stack.Screen name={Screen.COMPLETE_TASKS} component={CompleteTasks} />
+      <Stack.Screen name={Screen.PATIENT_DETAIL} component={PatientDetail} />
+      <Stack.Screen name={Screen.PATIENT_CREDIT_CARD} component={PatientCreditCardsScreen} />
+
+
 
       {__DEV__ && (
         <Stack.Screen

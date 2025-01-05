@@ -32,14 +32,6 @@ const PatientAccountSettingsScreen = () => {
     handleDeleteConfirm,
   } = useAccountSettings();
 
-  if (isLoading && !profileData) {
-    return (
-      <View style={[styles.container, styles.centerContent]}>
-        <ActivityIndicator size="large" color={color.primaryColor} />
-      </View>
-    );
-  }
-
 
   return (
     <KeyboardAvoidingView
@@ -50,7 +42,9 @@ const PatientAccountSettingsScreen = () => {
         title="Account Settings"
         onPress={() => navigation.goBack()}
       />
-      <ScrollView style={styles.contentContainer}>
+      {isLoading && !profileData ? <View style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size="large" color={color.primaryColor} />
+      </View> : <ScrollView style={styles.contentContainer}>
         <View style={styles.avatarContainer}>
           <TouchableOpacity onPress={handleImagePicker}>
             {profilePhoto ? (
@@ -177,7 +171,7 @@ const PatientAccountSettingsScreen = () => {
             )}
           </Formik>
         )}
-      </ScrollView>
+      </ScrollView>}
     </KeyboardAvoidingView>
   );
 };

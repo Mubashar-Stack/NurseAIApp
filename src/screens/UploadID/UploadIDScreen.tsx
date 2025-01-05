@@ -39,7 +39,7 @@ const UploadIDScreen = () => {
                 />
               ) : (
                 <View style={{ alignItems: 'center' }}>
-                  <Feather name="upload" size={32} color="#666666" />
+                  <Feather name="upload" size={32} color="#002A65" />
                   <Text style={styles.uploadText}>Upload your ID to get Verified</Text>
                 </View>
               )}
