@@ -6,6 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import useHospitals from './useHospitals';
 import { BookingModal } from './components/BookingModal';
 import EmptyBookings from './components/empty-bookings';
+import { BaseLayout } from '@src/components';
 
 const HospitalCard = ({
   id,
@@ -206,111 +207,113 @@ const HospitalsScreen = () => {
   } = useHospitals();
 
   return (
-    <View style={styles.container}>
-      <Header onPress={() => navigation.goBack()} title="Hospitals" />
+    <BaseLayout>
+      <View style={styles.container}>
+        <Header onPress={() => navigation.goBack()} title="Hospitals" />
 
-      <View style={styles.tabContainer}>
-        <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'current' ? styles.activeTab : styles.inactiveTab]}
-          onPress={() => setActiveTab('current')}
-        >
-          <Text style={styles.tabText}>Current</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.tabButton, activeTab === 'history' ? styles.activeTab : styles.inactiveTab]}
-          onPress={() => setActiveTab('history')}
-        >
-          <Text style={styles.tabText}>History</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.tabContainer}>
+          <TouchableOpacity
+            style={[styles.tabButton, activeTab === 'current' ? styles.activeTab : styles.inactiveTab]}
+            onPress={() => setActiveTab('current')}
+          >
+            <Text style={styles.tabText}>Current</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.tabButton, activeTab === 'history' ? styles.activeTab : styles.inactiveTab]}
+            onPress={() => setActiveTab('history')}
+          >
+            <Text style={styles.tabText}>History</Text>
+          </TouchableOpacity>
+        </View>
 
-      <ScrollView style={{ marginBottom: 70 }}>
-        {activeTab === 'current' && (
-          <>
-            {loadingBookings ? (
-              <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#002B49" />
-              </View>
-            ) : bookings?.length > 0 && (
-              <View style={styles.bookedHospitalsContainer}>
-                <Text style={styles.bookedHospitalsTitle}>Your Bookings</Text>
-                <FlatList
-                  data={bookings}
-                  renderItem={(data: any) => {
-                    const item = data?.item
-                    return <BookedHospitalCard
-                      key={item.id}
-                      {...item}
-                      isFavorite={favorites.includes(item?.hospital?.id)}
-                      onFavorite={toggleFavorite}
-                      onEdit={openEditModel}
-                      onCancel={handleCancel}
-                      styles={styles}
-                      color={color}
-                    />
-                  }}
-                  keyExtractor={item => item.id.toString()}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={{ paddingHorizontal: 8 }}
-                />
-              </View>
-            )}
-
+        <ScrollView style={{ marginBottom: 70 }}>
+          {activeTab === 'current' && (
             <>
-              <Text style={styles.bookedHospitalsTitle}>Current Hospitals</Text>
-              {currentHospitals?.map(hospital => (
-                <HospitalCard
-                  key={hospital.id}
-                  {...hospital}
-                  isFavorite={favorites.includes(hospital.id)}
-                  onFavorite={toggleFavorite}
-                  onBook={handleBookNow}
-                  styles={styles}
-                  color={color}
-                />
-              ))}
+              {loadingBookings ? (
+                <View style={styles.loadingContainer}>
+                  <ActivityIndicator size="large" color="#002B49" />
+                </View>
+              ) : bookings?.length > 0 && (
+                <View style={styles.bookedHospitalsContainer}>
+                  <Text style={styles.bookedHospitalsTitle}>Your Bookings</Text>
+                  <FlatList
+                    data={bookings}
+                    renderItem={(data: any) => {
+                      const item = data?.item
+                      return <BookedHospitalCard
+                        key={item.id}
+                        {...item}
+                        isFavorite={favorites.includes(item?.hospital?.id)}
+                        onFavorite={toggleFavorite}
+                        onEdit={openEditModel}
+                        onCancel={handleCancel}
+                        styles={styles}
+                        color={color}
+                      />
+                    }}
+                    keyExtractor={item => item.id.toString()}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ paddingHorizontal: 8 }}
+                  />
+                </View>
+              )}
+
+              <>
+                <Text style={styles.bookedHospitalsTitle}>Current Hospitals</Text>
+                {currentHospitals?.map(hospital => (
+                  <HospitalCard
+                    key={hospital.id}
+                    {...hospital}
+                    isFavorite={favorites.includes(hospital.id)}
+                    onFavorite={toggleFavorite}
+                    onBook={handleBookNow}
+                    styles={styles}
+                    color={color}
+                  />
+                ))}
+              </>
+
             </>
 
-          </>
+          )}
+          {activeTab === 'history' && (
+            <>
+              {loadingHistoricalVisits ? (
+                <View style={styles.loadingContainer}>
+                  <ActivityIndicator size="large" color="#002B49" />
+                </View>
+              ) : (
+                historicalVisits.length > 0 ? historicalVisits?.map(hospital => (
+                  <HistoricalHospitalCard
+                    key={hospital.id}
+                    {...hospital}
+                    isFavorite={favorites.includes(hospital.id)}
+                    onFavorite={toggleFavorite}
+                    onGiveReview={handleGiveReview}
+                    styles={styles}
+                    color={color}
+                  />
+                )) : <EmptyBookings />
+              )}
+            </>
+          )}
+        </ScrollView>
 
-        )}
-        {activeTab === 'history' && (
-          <>
-            {loadingHistoricalVisits ? (
-              <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#002B49" />
-              </View>
-            ) : (
-              historicalVisits.length > 0 ? historicalVisits?.map(hospital => (
-                <HistoricalHospitalCard
-                  key={hospital.id}
-                  {...hospital}
-                  isFavorite={favorites.includes(hospital.id)}
-                  onFavorite={toggleFavorite}
-                  onGiveReview={handleGiveReview}
-                  styles={styles}
-                  color={color}
-                />
-              )) : <EmptyBookings />
-            )}
-          </>
-        )}
-      </ScrollView>
-
-      <BookingModal
-        visible={showBookingModal}
-        onClose={() => setShowBookingModal(false)}
-        styles={styles}
-        color={color}
-        selectedDate={selectedDate}
-        setSelectedDate={setSelectedDate}
-        selectedSpecialty={selectedSpecialty}
-        setSelectedSpecialty={setSelectedSpecialty}
-        onConfirm={isEditingBooking ? handleEdit : handleConfirmBooking}
-        specialties={specialties}
-      />
-    </View>
+        <BookingModal
+          visible={showBookingModal}
+          onClose={() => setShowBookingModal(false)}
+          styles={styles}
+          color={color}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          selectedSpecialty={selectedSpecialty}
+          setSelectedSpecialty={setSelectedSpecialty}
+          onConfirm={isEditingBooking ? handleEdit : handleConfirmBooking}
+          specialties={specialties}
+        />
+      </View>
+    </BaseLayout>
   );
 };
 

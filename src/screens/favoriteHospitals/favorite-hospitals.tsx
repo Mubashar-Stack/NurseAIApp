@@ -26,6 +26,7 @@ import { FavoriteHospital } from '../../types/hospital';
 import EmptyFavorites from './empty-favorites';
 import { useSelector } from 'react-redux';
 import Header from '@src/components/Header/Header';
+import { BaseLayout } from '@src/components';
 
 export default function FavoriteHospitalsScreen({ navigation }: any) {
     const [favorites, setFavorites] = useState<FavoriteHospital[]>([]);
@@ -79,60 +80,62 @@ export default function FavoriteHospitalsScreen({ navigation }: any) {
 
 
     return (
-        <View style={styles.container}>
-            {/* Header */}
-            <Header onPress={() => navigation.goBack()} title="Favorite hospitals" />
+        <BaseLayout>
+            <View style={styles.container}>
+                {/* Header */}
+                <Header onPress={() => navigation.goBack()} title="Favorite hospitals" />
 
-            {/* Content */}
-            {loading ? <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#002B49" />
-            </View> : <ScrollView
-                style={styles.content}
-                contentContainerStyle={favorites.length === 0 && styles.emptyContent}
-            >
-                {favorites.length === 0 ? (
-                    <EmptyFavorites />
-                ) : (
-                    favorites.map((favorite) => (
-                        <View key={favorite?.id} style={styles.hospitalCard}>
-                            <Image
-                                //@ts-ignore
-                                source={
-                                    favorite?.hospital?.photo
-                                        ? { uri: favorite?.hospital?.photo }
-                                        : '../assets/hospital-placeholder.png'
-                                }
-                                style={styles.hospitalImage}
-                            />
-                            <View style={styles.hospitalInfo}>
-                                <Text style={styles.hospitalName}>
-                                    {favorite?.hospital?.name}
-                                </Text>
-                                <Text style={styles.hospitalDistance}>
-                                    {favorite?.hospital?.description?.length > 50
-                                        ? `${favorite?.hospital?.description.substring(0, 50)}...`
-                                        : favorite?.hospital?.description}
-                                </Text>
-                                <View style={styles.ratingContainer}>
-                                    {renderStars(favorite?.hospital?.rating)}
+                {/* Content */}
+                {loading ? <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="#002B49" />
+                </View> : <ScrollView
+                    style={styles.content}
+                    contentContainerStyle={favorites.length === 0 && styles.emptyContent}
+                >
+                    {favorites.length === 0 ? (
+                        <EmptyFavorites />
+                    ) : (
+                        favorites.map((favorite) => (
+                            <View key={favorite?.id} style={styles.hospitalCard}>
+                                <Image
+                                    //@ts-ignore
+                                    source={
+                                        favorite?.hospital?.photo
+                                            ? { uri: favorite?.hospital?.photo }
+                                            : '../assets/hospital-placeholder.png'
+                                    }
+                                    style={styles.hospitalImage}
+                                />
+                                <View style={styles.hospitalInfo}>
+                                    <Text style={styles.hospitalName}>
+                                        {favorite?.hospital?.name}
+                                    </Text>
+                                    <Text style={styles.hospitalDistance}>
+                                        {favorite?.hospital?.description?.length > 50
+                                            ? `${favorite?.hospital?.description.substring(0, 50)}...`
+                                            : favorite?.hospital?.description}
+                                    </Text>
+                                    <View style={styles.ratingContainer}>
+                                        {renderStars(favorite?.hospital?.rating)}
+                                    </View>
                                 </View>
+                                <TouchableOpacity
+                                    style={styles.favoriteButton}
+                                    onPress={() => handleToggleFavorite(favorite.hospital.id)}
+                                    disabled={toggleLoading === favorite.hospital.id}
+                                >
+                                    {toggleLoading === favorite.hospital.id ? (
+                                        <ActivityIndicator size="small" color="#C8102E" />
+                                    ) : (
+                                        <Heart size={24} fill="#C8102E" color="#C8102E" />
+                                    )}
+                                </TouchableOpacity>
                             </View>
-                            <TouchableOpacity
-                                style={styles.favoriteButton}
-                                onPress={() => handleToggleFavorite(favorite.hospital.id)}
-                                disabled={toggleLoading === favorite.hospital.id}
-                            >
-                                {toggleLoading === favorite.hospital.id ? (
-                                    <ActivityIndicator size="small" color="#C8102E" />
-                                ) : (
-                                    <Heart size={24} fill="#C8102E" color="#C8102E" />
-                                )}
-                            </TouchableOpacity>
-                        </View>
-                    ))
-                )}
-            </ScrollView>}
-        </View>
+                        ))
+                    )}
+                </ScrollView>}
+            </View>
+        </BaseLayout>
     );
 }
 
