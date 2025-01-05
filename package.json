@@ -1,5 +1,5 @@
 {
-  "name": "NurseProAI",
+  "name": "nurseproai",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,7 +13,6 @@
     "preandroid": "ENVFILE=.env",
     "ios": "react-native run-ios",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "postinstall": "npx pod-install",
     "prepare": "husky",
     "refresh": "bash ./scripts/refresh.sh",
     "start": "react-native start",
@@ -35,6 +34,7 @@
     "axios": "^1.7.2",
     "date-fns": "^4.1.0",
     "formik": "^2.4.6",
+    "hermes-engine": "^0.11.0",
     "i18n-js": "^4.4.3",
     "lodash": "^4.17.21",
     "lucide-react-native": "^0.469.0",
