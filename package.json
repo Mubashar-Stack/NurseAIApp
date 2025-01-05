@@ -1,5 +1,5 @@
 {
-  "name": "NurseProAI",
+  "name": "nurseproai",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -34,6 +34,7 @@
     "axios": "^1.7.2",
     "date-fns": "^4.1.0",
     "formik": "^2.4.6",
+    "hermes-engine": "^0.11.0",
     "i18n-js": "^4.4.3",
     "lodash": "^4.17.21",
     "react": "18.2.0",

@@ -1,4 +1,4 @@
-package com.nurseproai
+package com.nurseaipro.io
 
 import android.app.Application
 import com.facebook.react.PackageList
