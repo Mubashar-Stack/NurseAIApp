@@ -1,27 +1,32 @@
 import React from 'react';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity, ScrollView, Image, FlatList, ActivityIndicator } from 'react-native';
 import { Text } from '@app/blueprints';
 import Header from '../../components/Header/Header';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import useHospitals from './useHospitals';
 import { BookingModal } from './components/BookingModal';
+import EmptyBookings from './components/empty-bookings';
 
-const BookedHospitalCard = ({
+const HospitalCard = ({
   id,
   name,
-  distance,
+  address,
+  description,
+  rating,
+  photo,
   isFavorite,
   onFavorite,
-  onEdit,
-  onCancel,
+  onBook,
   styles,
   color,
 }: any) => (
   <View style={styles.hospitalCard}>
-    <View style={styles.hospitalImage} />
+    <View style={styles.hospitalImage}>
+      {photo && <Image source={{ uri: photo }} style={styles.hospitalImage} />}
+    </View>
     <View style={styles.hospitalInfo}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text preset="h2">{name}</Text>
+        <Text style={styles.hospitalName}>{name}</Text>
         <TouchableOpacity onPress={() => onFavorite(id)}>
           <MaterialIcons
             name={isFavorite ? "favorite" : "favorite-border"}
@@ -30,17 +35,123 @@ const BookedHospitalCard = ({
           />
         </TouchableOpacity>
       </View>
-      <Text preset="small">{distance}</Text>
-      <View style={styles.ratingContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
+      <Text style={styles.hospitalDistance}>{description?.length > 50
+        ? `${description.substring(0, 50)}...`
+        : description}</Text>
+      <View style={{ flexDirection: 'row', gap: 40 }}>
+        <View style={styles.ratingContainer}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <MaterialIcons
+              key={star}
+              name="star"
+              size={16}
+              color={star <= rating ? "#BE0B31" : "#D3D3D3"}
+              style={styles.star}
+            />
+          ))}
+        </View>
+        <TouchableOpacity
+          style={styles.bookButton}
+          onPress={() => onBook({ id, name, address })}
+        >
+          <Text style={styles.bookButtonText}>Book now</Text>
+        </TouchableOpacity>
+      </View>
+
+    </View>
+  </View>
+);
+
+const HistoricalHospitalCard = ({
+  id,
+  name,
+  address,
+  created_at,
+  isFavorite,
+  onFavorite,
+  onGiveReview,
+  styles,
+  color,
+}: any) => (
+  <View style={styles.historyCard}>
+    <View style={styles.historyHospitalImage} />
+    <View style={styles.historyHospitalInfo}>
+      <View style={styles.historyHeaderSection}>
+        <View style={styles.historyNameSection}>
+          <Text style={styles.historyHospitalName}>{name}</Text>
+          <Text style={styles.historyDistance}>{address}</Text>
+        </View>
+        <TouchableOpacity onPress={() => onFavorite(id)}>
           <MaterialIcons
-            key={star}
-            name="star"
-            size={16}
-            color="#FFD700"
-            style={styles.star}
+            name={isFavorite ? "favorite" : "favorite-border"}
+            size={24}
+            color={isFavorite ? "red" : color.textColor}
           />
-        ))}
+        </TouchableOpacity>
+      </View>
+      <View style={styles.historyDivider} />
+      <View style={styles.historyAppointmentSection}>
+        <View>
+          <Text style={styles.historyAppointmentStatus}>Appointment done</Text>
+          <Text style={styles.historyAppointmentDate}>{new Date(created_at).toLocaleString()}</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.historyReviewButton}
+          onPress={() => onGiveReview(id)}
+        >
+          <Text style={styles.historyReviewButtonText}>Give review</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+);
+
+
+const BookedHospitalCard = ({
+  id,
+  name,
+  hospital,
+  isFavorite,
+  onFavorite,
+  onEdit,
+  onCancel,
+  styles,
+  color,
+  photo,
+  description,
+  rating = 5
+}: any) => (
+  <View style={[styles.hospitalCard, { margin: 10, borderRadius: 10, borderWidth: 1, borderColor: '#F0F0F0', }]}>
+    <View style={styles.hospitalImage}>
+      {hospital?.photo && <Image source={{ uri: hospital?.photo }} style={styles.hospitalImage} />}
+    </View>
+    <View style={styles.hospitalInfo}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={styles.hospitalName}>{hospital?.name}</Text>
+        <TouchableOpacity onPress={() => onFavorite(hospital?.id)}>
+          <MaterialIcons
+            name={isFavorite ? "favorite" : "favorite-border"}
+            size={24}
+            color={isFavorite ? "red" : color.textColor}
+          />
+        </TouchableOpacity>
+      </View>
+      <Text style={[styles.hospitalDistance, { maxWidth: 180 }]} >{hospital?.description?.length > 50
+        ? `${hospital?.description.substring(0, 50)}...`
+        : hospital?.description}</Text>
+      <View style={{ flexDirection: 'row', gap: 40 }}>
+        <View style={styles.ratingContainer}>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <MaterialIcons
+              key={star}
+              name="star"
+              size={16}
+              color={star <= hospital?.rating ? "#BE0B31" : "#D3D3D3"}
+              style={styles.star}
+            />
+          ))}
+        </View>
+
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -57,125 +168,10 @@ const BookedHospitalCard = ({
         </TouchableOpacity>
       </View>
     </View>
+
   </View>
 );
 
-const HistoricalHospitalCard = ({
-  id,
-  name,
-  distance,
-  appointmentDate,
-  hasReview,
-  onGiveReview,
-  isFavorite,
-  onFavorite,
-  styles,
-  color,
-}: any) => (
-  <View style={styles.historyCard}>
-    {/* Hospital Image */}
-    <View style={styles.historyHospitalImage} />
-
-    {/* Hospital Info Container */}
-    <View style={styles.historyHospitalInfo}>
-      {/* Header Section */}
-      <View style={styles.historyHeaderSection}>
-        <View style={styles.historyNameSection}>
-          <Text style={styles.historyHospitalName}>{name}</Text>
-          <Text style={styles.historyDistance}>{distance}</Text>
-
-          {/* Rating Stars */}
-          <View style={styles.historyRatingContainer}>
-            {[1, 2, 3, 4, 5].map((star) => (
-              <MaterialIcons
-                key={star}
-                name="star"
-                size={16}
-                color="#D3D3D3"
-                style={styles.historyStar}
-              />
-            ))}
-          </View>
-        </View>
-
-        <TouchableOpacity onPress={() => onFavorite(id)}>
-          <MaterialIcons
-            name={isFavorite ? "favorite" : "favorite-border"}
-            size={24}
-            color={isFavorite ? "red" : color.textColor}
-          />
-        </TouchableOpacity>
-      </View>
-
-      {/* Divider Line */}
-      <View style={styles.historyDivider} />
-
-      {/* Appointment Info Section */}
-      <View style={styles.historyAppointmentSection}>
-        <View>
-          <Text style={styles.historyAppointmentStatus}>Appointment done</Text>
-          <Text style={styles.historyAppointmentDate}>
-            {appointmentDate}
-          </Text>
-        </View>
-
-        {!hasReview && (
-          <TouchableOpacity
-            style={styles.historyReviewButton}
-            onPress={() => onGiveReview(id)}
-          >
-            <Text style={styles.historyReviewButtonText}>Give review</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    </View>
-  </View>
-);
-
-const UnbookedHospitalCard = ({
-  id,
-  name,
-  distance,
-  isFavorite,
-  onFavorite,
-  onBook,
-  styles,
-  color,
-}: any) => (
-  <View style={styles.hospitalCard}>
-    <View style={styles.hospitalImage} />
-    <View style={styles.hospitalInfo}>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text preset="h2">{name}</Text>
-        <TouchableOpacity onPress={() => onFavorite(id)}>
-          <MaterialIcons
-            name={isFavorite ? "favorite" : "favorite-border"}
-            size={24}
-            color={isFavorite ? "red" : color.textColor}
-          />
-        </TouchableOpacity>
-      </View>
-      <Text preset="small">{distance}</Text>
-      <View style={styles.ratingContainer}>
-        {[1, 2, 3, 4, 5].map((star) => (
-          <MaterialIcons
-            key={star}
-            name="star"
-            size={16}
-            color="#FFD700"
-            style={styles.star}
-          />
-        ))}
-      </View>
-      <TouchableOpacity
-        style={styles.bookButton}
-        onPress={() => onBook({ id, name, distance })}
-      >
-        <Text style={{ color: color.secondaryColor }}>Book now</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-);
 
 const HospitalsScreen = () => {
   const {
@@ -187,6 +183,7 @@ const HospitalsScreen = () => {
     toggleFavorite,
     handleBookNow,
     handleEdit,
+    openEditModel,
     handleCancel,
     color,
     showBookingModal,
@@ -196,10 +193,16 @@ const HospitalsScreen = () => {
     selectedSpecialty,
     setSelectedSpecialty,
     handleConfirmBooking,
+    hospitals,
     currentHospitals,
-    bookedHospitals,
     historicalVisits,
     handleGiveReview,
+    specialties,
+    bookings,
+    loadingBookings,
+    loadingCurrentHospitals,
+    loadingHistoricalVisits,
+    isEditingBooking
   } = useHospitals();
 
   return (
@@ -221,46 +224,77 @@ const HospitalsScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <ScrollView>
+      <ScrollView style={{ marginBottom: 70 }}>
         {activeTab === 'current' && (
           <>
-            {bookedHospitals.map(hospital => (
-              <BookedHospitalCard
-                key={hospital.id}
-                {...hospital}
-                isFavorite={favorites.includes(hospital.id)}
-                onFavorite={toggleFavorite}
-                onEdit={handleEdit}
-                onCancel={handleCancel}
-                styles={styles}
-                color={color}
-              />
-            ))}
-            {currentHospitals.map(hospital => (
-              <UnbookedHospitalCard
-                key={hospital.id}
-                {...hospital}
-                isFavorite={favorites.includes(hospital.id)}
-                onFavorite={toggleFavorite}
-                onBook={handleBookNow}
-                styles={styles}
-                color={color}
-              />
-            ))}
+            {loadingBookings ? (
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#002B49" />
+              </View>
+            ) : bookings?.length > 0 && (
+              <View style={styles.bookedHospitalsContainer}>
+                <Text style={styles.bookedHospitalsTitle}>Your Bookings</Text>
+                <FlatList
+                  data={bookings}
+                  renderItem={(data: any) => {
+                    const item = data?.item
+                    return <BookedHospitalCard
+                      key={item.id}
+                      {...item}
+                      isFavorite={favorites.includes(item?.hospital?.id)}
+                      onFavorite={toggleFavorite}
+                      onEdit={openEditModel}
+                      onCancel={handleCancel}
+                      styles={styles}
+                      color={color}
+                    />
+                  }}
+                  keyExtractor={item => item.id.toString()}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={{ paddingHorizontal: 8 }}
+                />
+              </View>
+            )}
+
+            <>
+              <Text style={styles.bookedHospitalsTitle}>Current Hospitals</Text>
+              {currentHospitals?.map(hospital => (
+                <HospitalCard
+                  key={hospital.id}
+                  {...hospital}
+                  isFavorite={favorites.includes(hospital.id)}
+                  onFavorite={toggleFavorite}
+                  onBook={handleBookNow}
+                  styles={styles}
+                  color={color}
+                />
+              ))}
+            </>
+
           </>
+
         )}
         {activeTab === 'history' && (
-          historicalVisits.map(hospital => (
-            <HistoricalHospitalCard
-              key={hospital.id}
-              {...hospital}
-              isFavorite={favorites.includes(hospital.id)}
-              onFavorite={toggleFavorite}
-              onGiveReview={handleGiveReview}
-              styles={styles}
-              color={color}
-            />
-          ))
+          <>
+            {loadingHistoricalVisits ? (
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#002B49" />
+              </View>
+            ) : (
+              historicalVisits.length > 0 ? historicalVisits?.map(hospital => (
+                <HistoricalHospitalCard
+                  key={hospital.id}
+                  {...hospital}
+                  isFavorite={favorites.includes(hospital.id)}
+                  onFavorite={toggleFavorite}
+                  onGiveReview={handleGiveReview}
+                  styles={styles}
+                  color={color}
+                />
+              )) : <EmptyBookings />
+            )}
+          </>
         )}
       </ScrollView>
 
@@ -273,10 +307,12 @@ const HospitalsScreen = () => {
         setSelectedDate={setSelectedDate}
         selectedSpecialty={selectedSpecialty}
         setSelectedSpecialty={setSelectedSpecialty}
-        onConfirm={handleConfirmBooking}
+        onConfirm={isEditingBooking ? handleEdit : handleConfirmBooking}
+        specialties={specialties}
       />
     </View>
   );
 };
 
 export default React.memo(HospitalsScreen);
+

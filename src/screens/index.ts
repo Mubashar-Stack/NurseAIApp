@@ -23,6 +23,7 @@ export { default as HelpAndSupport } from './HelpAndSupport/HelpAndSupport'
 export { default as TaskList } from './TaskList/TaskList';
 export { default as AddTaskScreen } from './AddTasks/AddTasks';
 export { default as CompleteTasks } from './CompleteTasks/CompleteTasks'
+export { default as PatientDetail } from './patientDetail/patientDetail'
 export { default as PatientSetLocationScreen } from './PatientSetLocation/PatientSetLocationScreen';
 export { default as PatientLocationSetupScreen } from './PatientLocationSetup/PatientLocationSetupScreen';
 export { default as PatientHomeScreen } from './PatientHome/PatientHomeScreen';
@@ -33,3 +34,6 @@ export { default as PatientProfileScreen } from './PatientProfile/PatientProfile
 export { default as PatientAccountSettingsScreen } from './PatientAccountSettings/PatientAccountSettingsScreen';
 export { default as UploadIDScreen } from './UploadID/UploadIDScreen';
 export { default as MedicalHistoryScreen } from './MedicalHistory/MedicalHistoryScreen';
+export { default as PatientCreditCardsScreen } from './PatientCreditCards/PatientCreditCardsScreen';
+export { default as FavoriteHospitalsScreen } from './favoriteHospitals/favorite-hospitals';
+

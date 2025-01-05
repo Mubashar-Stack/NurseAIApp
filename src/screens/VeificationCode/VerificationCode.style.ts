@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Palette } from '@src/utils';
 import { scaledSize } from '@src/utils';
 
-export const VerificationCodeStyles = ({ textColor, backgroundColor }: Palette) =>
+export const VerificationCodeStyles = ({ textColor, backgroundColor, primaryColor }: Palette) =>
     StyleSheet.create({
         container: {
             flex: 1,
@@ -39,16 +39,16 @@ export const VerificationCodeStyles = ({ textColor, backgroundColor }: Palette) 
         otpInput: {
             width: scaledSize(50),
             height: scaledSize(50),
-            borderWidth: 1,
-            borderColor: '#CCCCCC',
-            borderRadius: 8,
+            borderBottomWidth: 2,
+            borderColor: '#CCC',
+            // borderRadius: 8,
             marginHorizontal: 4,
             textAlign: 'center',
             fontSize: 24,
-            color: textColor,
+            color: '#002A65',
         },
         otpInputFocused: {
-            borderColor: '#000000',
+            borderColor: '#002A65',
         },
         errorText: {
             color: '#FF0000',
@@ -57,7 +57,7 @@ export const VerificationCodeStyles = ({ textColor, backgroundColor }: Palette) 
             textAlign: 'center',
         },
         verifyButton: {
-            backgroundColor: '#000000',
+            backgroundColor: primaryColor,
             padding: 16,
             borderRadius: 8,
             alignItems: 'center',
@@ -86,7 +86,7 @@ export const VerificationCodeStyles = ({ textColor, backgroundColor }: Palette) 
         },
         resendButtonText: {
             fontSize: 16,
-            color: '#000000',
+            color: primaryColor,
             fontWeight: '600',
         },
     });

@@ -8,6 +8,8 @@ import { signinHandler } from '../../api/auth';
 const useLogin = () => {
   const { color, navigation } = useAppContext();
   const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const passwordRef = useRef<TextInput>(null);
 
   const fieldValidation = yup.object().shape({
@@ -20,8 +22,8 @@ const useLogin = () => {
   });
 
   const initialValues = {
-    email: '',
-    password: '',
+    email: 'hyhello57@gmail.com',
+    password: 'Hello@1234',
   };
 
   const handleSubmit = useCallback(
@@ -31,7 +33,7 @@ const useLogin = () => {
         password: values.password,
       };
       console.log("🚀 ~ data:", data)
-      signinHandler(data, setDisabled, navigation,);
+      signinHandler(data, setDisabled, setLoading, navigation,);
     },
     [navigation]
   );
@@ -39,6 +41,7 @@ const useLogin = () => {
   return {
     color,
     disabled,
+    loading,
     fieldValidation,
     handleSubmit,
     initialValues,

@@ -37,7 +37,7 @@ const TabNurseNavigator: React.FC<TabNurseNavigatorProps> = ({ route }) => {
       initialRouteName={Screen.NURSE_HOME}
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: 'transparent',
+          backgroundColor: '#fff',
           borderTopWidth: 0,
           position: 'absolute',
           elevation: 0,
@@ -55,7 +55,7 @@ const TabNurseNavigator: React.FC<TabNurseNavigatorProps> = ({ route }) => {
           tabBarLabel: () => null,
           tabBarItemStyle: {
             margin: 0,
-            backgroundColor: '#E6E6E6',
+            backgroundColor: '#FFF',
           },
           tabBarIcon: ({ focused }) => (
             focused ? (
@@ -66,13 +66,13 @@ const TabNurseNavigator: React.FC<TabNurseNavigatorProps> = ({ route }) => {
                   alignItems: 'center',
                   height: 40,
                   width: 40,
-                  backgroundColor: activeTab === Screen.HOME ? '#ccc' : '#E6E6E6',
+                  backgroundColor: activeTab === Screen.NURSE_HOME ? '#E6E6E6' : '#FFF',
                   borderRadius: 35,
                 }}>
-                <Feather name={'home'} size={22} color={color?.textColor} />
+                <Feather name={'home'} size={29} color={'#BE0B31'} />
               </View>
             ) : (
-              <Feather name={'home'} size={22} color={color?.textColor} />
+              <Feather name={'home'} size={29} color={'#002A65'} />
             )
           ),
         }}
@@ -86,7 +86,7 @@ const TabNurseNavigator: React.FC<TabNurseNavigatorProps> = ({ route }) => {
           tabBarLabel: () => null,
           tabBarItemStyle: {
             margin: 0,
-            backgroundColor: '#E6E6E6',
+            backgroundColor: '#FFF',
           },
           tabBarIcon: ({ focused }) => (
             focused ? (
@@ -97,13 +97,13 @@ const TabNurseNavigator: React.FC<TabNurseNavigatorProps> = ({ route }) => {
                   alignItems: 'center',
                   height: 40,
                   width: 40,
-                  backgroundColor: activeTab === Screen.CHATS ? '#ccc' : '#E6E6E6',
+                  backgroundColor: activeTab === Screen.CHATS ? '#E6E6E6' : '#FFF',
                   borderRadius: 35,
                 }}>
-                <Ionicons name={'chatbubble-outline'} size={24} color={color?.textColor} />
+                <Ionicons name={'chatbubble-outline'} size={30} color={'#BE0B31'} />
               </View>
             ) : (
-              <Ionicons name={'chatbubble-outline'} size={24} color={color?.textColor} />
+              <Ionicons name={'chatbubble-outline'} size={30} color={'#002A65'} />
             )
           ),
         }}
@@ -117,7 +117,7 @@ const TabNurseNavigator: React.FC<TabNurseNavigatorProps> = ({ route }) => {
           tabBarLabel: () => null,
           tabBarItemStyle: {
             margin: 0,
-            backgroundColor: '#E6E6E6',
+            backgroundColor: '#FFF',
           },
           tabBarIcon: ({ focused }) => (
             focused ? (
@@ -128,13 +128,13 @@ const TabNurseNavigator: React.FC<TabNurseNavigatorProps> = ({ route }) => {
                   alignItems: 'center',
                   height: 40,
                   width: 40,
-                  backgroundColor: activeTab === Screen.TASK_LIST ? '#ccc' : '#E6E6E6',
+                  backgroundColor: activeTab === Screen.TASK_LIST ? '#E6E6E6' : '#FFF',
                   borderRadius: 35,
                 }}>
-                <Ionicons name={'document-text-outline'} size={24} color={color?.textColor} />
+                <Ionicons name={'document-text-outline'} size={30} color={'#BE0B31'} />
               </View>
             ) : (
-              <Ionicons name={'document-text-outline'} size={24} color={color?.textColor} />
+              <Ionicons name={'document-text-outline'} size={30} color={'#002A65'} />
             )
           ),
         }}
@@ -148,7 +148,7 @@ const TabNurseNavigator: React.FC<TabNurseNavigatorProps> = ({ route }) => {
           tabBarLabel: () => null,
           tabBarItemStyle: {
             margin: 0,
-            backgroundColor: '#E6E6E6',
+            backgroundColor: '#FFF',
           },
           tabBarIcon: ({ focused }) => (
             focused ? (
@@ -159,13 +159,13 @@ const TabNurseNavigator: React.FC<TabNurseNavigatorProps> = ({ route }) => {
                   alignItems: 'center',
                   height: 40,
                   width: 40,
-                  backgroundColor: activeTab === Screen.PROFILE ? '#ccc' : '#E6E6E6',
+                  backgroundColor: activeTab === Screen.PROFILE ? '#E6E6E6' : '#FFF',
                   borderRadius: 35,
                 }}>
-                <Ionicons name={'person-circle-outline'} size={24} color={color?.textColor} />
+                <Ionicons name={'person-circle-outline'} size={30} color={'#BE0B31'} />
               </View>
             ) : (
-              <Ionicons name={'person-circle-outline'} size={24} color={color?.textColor} />
+              <Ionicons name={'person-circle-outline'} size={30} color={'#002A65'} />
             )
           ),
         }}

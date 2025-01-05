@@ -45,13 +45,6 @@ const SingleChatScreen = () => {
     uploadProgress,
   }: any = useSingleChat(chatroom);
 
-  if (isLoading) {
-    return (
-      <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
-        <ActivityIndicator size="large" color="#000000" />
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>
@@ -76,7 +69,7 @@ const SingleChatScreen = () => {
           <Text style={styles.userName}>{otherUser?.name}</Text>
         </View>
 
-        <View style={styles.headerActions}>
+        {/* <View style={styles.headerActions}>
           <TouchableOpacity>
             <Feather name="phone" size={20} color="#000000" />
           </TouchableOpacity>
@@ -86,7 +79,7 @@ const SingleChatScreen = () => {
           <TouchableOpacity>
             <Feather name="search" size={20} color="#000000" />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
 
       <ScrollView
@@ -94,7 +87,9 @@ const SingleChatScreen = () => {
         ref={scrollViewRef}
         onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
       >
-        {messages.map((msg: any) => (
+        {isLoading ? <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+          <ActivityIndicator size="large" color="#002A65" />
+        </View> : messages.map((msg: any) => (
           <TouchableOpacity
             key={msg.id}
             onLongPress={() => handleLongPress(msg)}
@@ -176,20 +171,20 @@ const SingleChatScreen = () => {
             />
 
             <View style={styles.inputActions}>
-              {message.trim() ? (
-                <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
-                  <Feather name="send" size={24} color="#FFFFFF" />
-                </TouchableOpacity>
-              ) : (
+              {/* {message.trim() ? ( */}
+              <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
+                <Feather name="send" size={24} color="#FFFFFF" />
+              </TouchableOpacity>
+              {/* ) : (
                 <>
                   <TouchableOpacity onPress={handleAttachment}>
-                    <Feather name="paperclip" size={24} color="#8E8E93" />
+                    <Feather name="paperclip" size={24} color="#002A65" />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={handleVoiceMessage}>
-                    <Feather name="mic" size={24} color="#000000" />
+                    <Feather name="mic" size={24} color="#002A65" />
                   </TouchableOpacity>
                 </>
-              )}
+              )} */}
             </View>
           </View>
         )}

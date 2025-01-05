@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Palette } from '@src/utils';
 
-export const ForgotPasswordStyles = ({ textColor, backgroundColor }: Palette) =>
+export const ForgotPasswordStyles = ({ textColor, backgroundColor, primaryColor }: Palette) =>
     StyleSheet.create({
         container: {
             flex: 1,
@@ -32,7 +32,7 @@ export const ForgotPasswordStyles = ({ textColor, backgroundColor }: Palette) =>
         inputContainer: {
             flexDirection: 'row',
             alignItems: 'center',
-            backgroundColor: '#F5F5F5',
+            backgroundColor: '#E6E6E6',
             borderRadius: 8,
             paddingHorizontal: 16,
             height: 48,
@@ -49,8 +49,8 @@ export const ForgotPasswordStyles = ({ textColor, backgroundColor }: Palette) =>
             marginTop: 4,
         },
         confirmButton: {
-            backgroundColor: '#000000',
-            padding: 16,
+            backgroundColor: primaryColor,
+            padding: 12,
             borderRadius: 8,
             alignItems: 'center',
             marginTop: 30,

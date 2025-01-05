@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Palette } from '@src/utils';
 
-export const UploadIDStyles = ({ textColor, backgroundColor }: Palette) =>
+export const UploadIDStyles = ({ textColor, backgroundColor, primaryColor }: Palette) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -30,7 +30,7 @@ export const UploadIDStyles = ({ textColor, backgroundColor }: Palette) =>
       marginBottom: 16,
     },
     uploadArea: {
-      height: 300,
+      height: 400,
       backgroundColor: '#E5E5E5',
       justifyContent: 'center',
       alignItems: 'center',
@@ -49,7 +49,7 @@ export const UploadIDStyles = ({ textColor, backgroundColor }: Palette) =>
 
     },
     continueButton: {
-      backgroundColor: '#000000',
+      backgroundColor: primaryColor,
       padding: 16,
       borderRadius: 8,
       alignItems: 'center',

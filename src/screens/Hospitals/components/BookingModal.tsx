@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Modal, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { Text } from '@app/blueprints';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { Calendar } from 'react-native-calendars';
 
 interface BookingModalProps {
     visible: boolean;
@@ -10,9 +11,13 @@ interface BookingModalProps {
     color: any;
     selectedDate: string;
     setSelectedDate: (date: string) => void;
-    selectedSpecialty: string;
-    setSelectedSpecialty: (specialty: string) => void;
+    selectedSpecialty: number | null;
+    setSelectedSpecialty: (specialty: number | null) => void;
     onConfirm: () => void;
+    specialties: Array<{
+        id: number;
+        name: string;
+    }>;
 }
 
 export const BookingModal = ({
@@ -25,97 +30,69 @@ export const BookingModal = ({
     selectedSpecialty,
     setSelectedSpecialty,
     onConfirm,
+    specialties,
 }: BookingModalProps) => {
     const [showCalendar, setShowCalendar] = useState(false);
     const [showSpecialties, setShowSpecialties] = useState(false);
 
-    const handleDateSelect = (date: string) => {
-        setSelectedDate(date);
+    const today = new Date().toISOString().split('T')[0];
+
+    const onDayPress = useCallback((day: any) => {
+        setSelectedDate(day.dateString);
         setShowCalendar(false);
-    };
+    }, [setSelectedDate, selectedDate]);
 
-    const handleSpecialtySelect = (specialty: string) => {
-        setSelectedSpecialty(specialty);
-        setShowSpecialties(false);
-    };
-
-    const Calendar = ({ selectedDate, onSelectDate, styles, color }: any) => {
-        const date = new Date();
-        const currentMonth = date.getMonth();
-        const currentYear = date.getFullYear();
-
-        const getDaysInMonth = (month: number, year: number) => {
-            return new Date(year, month + 1, 0).getDate();
-        };
-
-        const generateDays = () => {
-            const daysInMonth = getDaysInMonth(currentMonth, currentYear);
-            const days = [];
-            for (let i = 1; i <= daysInMonth; i++) {
-                days.push(i);
-            }
-            return days;
-        };
-
-        const formatDate = (day: number) => {
-            return `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-        };
-
-        const isSelected = (day: number) => {
-            return selectedDate === formatDate(day);
-        };
-
-        return (
-            <View style={styles.calendar}>
-                <View style={styles.calendarHeader}>
-                    <Text style={styles.modalTitle}>
-                        {new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} {currentYear}
-                    </Text>
-                </View>
-                <View style={styles.weekDaysRow}>
-                    {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((day) => (
-                        <Text key={day} style={styles.weekDay}>{day}</Text>
-                    ))}
-                </View>
-                <View style={styles.daysGrid}>
-                    {generateDays().map((day) => (
-                        <TouchableOpacity
-                            key={day}
-                            style={[styles.dayCell, isSelected(day) && styles.selectedDay]}
-                            onPress={() => onSelectDate(formatDate(day))}
-                        >
-                            <Text style={[
-                                styles.dayText,
-                                isSelected(day) && styles.selectedDayText
-                            ]}>
-                                {day}
-                            </Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            </View>
-        );
-    };
+    const CalendarComponent = () => (
+        <View style={styles.calendarContainer}>
+            <Calendar
+                current={selectedDate || today}
+                minDate={today}
+                onDayPress={onDayPress}
+                monthFormat={'MMMM yyyy'}
+                hideExtraDays={true}
+                disableAllTouchEventsForDisabledDays={true}
+                enableSwipeMonths={true}
+                markedDates={{
+                    [selectedDate]: { selected: true, selectedColor: '#002B5B' }
+                }}
+                theme={{
+                    backgroundColor: '#ffffff',
+                    calendarBackground: '#ffffff',
+                    textSectionTitleColor: '#b6c1cd',
+                    selectedDayBackgroundColor: '#002B5B',
+                    selectedDayTextColor: '#ffffff',
+                    todayTextColor: '#002B5B',
+                    dayTextColor: '#2d4150',
+                    textDisabledColor: '#d9e1e8',
+                    dotColor: '#002B5B',
+                    selectedDotColor: '#ffffff',
+                    arrowColor: '#002B5B',
+                    monthTextColor: '#002B5B',
+                    textDayFontSize: 16,
+                    textMonthFontSize: 18,
+                    textDayHeaderFontSize: 14
+                }}
+            />
+        </View>
+    );
 
     const SpecialtyList = ({ selectedSpecialty, onSelectSpecialty, styles, color }: any) => {
-        const specialties = [
-            'General',
-            'Cardiology',
-            'Internal Medicine',
-            'Skin Specialist'
-        ];
-
+        console.log("🚀 ~ SpecialtyList ~ selectedSpecialty:", selectedSpecialty, specialties)
         return (
             <View style={styles.specialtyList}>
                 {specialties.map((specialty) => (
                     <TouchableOpacity
-                        key={specialty}
+                        key={specialty.id}
                         style={styles.specialtyItem}
-                        onPress={() => onSelectSpecialty(specialty)}
+                        onPress={() => {
+                            setSelectedSpecialty(specialty.id);
+                            onSelectSpecialty(specialty.id)
+                            setShowSpecialties(false);
+                        }}
                     >
-                        <Text style={[styles.selectButtonText, { flex: 1 }]}>{specialty}</Text>
+                        <Text style={styles.selectButtonText}>{specialty.name}</Text>
                         <View style={styles.radioButton}>
-                            {selectedSpecialty === specialty && (
+                            {selectedSpecialty == specialty.id && (
                                 <View style={styles.radioButtonSelected} />
                             )}
                         </View>
@@ -145,25 +122,18 @@ export const BookingModal = ({
                                     setShowSpecialties(false);
                                 }}
                             >
-                                <MaterialIcons name="calendar-today" size={24} color={color.textColor} />
+                                <MaterialIcons name="calendar-today" size={24} color="#002B5B" />
                                 <Text style={styles.selectButtonText}>
                                     {selectedDate ? new Date(selectedDate).toLocaleDateString() : 'Select date'}
                                 </Text>
                                 <MaterialIcons
                                     name={showCalendar ? "keyboard-arrow-up" : "keyboard-arrow-down"}
                                     size={24}
-                                    color={color.textColor}
+                                    color="#002B5B"
                                 />
                             </TouchableOpacity>
 
-                            {showCalendar && (
-                                <Calendar
-                                    selectedDate={selectedDate}
-                                    onSelectDate={handleDateSelect}
-                                    styles={styles}
-                                    color={color}
-                                />
-                            )}
+                            {showCalendar && <CalendarComponent />}
 
                             <TouchableOpacity
                                 style={styles.selectButton}
@@ -172,32 +142,38 @@ export const BookingModal = ({
                                     setShowCalendar(false);
                                 }}
                             >
-                                <MaterialIcons name="medical-services" size={24} color={color.textColor} />
+                                <MaterialIcons name="medical-services" size={24} color="#002B5B" />
                                 <Text style={styles.selectButtonText}>
-                                    {selectedSpecialty || 'Specialty'}
+                                    {selectedSpecialty ?
+                                        specialties.find(s => s.id === selectedSpecialty)?.name :
+                                        'Specialty'
+                                    }
                                 </Text>
                                 <MaterialIcons
                                     name={showSpecialties ? "keyboard-arrow-up" : "keyboard-arrow-down"}
                                     size={24}
-                                    color={color.textColor}
+                                    color="#002B5B"
                                 />
                             </TouchableOpacity>
 
                             {showSpecialties && (
                                 <SpecialtyList
                                     selectedSpecialty={selectedSpecialty}
-                                    onSelectSpecialty={handleSpecialtySelect}
+                                    onSelectSpecialty={setSelectedSpecialty}
                                     styles={styles}
                                     color={color}
+                                    specialties={specialties}
                                 />
                             )}
 
-                            <TouchableOpacity
-                                style={styles.confirmButton}
-                                onPress={onConfirm}
-                            >
-                                <Text style={styles.confirmButtonText}>Confirm</Text>
-                            </TouchableOpacity>
+                            {(selectedDate && selectedSpecialty) && (
+                                <TouchableOpacity
+                                    style={styles.confirmButton}
+                                    onPress={onConfirm}
+                                >
+                                    <Text style={styles.confirmButtonText}>Confirm</Text>
+                                </TouchableOpacity>
+                            )}
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
@@ -205,3 +181,4 @@ export const BookingModal = ({
         </Modal>
     );
 };
+

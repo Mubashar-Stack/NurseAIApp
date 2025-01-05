@@ -26,7 +26,7 @@ const MainScreen = () => {
           <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
             <Text preset="h2">Already have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate(Screen.LOGIN)}>
-              <Text preset="h3" >Log in</Text>
+              <Text preset="h3" color={color.primaryColor}>Log in</Text>
             </TouchableOpacity>
           </View>
         </View>

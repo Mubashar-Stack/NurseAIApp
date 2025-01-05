@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TouchableOpacity, Platform, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, TextInput } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Platform, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, TextInput, ActivityIndicator } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import mainStyle from '@src/constants/MainStyles';
@@ -10,25 +10,19 @@ import { Formik } from 'formik';
 import { Text } from '@app/blueprints';
 import useSignUp from './useSignUp';
 import DropdownPicker from '@src/components/Dropdown/DropdownPicker';
+import { Screen } from '../../navigation/appNavigation.type';
 
 const SignUp = () => {
   const { color } = useColor();
   const design = mainStyle(color);
   const { navigation } = useAppContext();
-  const { initialValues, fieldValidation, handleSubmit } = useSignUp();
+  const { initialValues, fieldValidation, handleSubmit, specialities, isLoading } = useSignUp();
   const [passwordVisible, setPasswordVisible] = useState(true);
   const roleOptions = [
     { label: 'Nurse', value: 'nurse' },
     { label: 'Patient', value: 'patient' },
   ];
 
-  const specialityOptions = [
-    { label: 'Pediatrics', value: 'Pediatrics' },
-    { label: 'Geriatrics', value: 'Geriatrics' },
-    { label: 'Critical Care', value: 'Critical Care' },
-    { label: 'Surgical Nursing', value: 'Surgical Nursing' },
-    { label: 'Oncology Nursing', value: 'Oncology Nursing' },
-  ];
   return (
     <BaseLayout>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -152,12 +146,14 @@ const SignUp = () => {
                     {/* Speciality Dropdown (visible only for nurses) */}
                     {values.role === 'nurse' && (
                       <View style={{ marginBottom: 16 }}>
+
                         <DropdownPicker
                           label="Specialty"
-                          options={specialityOptions}
+                          options={specialities}
                           selectedValue={values.speciality}
                           onValueChange={(itemValue) => setFieldValue('speciality', itemValue)}
                         />
+
                         {touched.speciality && errors.speciality && (
                           <Text style={design.errorText}>{errors.speciality}</Text>
                         )}
@@ -167,8 +163,15 @@ const SignUp = () => {
                       //@ts-ignore
                       onPress={handleSubmit}
                     >
-                      <Text style={design.footerBtnTxt}>Continue</Text>
+                      {isLoading ? <ActivityIndicator size="small" color="#FFF" /> : <Text style={design.footerBtnTxt}>Continue</Text>}
                     </TouchableOpacity>
+
+                    <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                      <Text preset="h2">Already have an account? </Text>
+                      <TouchableOpacity onPress={() => navigation.navigate(Screen.LOGIN)}>
+                        <Text preset="h3" color={color.primaryColor}>Login</Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 )}
               </Formik>

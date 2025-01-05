@@ -51,7 +51,7 @@ export const ResetPasswordStyles = ({ textColor, backgroundColor, Tertiary }: Pa
             marginBottom: 16,
         },
         submitButton: {
-            backgroundColor: '#000000',
+            backgroundColor: '#002A65',
             padding: 16,
             borderRadius: 8,
             alignItems: 'center',

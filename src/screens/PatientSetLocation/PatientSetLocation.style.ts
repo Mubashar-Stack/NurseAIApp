@@ -48,7 +48,7 @@ export const PatientSetLocationStyles = ({ textColor, Tertiary, backgroundColor 
       right: 16,
     },
     setLocationButton: {
-      backgroundColor: '#000000',
+      backgroundColor: '#002A65',
       borderRadius: 8,
       paddingVertical: 16,
       alignItems: 'center',
@@ -118,5 +118,21 @@ export const PatientSetLocationStyles = ({ textColor, Tertiary, backgroundColor 
     loadingIndicator: {
       padding: 15,
       alignItems: 'center',
+    },
+    currentLocationButton: {
+      position: 'absolute',
+      bottom: 16,
+      right: 16,
+      backgroundColor: 'white',
+      borderRadius: 30,
+      width: 60,
+      height: 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
     },
   });

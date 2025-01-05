@@ -58,9 +58,9 @@ const MedicalHistoryScreen = () => {
           activeOpacity={0.7}
         >
           {document.uri ? (
-            <Feather name="check-circle" size={24} color="#4CAF50" />
+            <Feather name="check-circle" size={28} color="#4CAF50" />
           ) : (
-            <Feather name="upload" size={24} color="#000000" style={styles.uploadIcon} />
+            <Feather name="upload" size={35} color="#002A65" style={styles.uploadIcon} />
           )}
           <Text style={styles.uploadText}>
             {document.uri ? 'Document uploaded' : 'Upload your medical report'}

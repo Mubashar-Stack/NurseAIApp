@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { Palette } from '@src/utils';
 
-export const SelfiScreenStyles = ({ textColor, backgroundColor }: Palette) =>
+export const SelfiScreenStyles = ({ textColor, backgroundColor, primaryColor }: Palette) =>
     StyleSheet.create({
         container: {
             flex: 1,
@@ -36,6 +36,26 @@ export const SelfiScreenStyles = ({ textColor, backgroundColor }: Palette) =>
         camera: {
             flex: 1,
         },
+        capturedImageContainer: {
+            flex: 1,
+            position: 'relative',
+        },
+        capturedImage: {
+            flex: 1,
+            width: '100%',
+            height: '100%',
+        },
+        retakeButton: {
+            position: 'absolute',
+            top: 16,
+            right: 16,
+            width: 36,
+            height: 36,
+            borderRadius: 18,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
         gridContainer: {
             flex: 1,
             flexDirection: 'row',
@@ -57,14 +77,14 @@ export const SelfiScreenStyles = ({ textColor, backgroundColor }: Palette) =>
             height: 64,
             borderRadius: 32,
             borderWidth: 2,
-            borderColor: '#000000',
+            borderColor: '#002A65',
             backgroundColor: 'transparent',
         },
         captureButtonInner: {
             width: 56,
             height: 56,
             borderRadius: 28,
-            backgroundColor: '#000000',
+            backgroundColor: '#002A65',
             margin: 2,
         },
         description: {
@@ -75,7 +95,7 @@ export const SelfiScreenStyles = ({ textColor, backgroundColor }: Palette) =>
             paddingHorizontal: 16,
         },
         continueButton: {
-            backgroundColor: '#000000',
+            backgroundColor: primaryColor,
             padding: 16,
             borderRadius: 8,
             alignItems: 'center',

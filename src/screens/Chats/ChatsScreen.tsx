@@ -17,14 +17,6 @@ const ChatsScreen = () => {
     handleRefresh,
   } = useChats();
 
-  if (isLoading) {
-    return (
-      <View style={[styles.container, styles.centerContent]}>
-        <ActivityIndicator size="large" color="#000000" />
-      </View>
-    );
-  }
-
   const renderChatItem = ({ item: chat }: any) => (
     <TouchableOpacity
       style={styles.chatItem}
@@ -76,14 +68,16 @@ const ChatsScreen = () => {
         </View>
       </View>
 
-      <FlatList
+      {isLoading ? <View style={[styles.container, styles.centerContent]}>
+        <ActivityIndicator size="large" color="#002A65" />
+      </View> : <FlatList
         data={chats}
         renderItem={renderChatItem}
         keyExtractor={(item) => item.id.toString()}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         }
-      />
+      />}
     </View>
   );
 };

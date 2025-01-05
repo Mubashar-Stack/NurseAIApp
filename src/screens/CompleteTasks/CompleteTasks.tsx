@@ -21,16 +21,6 @@ const CompleteTasks = () => {
 
   const styles = CompleteTaskStyles(color);
 
-  if (isLoading) {
-    return (
-      <BaseLayout>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#000000" />
-        </View>
-      </BaseLayout>
-    );
-  }
-
   return (
     <BaseLayout>
       <View style={styles.mainView}>
@@ -53,30 +43,37 @@ const CompleteTasks = () => {
             <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
           }
         >
-          {tasks.length === 0 ? (
-            <View style={styles.emptyContainer}>
-              <Feather
-                name="clipboard"
-                size={48}
-                color="#666666"
-                style={styles.emptyIcon}
-              />
-              <Text style={styles.emptyText}>No completed tasks found</Text>
-            </View>
-          ) : (
-            tasks.map((task) => (
-              <TouchableOpacity key={task.id} style={styles.taskItem}>
-                <View style={styles.avatar} />
-                <View style={styles.taskDetails}>
-                  <Text style={styles.patientName}>{task.patient_name}</Text>
-                  <Text style={styles.medication}>{task.medication}</Text>
-                  <Text style={styles.date}>
-                    Date: {format(new Date(task.created_at), 'dd MMM yyyy')}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))
-          )}
+          {isLoading ? (
+            <BaseLayout>
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#002A65" />
+              </View>
+            </BaseLayout>
+          )
+            : tasks.length === 0 ? (
+              <View style={styles.emptyContainer}>
+                <Feather
+                  name="clipboard"
+                  size={48}
+                  color="#666666"
+                  style={styles.emptyIcon}
+                />
+                <Text style={styles.emptyText}>No completed tasks found</Text>
+              </View>
+            ) : (
+              tasks.map((task) => (
+                <TouchableOpacity key={task.id} style={styles.taskItem}>
+                  <View style={styles.avatar} />
+                  <View style={styles.taskDetails}>
+                    <Text style={styles.patientName}>{task.patient_name}</Text>
+                    <Text style={styles.medication}>{task.medication}</Text>
+                    <Text style={styles.date}>
+                      Date: {format(new Date(task.created_at), 'dd MMM yyyy')}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))
+            )}
         </ScrollView>
 
       </View>

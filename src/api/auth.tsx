@@ -23,8 +23,9 @@ interface ResetPasswordResponse {
 }
 
 
-export const signupHandler = async (data: any, setDisabled: any, navigation: any) => {
+export const signupHandler = async (data: any, setDisabled: any, setIsLoading: any, navigation: any) => {
   setDisabled(true);
+  setIsLoading(true);
   try {
     const response = await axios.post(baseURL + '/api/signup', data);
     console.log("🚀 ~ signupHandler ~ response:", response?.data);
@@ -48,11 +49,14 @@ export const signupHandler = async (data: any, setDisabled: any, navigation: any
     showErrorToast(error?.response?.data?.errors[0]?.message, 2000);
   } finally {
     setDisabled(false);
+    setIsLoading(false);
+
   }
 };
 
-export const signinHandler = async (data: any, setDisabled: any, navigation: any) => {
+export const signinHandler = async (data: any, setDisabled: any, setLoading: any, navigation: any) => {
   setDisabled(true);
+  setLoading(true);
   try {
     const response = await axios.post(baseURL + '/api/signin', data);
     showSuccessToast(response?.data?.message, 2000);
@@ -72,6 +76,8 @@ export const signinHandler = async (data: any, setDisabled: any, navigation: any
     showErrorToast(error?.response?.data?.message, 2000);
   } finally {
     setDisabled(false);
+    setLoading(false);
+
   }
 };
 
@@ -98,11 +104,11 @@ export const sendOTP = async (email: string, token: string): Promise<SendOTPResp
   const response = await axios.post(
     'https://technlogics.co/api/send-otp',
     { email },
-    {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    }
+    // {
+    //   headers: {
+    //     'Authorization': `Token ${token}`,
+    //   },
+    // }
   );
 
   return response.data;
@@ -113,11 +119,11 @@ export const verifyOTP = async (email: string, token: string, otp: string): Prom
   const response = await axios.post(
     'https://technlogics.co/api/verify-otp',
     { email, otp },
-    {
-      headers: {
-        'Authorization': `Token ${token}`,
-      },
-    }
+    // {
+    //   headers: {
+    //     'Authorization': `Token ${token}`,
+    //   },
+    // }
   );
 
   return response.data;

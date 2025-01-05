@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, TouchableOpacity, ScrollView, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, TouchableOpacity, ScrollView, ActivityIndicator, RefreshControl, Image } from 'react-native';
 import { Text } from '@app/blueprints';
 import { BaseLayout } from '@src/components';
 import useTaskList from './useTaskList';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import { TaskListStyles } from './TaskList.style';
+import { Screen } from '../../navigation/appNavigation.type';
 
 const TaskListScreen = () => {
   const {
@@ -17,18 +18,11 @@ const TaskListScreen = () => {
     isLoading,
     loadTasks,
   } = useTaskList();
+  console.log("🚀 ~ TaskListScreen ~ tasks:", tasks)
 
   const styles = TaskListStyles(color);
 
-  if (isLoading) {
-    return (
-      <BaseLayout>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#000000" />
-        </View>
-      </BaseLayout>
-    );
-  }
+
 
   return (
     <BaseLayout>
@@ -45,8 +39,8 @@ const TaskListScreen = () => {
             <View style={styles.shiftInfo}>
               <Feather name="clock" color={color.textColor} size={24} />
               <View style={styles.shiftDetails}>
-                <Text style={{ color: color.textColor, fontSize: 14 }}>Shift timing</Text>
-                <Text style={{ color: color.textColor, fontSize: 14, fontWeight: '600' }}>
+                <Text style={{ color: color.textColor, fontSize: 12 }}>Shift timing</Text>
+                <Text style={{ color: color.textColor, fontSize: 12, fontWeight: '500' }}>
                   09:00 AM - 05:00 PM
                 </Text>
               </View>
@@ -69,34 +63,45 @@ const TaskListScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <ScrollView
-            style={styles.taskList}
-            showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl refreshing={isLoading} onRefresh={loadTasks} />
-            }
-          >
-            {tasks.length === 0 ? (
-              <View style={styles.noTasksContainer}>
-                <Feather name="clipboard" size={48} color={'#666666'} />
-                <Text style={styles.noTasksText}>No tasks found</Text>
+          {isLoading ? (
+            <BaseLayout>
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#002A65" />
               </View>
-            ) : (
-              tasks.map((task) => (
-                <TouchableOpacity
-                  key={task.id}
-                  style={styles.taskItem}
-                  onPress={() => { }}
-                >
-                  <View style={styles.avatar} />
-                  <View style={styles.taskDetails}>
-                    <Text style={styles.patientName}>{task.patient_name}</Text>
-                    <Text style={styles.medication}>{task.medication}</Text>
-                  </View>
-                </TouchableOpacity>
-              ))
-            )}
-          </ScrollView>
+            </BaseLayout>
+          )
+            : <ScrollView
+              style={styles.taskList}
+              showsVerticalScrollIndicator={false}
+              refreshControl={
+                <RefreshControl refreshing={isLoading} onRefresh={loadTasks} />
+              }
+            >
+              {tasks.length === 0 ? (
+                <View style={styles.noTasksContainer}>
+                  <Feather name="clipboard" size={48} color={'#666666'} />
+                  <Text style={styles.noTasksText}>No tasks found</Text>
+                </View>
+              ) : (
+                tasks.map((task: any) => (
+                  <TouchableOpacity
+                    key={task.id}
+                    style={styles.taskItem}
+                    //@ts-ignore
+                    onPress={() => navigation.navigate(Screen.PATIENT_DETAIL, { taskId: task?.id })}
+                  >
+                    <Image
+                      source={{ uri: 'https://technlogics.co/api' + task?.patient_photo }}
+                      style={styles.avatar}
+                    />
+                    <View style={styles.taskDetails}>
+                      <Text style={styles.patientName}>{task.patient_name}</Text>
+                      <Text style={styles.medication}>{task.medication}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ))
+              )}
+            </ScrollView>}
         </View>
 
       </View>

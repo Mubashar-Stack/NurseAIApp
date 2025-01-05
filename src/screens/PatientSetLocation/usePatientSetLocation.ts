@@ -7,6 +7,8 @@ import { useAppContext } from '@src/context';
 import { PatientSetLocationStyles } from './PatientSetLocation.style';
 import { debounce } from 'lodash';
 import { Screen } from '../../navigation/appNavigation.type';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 export interface LocationSuggestion {
   placeId: string;
@@ -21,7 +23,7 @@ export interface LocationSuggestion {
 // Google Places API Key
 const GOOGLE_PLACES_API_KEY = 'AIzaSyBNWQWVhRgKjAV0nNkMiYWEewCoLzptX8w';
 const usePatientSetLocation = () => {
-  const { color, navigation } = useAppContext();
+  const { color, navigation }: any = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [hasLocationPermission, setHasLocationPermission] = useState(false);
@@ -29,7 +31,9 @@ const usePatientSetLocation = () => {
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isSelectingSuggestion, setIsSelectingSuggestion] = useState(false);
-  const [selectedPlace, setSelectedPlace] = useState<LocationSuggestion | null>(null);
+  const [selectedPlace, setSelectedPlace] = useState<any>(null);
+  const token = useSelector((state: any) => state.auth?.isToken);
+
   const mapRef = useRef(null);
 
 
@@ -91,24 +95,36 @@ const usePatientSetLocation = () => {
     }
   }, []);
 
-  const getCurrentLocation = useCallback(() => {
-    Geolocation.getCurrentPosition(
-      position => {
-        const region = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
-        };
-        setCurrentLocation(region);
-        setCurrentRegion(region);
-      },
-      error => {
-        console.error('Error getting current location:', error);
-        Alert.alert('Error', 'Failed to get your current location');
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
+  const getCurrentLocation = useCallback(async () => {
+    return new Promise<void>((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        async position => {
+          const { latitude, longitude } = position.coords;
+          const region = {
+            latitude,
+            longitude,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          };
+          setCurrentLocation(region);
+          setCurrentRegion(region);
+
+          const placeDetails = await getPlaceDetailsByCoordinates(latitude, longitude);
+          if (placeDetails) {
+            setSelectedPlace(placeDetails);
+            setSearchQuery(placeDetails.mainText);
+          }
+
+          resolve();
+        },
+        error => {
+          console.error('Error getting current location:', error);
+          Alert.alert('Error', 'Failed to get your current location');
+          reject(error);
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    });
   }, []);
 
   useEffect(() => {
@@ -117,7 +133,7 @@ const usePatientSetLocation = () => {
       setHasLocationPermission(hasPermission);
 
       if (hasPermission) {
-        getCurrentLocation();
+        await getCurrentLocation();
       }
 
       setIsLoading(false);
@@ -130,12 +146,46 @@ const usePatientSetLocation = () => {
     setCurrentRegion(region);
   }, []);
 
-  const handleSetLocation = useCallback(() => {
-    // Handle saving the selected location
-    console.log('Selected location:', currentRegion);
-    navigation.navigate(Screen.PATIENT_LOCATION_SETUP);
+  const handleSetLocation = useCallback(async () => {
+    if (!selectedPlace || !selectedPlace.location) {
+      Alert.alert('Error', 'Please select a location first');
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        'https://technlogics.co/api/addresses/add',
+        {
+          address: selectedPlace.mainText,
+          title: "Selected Location",
+          city: selectedPlace.secondaryText.split(',')[0].trim(),
+          state: selectedPlace.secondaryText.split(',')[1]?.trim() || "NY",
+          postal_code: "10001",
+          country: selectedPlace.secondaryText.split(',')[2]?.trim() || "USA",
+          latitude: selectedPlace.location.latitude.toString(),
+          longitude: selectedPlace.location.longitude.toString(),
+          is_default: true
+        },
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Token ' + token
+          }
+        }
+      );
 
-  }, [currentRegion, navigation]);
+      if (response.data && response.data.id) {
+        navigation.navigate(Screen.PATIENT_LOCATION_SETUP, { locationId: response.data.id });
+      } else {
+        throw new Error('Failed to add address');
+      }
+    } catch (error: any) {
+      console.error('Error setting location:', error.response.data);
+      Alert.alert('Error', 'Failed to set location. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [selectedPlace, navigation]);
 
   const fetchPlaceSuggestions = async (input: string) => {
     if (!input.trim()) {
@@ -165,8 +215,8 @@ const usePatientSetLocation = () => {
         console.error('Place Autocomplete Error:', data.status);
         setSuggestions([]);
       }
-    } catch (error) {
-      console.error('Error fetching place suggestions:', error);
+    } catch (error: any) {
+      console.error('Error fetching place suggestions:', error.response.data);
       setSuggestions([]);
     } finally {
       setIsSearching(false);
@@ -198,10 +248,36 @@ const usePatientSetLocation = () => {
     }
   };
 
+  const getPlaceDetailsByCoordinates = async (latitude: number, longitude: number) => {
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_PLACES_API_KEY}`
+      );
+      const data = await response.json();
+
+      if (data.status === 'OK' && data.results.length > 0) {
+        const result = data.results[0];
+        return {
+          placeId: result.place_id,
+          mainText: result.formatted_address,
+          secondaryText: result.formatted_address,
+          location: {
+            latitude,
+            longitude
+          }
+        };
+      }
+      throw new Error('No results found');
+    } catch (error) {
+      console.error('Error getting place details by coordinates:', error);
+      return null;
+    }
+  };
+
   const handleSelectSuggestion = async (suggestion: LocationSuggestion) => {
-    setIsSelectingSuggestion(true); // Prevent triggering search again
-    setSearchQuery(suggestion.mainText); // Set the query to the selected suggestion text
-    setSuggestions([]); // Clear suggestions
+    setIsSelectingSuggestion(true);
+    setSearchQuery(suggestion.mainText);
+    setSuggestions([]); // Clear suggestions immediately
     try {
       const location = await getPlaceDetails(suggestion.placeId);
       if (location) {
@@ -213,21 +289,31 @@ const usePatientSetLocation = () => {
         setCurrentRegion(newRegion);
         //@ts-ignore
         mapRef.current?.animateToRegion(newRegion, 1000);
-        setSelectedPlace({ location, ...suggestion }); // Set the selected place for marker
+        setSelectedPlace({ location, ...suggestion });
       }
     } catch (error) {
       console.error('Error handling suggestion selection:', error);
       Alert.alert('Error', 'Failed to get location details');
     } finally {
-      setIsSelectingSuggestion(false); // Allow future searches
+      setIsSelectingSuggestion(false);
     }
   };
 
+  const handleCurrentLocationClick = useCallback(async () => {
+    try {
+      await getCurrentLocation();
+    } catch (error) {
+      console.error('Error handling current location click:', error);
+      Alert.alert('Error', 'Failed to get your current location');
+    }
+  }, [getCurrentLocation]);
+
+
   useEffect(() => {
     if (!isSelectingSuggestion && searchQuery !== selectedPlace?.mainText) {
-      debouncedFetchSuggestions(searchQuery); // Only search when not selecting
+      debouncedFetchSuggestions(searchQuery);
     }
-  }, [searchQuery, isSelectingSuggestion]);
+  }, [searchQuery, isSelectingSuggestion, selectedPlace]);
 
   return {
     color,
@@ -245,7 +331,8 @@ const usePatientSetLocation = () => {
     hasLocationPermission,
     requestLocationPermission,
     currentLocation,
-    selectedPlace
+    selectedPlace,
+    handleCurrentLocationClick
   };
 };
 

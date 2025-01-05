@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
 import * as yup from 'yup';
 import { useAppContext } from '@src/context';
@@ -8,6 +8,8 @@ import { signupHandler } from '../../api/auth';
 const useSignUp = () => {
   const { color, navigation } = useAppContext();
   const [disabled, setDisabled] = useState(false);
+  const [specialities, setSpecialities] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const passwordRef = useRef<TextInput>(null);
 
   const fieldValidation = yup.object().shape({
@@ -28,6 +30,28 @@ const useSignUp = () => {
     //   then: yup.string().required('Speciality is required for nurses'),
     // }),
   });
+
+  const fetchSpecialities = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('https://technlogics.co/api/specialities');
+      const result = await response.json();
+      if (result.status && result.data) {
+        setSpecialities(result.data.map((item: any) => ({
+          label: item.name,
+          value: item.id.toString()
+        })));
+      }
+    } catch (error) {
+      console.error('Error fetching specialities:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchSpecialities();
+  }, [fetchSpecialities]);
 
 
   const initialValues = {
@@ -52,7 +76,7 @@ const useSignUp = () => {
         role: values.role,
         speciality: values.speciality
       };
-      signupHandler(data, setDisabled, navigation,);
+      signupHandler(data, setDisabled, setIsLoading, navigation,);
     },
     [navigation]
   );
@@ -65,6 +89,8 @@ const useSignUp = () => {
     initialValues,
     navigation,
     passwordRef,
+    specialities,
+    isLoading
   };
 };
 export default useSignUp;

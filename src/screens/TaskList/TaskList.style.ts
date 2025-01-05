@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Palette } from '@src/utils';
 import { scaleHeight, scaleWidth } from '@src/utils';
 
-export const TaskListStyles = ({ textColor, backgroundColor }: Palette) =>
+export const TaskListStyles = ({ textColor, backgroundColor, primaryColor }: Palette) =>
     StyleSheet.create({
         container: {
             flex: 1,
@@ -25,7 +25,7 @@ export const TaskListStyles = ({ textColor, backgroundColor }: Palette) =>
             alignItems: 'center',
         },
         backButton: {
-            padding: 8,
+            // padding: 8,
         },
         shiftInfo: {
             marginLeft: scaleWidth(5),
@@ -36,7 +36,7 @@ export const TaskListStyles = ({ textColor, backgroundColor }: Palette) =>
             marginLeft: scaleWidth(5),
         },
         completeTaskButton: {
-            backgroundColor: '#000000',
+            backgroundColor: '#BE0B31',
             borderRadius: 10,
             paddingHorizontal: 16,
             paddingVertical: 8,
@@ -71,14 +71,16 @@ export const TaskListStyles = ({ textColor, backgroundColor }: Palette) =>
             borderBottomColor: '#E0E0E0',
         },
         avatar: {
-            width: 48,
-            height: 48,
-            borderRadius: 24,
+            width: 70,
+            height: 70,
+            borderRadius: 50,
             backgroundColor: '#E0E0E0',
             marginRight: 16,
+            objectFit: 'cover',
         },
         taskDetails: {
             flex: 1,
+            marginTop: 10
         },
         patientName: {
             fontSize: 16,

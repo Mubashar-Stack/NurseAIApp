@@ -29,6 +29,10 @@ const AddTaskScreen = () => {
     handleSubmit,
     completeTask,
     isLoading,
+    searchPatients,
+    searchResults,
+    isSearching,
+    setSearchResults
   } = useAddTask();
 
   const styles = AddTaskStyles(color);
@@ -51,10 +55,10 @@ const AddTaskScreen = () => {
               <View style={styles.shiftInfo}>
                 <Feather name="clock" color={color.textColor} size={24} />
                 <View style={styles.shiftDetails}>
-                  <Text style={{ fontSize: 14, color: color.textColor }}>
+                  <Text style={{ fontSize: 12, color: color.textColor }}>
                     Shift timing
                   </Text>
-                  <Text style={{ fontSize: 14, fontWeight: '600', color: color.textColor }}>
+                  <Text style={{ fontSize: 12, fontWeight: '500', color: color.textColor }}>
                     09:00 AM - 05:00 PM
                   </Text>
                 </View>
@@ -92,19 +96,46 @@ const AddTaskScreen = () => {
 
                   <View style={styles.inputContainer}>
                     <Text style={styles.label}>Patient Name</Text>
-                    <View style={styles.inputWrapper}>
+                    <View style={[styles.inputWrapper, { zIndex: 1 }]}>
                       <TextInput
                         style={styles.input}
                         placeholder="Type patient name"
                         placeholderTextColor="#999999"
                         value={values.patientName}
-                        onChangeText={handleChange('patientName')}
+                        onChangeText={(text) => {
+                          setFieldValue('patientName', text);
+                          searchPatients(text);
+                        }}
                         onBlur={handleBlur('patientName')}
                       />
                       <TouchableOpacity style={styles.micButton}>
                         <Ionicons name="mic-outline" color={color.textColor} size={24} />
                       </TouchableOpacity>
                     </View>
+                    {isSearching && (
+                      <ActivityIndicator style={styles.searchLoader} color={color.textColor} />
+                    )}
+                    {searchResults.length > 0 && (
+                      <View style={styles.searchResults}>
+                        {searchResults.map((patient) => (
+                          <TouchableOpacity
+                            key={patient.id}
+                            style={styles.searchResultItem}
+                            onPress={() => {
+                              setFieldValue('patientName', patient.name);
+                              setFieldValue('patient', 36);
+                              // setFieldValue('sex', patient.gender);
+                              setSearchResults([]);
+                            }}
+                          >
+                            <Text style={styles.patientName}>{patient.name}</Text>
+                            <Text style={styles.patientInfo}>
+                              {patient.email} • {patient.mobile_no}
+                            </Text>
+                          </TouchableOpacity>
+                        ))}
+                      </View>
+                    )}
                     {touched.patientName && errors.patientName && (
                       <Text style={styles.errorText}>{errors.patientName}</Text>
                     )}

@@ -6,6 +6,7 @@ import { showErrorToast, showSuccessToast } from '@src/utils';
 import { useSelector } from 'react-redux';
 import { PermissionsAndroid, Platform } from 'react-native';
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
+import axios from 'axios';
 // import { uploadFile } from '../../api/upload';
 
 const audioRecorderPlayer = new AudioRecorderPlayer();
@@ -45,7 +46,9 @@ const useSingleChat = (chatroom: any) => {
 
   useEffect(() => {
     loadMessages();
+    markAllMessagesAsRead();
   }, [loadMessages]);
+
 
   const handleSend = async () => {
     if (message.trim() || audioFile) {
@@ -226,6 +229,19 @@ const useSingleChat = (chatroom: any) => {
   const isUserMessage = (senderId: number) => {
     return senderId === userId;
   };
+
+  const markAllMessagesAsRead = useCallback(async () => {
+    try {
+      await axios.post(`https://technlogics.co/api/mark-all-read/${chatroom.id}`, null, {
+        headers: {
+          'Authorization': `Token ${token}`
+        }
+      });
+      console.log('All messages marked as read');
+    } catch (error: any) {
+      console.error('Error marking messages as read:', error);
+    }
+  }, [token]);
 
   return {
     color,
