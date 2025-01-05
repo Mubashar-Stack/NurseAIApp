@@ -17,7 +17,7 @@ export const ChatsStyles = ({ textColor, backgroundColor, Tertiary }: Palette) =
     },
     searchBar: {
       width: '99%',
-      marginTop: 10,
+      marginTop: 1,
       flexDirection: 'row',
       alignSelf: 'center',
       borderRadius: 16,

@@ -13,8 +13,9 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		189F9D652D122B5500B2B622 /* libReact-hermes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 189F9D642D122B5500B2B622 /* libReact-hermes.a */; };
 		27C33189294146D5AE7BC0F6 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CDC7120CF3E14694BA997577 /* Roboto-LightItalic.ttf */; };
+		2AD22E6780B212BBEDF72A3D /* libPods-NurseProAI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAD5565524E202D2AE5CF5D1 /* libPods-NurseProAI.a */; };
 		312D2376FBB74A4CA915A027 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 653A0B6ADD9048BE986A2696 /* Roboto-BoldItalic.ttf */; };
-		3B616FD889106ED990F19740 /* libPods-NurseProAI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F0898C6FF5085B42C94DF95 /* libPods-NurseProAI.a */; };
+		43A9DEE1CB3A735D56C6FC87 /* libPods-NurseProAI-NurseProAITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8396D696118438CD432D91 /* libPods-NurseProAI-NurseProAITests.a */; };
 		442767AAD204403E8A13C65B /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 412E6DC8DF344D84927257C5 /* Roboto-Bold.ttf */; };
 		50A29A7626D44314A12A7DBB /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13C8EE42F96443C7B50E8668 /* Roboto-Black.ttf */; };
 		5624C9663D5846DD8F3FE56B /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A8C834D57654B488FEFA474 /* Roboto-BlackItalic.ttf */; };
@@ -24,7 +25,6 @@
 		AD012B0CAE985EACFCEE8BD9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 9ED2BB560F2ACE119C9702C2 /* PrivacyInfo.xcprivacy */; };
 		BA8E09CBE43C4C60A9CD2DF9 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F800BEF8CD2465BB3AC6F50 /* Roboto-Regular.ttf */; };
 		BF7F6507F6BF45BC97F34E24 /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3C809E5387F4D689E3AD58F /* Roboto-MediumItalic.ttf */; };
-		DC3BD541EC5C88C61D5DCFBD /* libPods-NurseProAI-NurseProAITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FD4993796D90CB08B7C698D /* libPods-NurseProAI-NurseProAITests.a */; };
 		DE6A749618624124A6C5711C /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6E23BFE5C2045DD91A0AC6C /* Roboto-Medium.ttf */; };
 		E9DB18B200D64CD5B61DCB60 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F55CF3905054B7DA6D4F48E /* Roboto-Light.ttf */; };
 		F2C3D8A81AFE44DCB8F64EC6 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 41D6F6F831C34FDC8728523B /* Roboto-Italic.ttf */; };
@@ -44,6 +44,7 @@
 		00E356EE1AD99517003FC87E /* NurseProAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NurseProAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* NurseProAITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NurseProAITests.m; sourceTree = "<group>"; };
+		0F0C61BC73B7B08EC12DF46C /* Pods-NurseProAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NurseProAI.debug.xcconfig"; path = "Target Support Files/Pods-NurseProAI/Pods-NurseProAI.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* NurseProAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NurseProAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = NurseProAI/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = NurseProAI/AppDelegate.mm; sourceTree = "<group>"; };
@@ -52,6 +53,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NurseProAI/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = NurseProAI/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13C8EE42F96443C7B50E8668 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
+		1695E08D393494D2BBF76D79 /* Pods-NurseProAI-NurseProAITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NurseProAI-NurseProAITests.debug.xcconfig"; path = "Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests.debug.xcconfig"; sourceTree = "<group>"; };
 		189F9D642D122B5500B2B622 /* libReact-hermes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-hermes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		189F9D662D122D4C00B2B622 /* libReact-RuntimeHermes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RuntimeHermes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F800BEF8CD2465BB3AC6F50 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -59,20 +61,18 @@
 		3A8C834D57654B488FEFA474 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../src/assets/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		412E6DC8DF344D84927257C5 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		41D6F6F831C34FDC8728523B /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../src/assets/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
+		4D8396D696118438CD432D91 /* libPods-NurseProAI-NurseProAITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NurseProAI-NurseProAITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55691580805841F493F92A11 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../src/assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
-		63F4E441999A96F6D5771E49 /* Pods-NurseProAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NurseProAI.debug.xcconfig"; path = "Target Support Files/Pods-NurseProAI/Pods-NurseProAI.debug.xcconfig"; sourceTree = "<group>"; };
 		653A0B6ADD9048BE986A2696 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../src/assets/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
-		6F0898C6FF5085B42C94DF95 /* libPods-NurseProAI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NurseProAI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = NurseProAI/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8F51BFED485EF1CB96DC1FAC /* Pods-NurseProAI-NurseProAITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NurseProAI-NurseProAITests.debug.xcconfig"; path = "Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9ED2BB560F2ACE119C9702C2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = NurseProAI/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		9FD4993796D90CB08B7C698D /* libPods-NurseProAI-NurseProAITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NurseProAI-NurseProAITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3C809E5387F4D689E3AD58F /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../src/assets/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
+		BAD5565524E202D2AE5CF5D1 /* libPods-NurseProAI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NurseProAI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0FC0F3B395CE4C24882BE91 /* Pods-NurseProAI-NurseProAITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NurseProAI-NurseProAITests.release.xcconfig"; path = "Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests.release.xcconfig"; sourceTree = "<group>"; };
 		C5D6D53C035B4AC18AD1630F /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../src/assets/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
+		CBA41CCA958D3FC07B6FC73C /* Pods-NurseProAI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NurseProAI.release.xcconfig"; path = "Target Support Files/Pods-NurseProAI/Pods-NurseProAI.release.xcconfig"; sourceTree = "<group>"; };
 		CDC7120CF3E14694BA997577 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../src/assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
-		D001DC867E4BE56EB46018CC /* Pods-NurseProAI-NurseProAITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NurseProAI-NurseProAITests.release.xcconfig"; path = "Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F02C036C71654F0BAFCA0101 /* Pods-NurseProAI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NurseProAI.release.xcconfig"; path = "Target Support Files/Pods-NurseProAI/Pods-NurseProAI.release.xcconfig"; sourceTree = "<group>"; };
 		F6E23BFE5C2045DD91A0AC6C /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC3BD541EC5C88C61D5DCFBD /* libPods-NurseProAI-NurseProAITests.a in Frameworks */,
+				43A9DEE1CB3A735D56C6FC87 /* libPods-NurseProAI-NurseProAITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				189F9D652D122B5500B2B622 /* libReact-hermes.a in Frameworks */,
-				3B616FD889106ED990F19740 /* libPods-NurseProAI.a in Frameworks */,
+				2AD22E6780B212BBEDF72A3D /* libPods-NurseProAI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,8 +135,8 @@
 				189F9D662D122D4C00B2B622 /* libReact-RuntimeHermes.a */,
 				189F9D642D122B5500B2B622 /* libReact-hermes.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				6F0898C6FF5085B42C94DF95 /* libPods-NurseProAI.a */,
-				9FD4993796D90CB08B7C698D /* libPods-NurseProAI-NurseProAITests.a */,
+				BAD5565524E202D2AE5CF5D1 /* libPods-NurseProAI.a */,
+				4D8396D696118438CD432D91 /* libPods-NurseProAI-NurseProAITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -195,10 +195,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				63F4E441999A96F6D5771E49 /* Pods-NurseProAI.debug.xcconfig */,
-				F02C036C71654F0BAFCA0101 /* Pods-NurseProAI.release.xcconfig */,
-				8F51BFED485EF1CB96DC1FAC /* Pods-NurseProAI-NurseProAITests.debug.xcconfig */,
-				D001DC867E4BE56EB46018CC /* Pods-NurseProAI-NurseProAITests.release.xcconfig */,
+				0F0C61BC73B7B08EC12DF46C /* Pods-NurseProAI.debug.xcconfig */,
+				CBA41CCA958D3FC07B6FC73C /* Pods-NurseProAI.release.xcconfig */,
+				1695E08D393494D2BBF76D79 /* Pods-NurseProAI-NurseProAITests.debug.xcconfig */,
+				C0FC0F3B395CE4C24882BE91 /* Pods-NurseProAI-NurseProAITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -210,12 +210,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "NurseProAITests" */;
 			buildPhases = (
-				B0C54ABAAD2C9DAC53F3DC48 /* [CP] Check Pods Manifest.lock */,
+				47A272A6D1D922A0A1A13B54 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				77FC2EC15BB387E1632CFAC9 /* [CP] Embed Pods Frameworks */,
-				F318015D3F303CA7FE39508C /* [CP] Copy Pods Resources */,
+				E1B6BB8347BB474D14E28D6C /* [CP] Embed Pods Frameworks */,
+				381626E05A84196DA6A8324F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -231,14 +231,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "NurseProAI" */;
 			buildPhases = (
-				BAF37E46F330F24FADE2B7BC /* [CP] Check Pods Manifest.lock */,
+				9C88106DE9865904D013BA4B /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				04DD9E5D2C9DE88000B92A4D /* ShellScript */,
-				E2E54424FAE204A1EB127CF0 /* [CP] Embed Pods Frameworks */,
-				2D076D19BCEE03C1C971EF80 /* [CP] Copy Pods Resources */,
+				939E8AB8F40745463E1C7E3A /* [CP] Embed Pods Frameworks */,
+				44510D5723FDA68190006D70 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -350,10 +350,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "
-";
+			shellScript = "\n";
 		};
-		2D076D19BCEE03C1C971EF80 /* [CP] Copy Pods Resources */ = {
+		381626E05A84196DA6A8324F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		44510D5723FDA68190006D70 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -370,24 +386,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NurseProAI/Pods-NurseProAI-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		77FC2EC15BB387E1632CFAC9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B0C54ABAAD2C9DAC53F3DC48 /* [CP] Check Pods Manifest.lock */ = {
+		47A272A6D1D922A0A1A13B54 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -409,7 +408,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BAF37E46F330F24FADE2B7BC /* [CP] Check Pods Manifest.lock */ = {
+		939E8AB8F40745463E1C7E3A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI/Pods-NurseProAI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI/Pods-NurseProAI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NurseProAI/Pods-NurseProAI-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9C88106DE9865904D013BA4B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -431,38 +447,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E2E54424FAE204A1EB127CF0 /* [CP] Embed Pods Frameworks */ = {
+		E1B6BB8347BB474D14E28D6C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI/Pods-NurseProAI-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI/Pods-NurseProAI-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NurseProAI/Pods-NurseProAI-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F318015D3F303CA7FE39508C /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NurseProAI-NurseProAITests/Pods-NurseProAI-NurseProAITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -498,7 +497,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8F51BFED485EF1CB96DC1FAC /* Pods-NurseProAI-NurseProAITests.debug.xcconfig */;
+			baseConfigurationReference = 1695E08D393494D2BBF76D79 /* Pods-NurseProAI-NurseProAITests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -525,7 +524,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D001DC867E4BE56EB46018CC /* Pods-NurseProAI-NurseProAITests.release.xcconfig */;
+			baseConfigurationReference = C0FC0F3B395CE4C24882BE91 /* Pods-NurseProAI-NurseProAITests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -549,7 +548,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 63F4E441999A96F6D5771E49 /* Pods-NurseProAI.debug.xcconfig */;
+			baseConfigurationReference = 0F0C61BC73B7B08EC12DF46C /* Pods-NurseProAI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -579,7 +578,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F02C036C71654F0BAFCA0101 /* Pods-NurseProAI.release.xcconfig */;
+			baseConfigurationReference = CBA41CCA958D3FC07B6FC73C /* Pods-NurseProAI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
