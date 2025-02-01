@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { TextInput } from 'react-native';
+import { Platform, TextInput } from 'react-native';
 import * as yup from 'yup';
-import { useAppContext } from '@src/context';
+import { storage, useAppContext } from '@src/context';
 import { specialCharacters } from '@src/services/Env';
 import { signupHandler } from '../../api/auth';
+import { StorageKeys } from '../../constants';
 
 const useSignUp = () => {
   const { color, navigation } = useAppContext();
@@ -65,6 +66,8 @@ const useSignUp = () => {
 
   const handleSubmit = useCallback(
     async (values: typeof initialValues) => {
+      const deviceType = Platform.OS === 'ios' ? 'ios' : 'android';
+      let fcmToken = storage.getData(StorageKeys.FCM_TOKEN);
       const data = {
         name: values.name,
         email: values.email,
@@ -74,7 +77,10 @@ const useSignUp = () => {
         gender: "male",
         address: "123 Main St",
         role: values.role,
-        speciality: values.speciality
+        speciality: values.speciality,
+        fcm_token: fcmToken,
+        device_id: fcmToken,
+        device_type: deviceType
       };
       signupHandler(data, setDisabled, setIsLoading, navigation,);
     },

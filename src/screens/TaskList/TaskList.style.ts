@@ -8,6 +8,18 @@ export const TaskListStyles = ({ textColor, backgroundColor, primaryColor }: Pal
             flex: 1,
             backgroundColor: backgroundColor,
         },
+        taskItem: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: 10,
+        },
+        taskContent: {
+            flex: 1,
+        },
+        copyButton: {
+            padding: 8,
+        },
         mainView: {
             flex: 1,
             backgroundColor: backgroundColor,

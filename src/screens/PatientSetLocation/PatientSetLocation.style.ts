@@ -32,7 +32,7 @@ export const PatientSetLocationStyles = ({ textColor, Tertiary, backgroundColor 
       fontSize: 14,
       fontWeight: '400',
       color: textColor,
-      width: '90%',
+      width: '88%',
       fontFamily: Fonts.Roboto_Light
     },
     mapContainer: {

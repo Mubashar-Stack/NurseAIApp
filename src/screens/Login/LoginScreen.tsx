@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Keyboard, ScrollView, StyleSheet, KeyboardAvoidingView, TextInput, Platform, TouchableWithoutFeedback, View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { BaseLayout } from '@src/components';
 import Feather from 'react-native-vector-icons/Feather';
@@ -11,7 +11,8 @@ import Header from '@src/components/Header/Header';
 import { Formik } from 'formik';
 import { Screen } from '../../navigation/appNavigation.type'
 import { Text } from '@app/blueprints';
-import useLogin from './useLogin';  // Import the useLogin hook
+import useLogin from './useLogin';
+import { useVoiceInput } from '@src/context/VoiceInputContext';
 
 const LoginScreen = () => {
   const { color } = useColor();
@@ -19,7 +20,26 @@ const LoginScreen = () => {
   const { navigation } = useAppContext();
   const { disabled, loading, fieldValidation, initialValues, handleSubmit, passwordRef } = useLogin();
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [activeField, setActiveField] = useState<'email' | null>(null);
+  const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput();
+  const emailRef = useRef<TextInput>(null);
+  const formikRef = useRef<any>(null);
 
+  useEffect(() => {
+    if (voiceInputText && activeField && formikRef.current) {
+      formikRef.current.setFieldValue(activeField, voiceInputText);
+      setActiveField(null);
+    }
+  }, [voiceInputText, activeField]);
+
+  const handleVoiceInput = async (field: 'email') => {
+    if (isListening) {
+      await stopVoiceInput();
+    } else {
+      setActiveField(field);
+      await startVoiceInput();
+    }
+  };
 
   return (
     <BaseLayout>
@@ -29,9 +49,10 @@ const LoginScreen = () => {
           <View style={design.subView}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <Formik
+                innerRef={formikRef}
                 initialValues={initialValues}
                 validationSchema={fieldValidation}
-                onSubmit={handleSubmit} // Use handleSubmit from the hook
+                onSubmit={handleSubmit}
               >
                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                   <View style={{ flex: 1 }}>
@@ -39,6 +60,7 @@ const LoginScreen = () => {
                       <Text preset="h2">Email</Text>
                       <View style={design.textView}>
                         <TextInput
+                          ref={emailRef}
                           contextMenuHidden={true}
                           selectTextOnFocus={true}
                           style={{ ...design.inputText, textAlign: 'left' }}
@@ -51,9 +73,10 @@ const LoginScreen = () => {
                           onBlur={handleBlur('email')}
                           blurOnSubmit={false}
                           underlineColorAndroid="transparent"
+                          onFocus={() => setActiveField('email')}
                         />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                        <TouchableOpacity onPress={() => handleVoiceInput('email')}>
+                          <Ionicons name={isListening && activeField === 'email' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
                         </TouchableOpacity>
                       </View>
                       {touched.email && errors.email ? (
@@ -64,7 +87,7 @@ const LoginScreen = () => {
                       <Text preset="h2">Password</Text>
                       <View style={design.textView} >
                         <TextInput
-                          ref={passwordRef}  // Reference from useLogin hook
+                          ref={passwordRef}
                           contextMenuHidden={true}
                           style={design.inputText}
                           placeholder="Enter your password"
@@ -80,6 +103,7 @@ const LoginScreen = () => {
                         <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
                           <Feather name={passwordVisible ? "eye-off" : "eye"} color={color.textColor} size={20} />
                         </TouchableOpacity>
+
                       </View>
                       {touched.password && errors.password ? (
                         <Text style={design.errorText}>{errors.password}</Text>
@@ -89,7 +113,7 @@ const LoginScreen = () => {
                       <Text preset='h2' textAlign='right' >Forgot Password?</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={[design.footerBtn, disabled && { opacity: 0.5 }]} // Disable button when submitting
+                      style={[design.footerBtn, disabled && { opacity: 0.5 }]}
                       //@ts-ignore
                       onPress={handleSubmit}
                       disabled={disabled}
@@ -104,11 +128,10 @@ const LoginScreen = () => {
                     </View>
 
                     <View style={styles.socialButtons}>
-
-                      <TouchableOpacity style={[styles.socialButton, { backgroundColor: color.backgroundColor, }]}>
+                      <TouchableOpacity style={[styles.socialButton, { backgroundColor: color.backgroundColor }]}>
                         <AntDesign size={24} name="apple-o" color={color.textColor} />
                       </TouchableOpacity>
-                      <TouchableOpacity style={[styles.socialButton, { backgroundColor: color.backgroundColor, }]}>
+                      <TouchableOpacity style={[styles.socialButton, { backgroundColor: color.backgroundColor }]}>
                         <MaterialCommunityIcons size={24} name="google" color={color.textColor} />
                       </TouchableOpacity>
                     </View>
@@ -129,6 +152,7 @@ const LoginScreen = () => {
     </BaseLayout>
   );
 };
+
 const styles = StyleSheet.create({
   divider: {
     flexDirection: 'row',
@@ -149,4 +173,6 @@ const styles = StyleSheet.create({
     marginHorizontal: -5,
   },
 });
+
 export default React.memo(LoginScreen);
+

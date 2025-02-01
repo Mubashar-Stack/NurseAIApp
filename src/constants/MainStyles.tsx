@@ -20,6 +20,7 @@ const mainStyle = (color: any) => StyleSheet.create({
         fontFamily: Fonts.Roboto_Medium,
         color: color.textColor,
         fontSize: 16,
+
     },
     subText: {
         color: color.textColor,

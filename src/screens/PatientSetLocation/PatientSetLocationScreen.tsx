@@ -64,7 +64,10 @@ const PatientSetLocationScreen = () => {
     requestLocationPermission,
     currentLocation,
     selectedPlace,
-    handleCurrentLocationClick
+    handleCurrentLocationClick,
+    handleVoiceSearch,
+    isListening,
+    isVoiceSearchActive,
   } = usePatientSetLocation();
 
 
@@ -98,8 +101,12 @@ const PatientSetLocationScreen = () => {
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
-          <TouchableOpacity>
-            <Ionicons name="mic-outline" color={color.textColor} size={24} />
+          <TouchableOpacity onPress={handleVoiceSearch}>
+            <Ionicons
+              name={isListening && isVoiceSearchActive ? "mic" : "mic-outline"}
+              color={color.textColor}
+              size={24}
+            />
           </TouchableOpacity>
         </View>
       </View>

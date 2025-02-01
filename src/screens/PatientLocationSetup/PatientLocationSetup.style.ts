@@ -14,7 +14,7 @@ export const PatientLocationSetupStyles = (color: Palette) =>
     subView: {
       flex: 1,
       paddingHorizontal: 16,
-      paddingVertical: 20,
+      paddingVertical: 2,
     },
     inputContainer: {
       marginBottom: 16,

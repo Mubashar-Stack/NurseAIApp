@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -19,6 +19,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { Formik } from 'formik';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DropdownPicker from '@src/components/Dropdown/DropdownPicker';
+import { useVoiceInput } from '@src/context/VoiceInputContext';
 
 const AddTaskScreen = () => {
   const {
@@ -36,6 +37,30 @@ const AddTaskScreen = () => {
   } = useAddTask();
 
   const styles = AddTaskStyles(color);
+  const [activeField, setActiveField] = useState<any>(null);
+
+  const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput();
+  const nameRef = useRef<TextInput>(null);
+  const medicationRef = useRef<TextInput>(null);
+  const describeRef = useRef<TextInput>(null);
+
+  const formikRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (voiceInputText && activeField && formikRef.current) {
+      formikRef.current.setFieldValue(activeField, voiceInputText);
+      setActiveField(null);
+    }
+  }, [voiceInputText, activeField]);
+
+  const handleVoiceInput = async (field: any) => {
+    if (isListening) {
+      await stopVoiceInput();
+    } else {
+      setActiveField(field);
+      await startVoiceInput();
+    }
+  };
 
   return (
     <BaseLayout>
@@ -78,6 +103,7 @@ const AddTaskScreen = () => {
             keyboardShouldPersistTaps="handled"
           >
             <Formik
+              innerRef={formikRef}
               initialValues={initialValues}
               validationSchema={fieldValidation}
               onSubmit={handleSubmit}
@@ -98,6 +124,9 @@ const AddTaskScreen = () => {
                     <Text style={styles.label}>Patient Name</Text>
                     <View style={[styles.inputWrapper, { zIndex: 1 }]}>
                       <TextInput
+                        ref={nameRef}
+                        contextMenuHidden={true}
+                        selectTextOnFocus={true}
                         style={styles.input}
                         placeholder="Type patient name"
                         placeholderTextColor="#999999"
@@ -107,10 +136,11 @@ const AddTaskScreen = () => {
                           searchPatients(text);
                         }}
                         onBlur={handleBlur('patientName')}
+                        onFocus={() => setActiveField('patientName')}
                       />
-                      <TouchableOpacity style={styles.micButton}>
-                        <Ionicons name="mic-outline" color={color.textColor} size={24} />
-                      </TouchableOpacity>
+                      {/* <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput('patientName')}>
+                        <Ionicons name={isListening && activeField === 'patientName' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
+                      </TouchableOpacity> */}
                     </View>
                     {isSearching && (
                       <ActivityIndicator style={styles.searchLoader} color={color.textColor} />
@@ -205,15 +235,19 @@ const AddTaskScreen = () => {
                     <Text style={styles.label}>Medication</Text>
                     <View style={styles.inputWrapper}>
                       <TextInput
+                        ref={medicationRef}
+                        contextMenuHidden={true}
+                        selectTextOnFocus={true}
                         style={styles.input}
                         placeholder="Medication1, Medication2, Medication3"
                         placeholderTextColor="#999999"
                         value={values.medication}
                         onChangeText={handleChange('medication')}
                         onBlur={handleBlur('medication')}
+                        onFocus={() => setActiveField('medication')}
                       />
-                      <TouchableOpacity style={styles.micButton}>
-                        <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                      <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput('medication')}>
+                        <Ionicons name={isListening && activeField === 'medication' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
                       </TouchableOpacity>
                     </View>
                     {touched.medication && errors.medication && (
@@ -225,6 +259,9 @@ const AddTaskScreen = () => {
                     <Text style={styles.label}>Describe in detail</Text>
                     <View style={[styles.inputWrapper, { height: 120, alignItems: 'flex-start' }]}>
                       <TextInput
+                        ref={describeRef}
+                        contextMenuHidden={true}
+                        selectTextOnFocus={true}
                         style={[styles.input, styles.textArea]}
                         placeholder="Type here..."
                         placeholderTextColor="#999999"
@@ -232,9 +269,10 @@ const AddTaskScreen = () => {
                         onChangeText={handleChange('describe')}
                         onBlur={handleBlur('describe')}
                         multiline
+                        onFocus={() => setActiveField('describe')}
                       />
-                      <TouchableOpacity style={[styles.micButton, { alignSelf: 'flex-start' }]}>
-                        <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                      <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput('describe')}>
+                        <Ionicons name={isListening && activeField === 'describe' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
                       </TouchableOpacity>
                     </View>
                     {touched.describe && errors.describe && (
@@ -244,6 +282,7 @@ const AddTaskScreen = () => {
 
                   <TouchableOpacity
                     style={[styles.addButton, isLoading && styles.addButtonDisabled]}
+                    //@ts-ignore
                     onPress={handleSubmit}
                     disabled={isLoading}
                   >

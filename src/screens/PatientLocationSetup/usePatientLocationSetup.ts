@@ -5,6 +5,7 @@ import { PatientLocationSetupStyles } from './PatientLocationSetup.style';
 import { Screen } from '../../navigation/appNavigation.type';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useVoiceInput } from '@src/context/VoiceInputContext';
 
 const usePatientLocationSetup = (locationId: number) => {
   console.log("🚀 ~ usePatientLocationSetup ~ locationId:", locationId)
@@ -12,13 +13,10 @@ const usePatientLocationSetup = (locationId: number) => {
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const token = useSelector((state: any) => state.auth?.isToken);
-
+  const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput();
+  const [activeField, setActiveField] = useState<string | null>(null);
 
   const fieldValidation = yup.object().shape({
-    // buildingNumber: yup.string().trim().required('Please enter building number'),
-    // apartmentNumber: yup.string().trim().required('Please enter apartment number'),
-    // floorNumber: yup.string().trim().required('Please enter floor number'),
-    // address: yup.string().trim().required('Please enter address'),
     city: yup.string().trim().required('Please enter city'),
     state: yup.string().trim().required('Please enter state'),
     postalCode: yup.string().trim().required('Please enter postal code'),
@@ -26,10 +24,6 @@ const usePatientLocationSetup = (locationId: number) => {
   });
 
   const [initialValues, setInitialValues] = useState({
-    buildingNumber: '',
-    apartmentNumber: '',
-    floorNumber: '',
-    address: '',
     city: '',
     state: '',
     postalCode: '',
@@ -57,7 +51,6 @@ const usePatientLocationSetup = (locationId: number) => {
           }
         );
         console.log("🚀 ~ response:", response)
-        // console.log("Address updated successfully:", response.data);
         navigation.navigate(Screen.HOME);
       } catch (error: any) {
         console.error("Error updating location:", error);
@@ -65,8 +58,24 @@ const usePatientLocationSetup = (locationId: number) => {
         setDisabled(false);
       }
     },
-    [navigation, locationId]
+    [navigation, locationId, token]
   );
+
+  const handleVoiceInput = async (field: string) => {
+    if (isListening) {
+      await stopVoiceInput();
+    } else {
+      setActiveField(field);
+      await startVoiceInput();
+    }
+  };
+
+  useEffect(() => {
+    if (voiceInputText && activeField) {
+      setInitialValues(prev => ({ ...prev, [activeField]: voiceInputText }));
+      setActiveField(null);
+    }
+  }, [voiceInputText, activeField]);
 
   return {
     color,
@@ -77,6 +86,9 @@ const usePatientLocationSetup = (locationId: number) => {
     initialValues,
     navigation,
     styles: PatientLocationSetupStyles(color),
+    handleVoiceInput,
+    isListening,
+    activeField,
   };
 };
 

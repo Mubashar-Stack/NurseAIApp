@@ -59,6 +59,7 @@ export const signinHandler = async (data: any, setDisabled: any, setLoading: any
   setLoading(true);
   try {
     const response = await axios.post(baseURL + '/api/signin', data);
+    console.log("🚀 ~ signinHandler ~ response?.data:", response?.data)
     showSuccessToast(response?.data?.message, 2000);
     store.dispatch(
       setUserInfo({

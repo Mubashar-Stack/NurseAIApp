@@ -1,52 +1,26 @@
 import { BaseLayout } from '@src/components';
 import Header from '@src/components/Header/Header';
-import mainStyle from '@src/constants/MainStyles';
-import { useAppContext, useColor } from '@src/context';
-import React, { useState } from 'react';
-import { View, TouchableOpacity, ScrollView, TextInput, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, TouchableOpacity, ScrollView, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
 import { Text } from '@app/blueprints';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { scaleHeight } from '@src/utils';
-
-interface FAQItem {
-  id: string;
-  question: string;
-  answer: string;
-}
-
-const faqData: FAQItem[] = [
-  {
-    id: '1',
-    question: 'What is Nurse Pro Ai?',
-    answer: 'Nurse Pro Ai is an advanced artificial intelligence platform designed to assist nursing professionals in their daily tasks and decision-making processes.',
-  },
-  {
-    id: '2',
-    question: 'Why choose Nurse Pro Ai?',
-    answer: 'Nurse Pro Ai offers cutting-edge technology, personalized assistance, and continuous learning capabilities to enhance the efficiency and accuracy of nursing care.',
-  },
-  {
-    id: '3',
-    question: 'What are the payment methods?',
-    answer: 'We accept various payment methods including credit cards, debit cards, and digital wallets. Please check our payment page for a full list of accepted methods.',
-  },
-];
+import useHelpAndSupport, { faqData } from './useHelpAndSupport';
 
 const HelpAndSupport = () => {
-  const { color } = useColor();
-  const design = mainStyle(color);
-  const { navigation } = useAppContext();
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [query, setQuery] = useState('');
-
-  const toggleExpand = (id: string) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
-
-  const handleSend = () => {
-    console.log('Sending query:', query);
-    setQuery('');
-  };
+  const {
+    design,
+    color,
+    navigation,
+    expandedId,
+    query,
+    subject,
+    isLoading,
+    setQuery,
+    setSubject,
+    toggleExpand,
+    handleSend,
+  } = useHelpAndSupport();
 
   return (
     <BaseLayout>
@@ -56,36 +30,52 @@ const HelpAndSupport = () => {
           <ScrollView style={{ flex: 1 }}>
             <Text preset='h2' style={{ marginBottom: scaleHeight(10) }}>FAQs</Text>
             {faqData.map((item) => (
-              <View key={item.id} style={styles.faqItem} >
+              <View key={item.id} style={styles.faqItem}>
                 <TouchableOpacity
                   style={{ ...design.listView, padding: scaleHeight(16), borderBottomWidth: 0 }}
                   onPress={() => toggleExpand(item.id)}
                 >
                   <Text preset='h2'>{item.question}</Text>
-                  {expandedId === item.id ? (
-                    <AntDesign size={18} name={"up"} color={color.textColor} />
-                  ) : (
-                    <AntDesign size={18} name={"down"} color={color.textColor} />
-                  )}
+                  <AntDesign
+                    size={18}
+                    name={expandedId === item.id ? "up" : "down"}
+                    color={color.textColor}
+                  />
                 </TouchableOpacity>
                 {expandedId === item.id && (
                   <Text preset='h4' style={{ padding: scaleHeight(16) }}>{item.answer}</Text>
                 )}
               </View>
             ))}
-            <View >
+            <View>
               <Text preset='h2' style={{ marginBottom: scaleHeight(10) }}>Still need help?</Text>
-              <View style={{ ...design.textView, alignItems: 'stretch', padding: scaleHeight(10), height: 100, }}>
+              <View style={styles.queryContainer}>
                 <TextInput
-                  style={{ ...design.inputText, textAlignVertical: 'top', }}
-                  placeholder="Type your query..."
-                  value={query}
-                  onChangeText={setQuery}
-                  multiline
+                  style={[design.inputText, styles.subjectInput]}
+                  placeholder="Subject (optional)"
+                  value={subject}
+                  onChangeText={setSubject}
                 />
+                <View style={{ ...design.textView, alignItems: 'stretch', padding: scaleHeight(10), height: 100 }}>
+                  <TextInput
+                    style={{ ...design.inputText, textAlignVertical: 'top' }}
+                    placeholder="Type your query..."
+                    value={query}
+                    onChangeText={setQuery}
+                    multiline
+                  />
+                </View>
               </View>
-              <TouchableOpacity style={design.footerBtn} onPress={handleSend}>
-                <Text style={design.footerBtnTxt}>Send</Text>
+              <TouchableOpacity
+                style={[design.footerBtn, isLoading && styles.disabledButton]}
+                onPress={handleSend}
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <ActivityIndicator color="#FFFFFF" />
+                ) : (
+                  <Text style={design.footerBtnTxt}>Send</Text>
+                )}
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -93,7 +83,7 @@ const HelpAndSupport = () => {
       </View>
     </BaseLayout>
   );
-}
+};
 
 const styles = StyleSheet.create({
   faqItem: {
@@ -102,5 +92,23 @@ const styles = StyleSheet.create({
     borderColor: '#E0E0E0',
     borderRadius: 8,
   },
+  queryContainer: {
+    marginBottom: 16,
+  },
+  subjectInput: {
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    borderRadius: 8,
+    margin: 5,
+    backgroundColor: '#E2E2E2',
+    height: 40,
+    width: 'auto'
+  },
+  disabledButton: {
+    opacity: 0.7,
+  },
 });
-export default HelpAndSupport
+
+export default HelpAndSupport;
+

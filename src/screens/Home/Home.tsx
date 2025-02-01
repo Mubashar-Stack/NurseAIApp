@@ -6,6 +6,7 @@ import { MapPin, Bell, CheckCircle } from 'lucide-react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import VideoPlayerModal from './VideoPlayerModal';
 import { BaseLayout } from '@src/components';
+import YouTubePlayerModal from './youtube-player-modal';
 
 const HomeScreen = () => {
   const {
@@ -21,6 +22,7 @@ const HomeScreen = () => {
     currentAddress,
     checkins,
     recommendedVideos,
+    technlogicsVideos,
     requestLocationPermission,
     getCurrentLocation,
     handleCheckIn,
@@ -29,6 +31,8 @@ const HomeScreen = () => {
 
   const [isVideoModalVisible, setIsVideoModalVisible] = useState(false);
   const [selectedVideoUrl, setSelectedVideoUrl] = useState('');
+  const [isYouTubeModalVisible, setIsYouTubeModalVisible] = useState(false)
+  const [selectedYouTubeId, setSelectedYouTubeId] = useState("")
 
   useEffect(() => {
     if (!hasLocationPermission) {
@@ -40,17 +44,23 @@ const HomeScreen = () => {
     <TouchableOpacity
       style={styles.videoThumbnail}
       onPress={() => {
-        setSelectedVideoUrl(item.video_file);
-        setIsVideoModalVisible(true);
+        if (item.youtube_video_id) {
+          setSelectedYouTubeId(item.youtube_video_id)
+          setIsYouTubeModalVisible(true)
+        } else if (item.video_file) {
+          setSelectedVideoUrl(item.video_file)
+          setIsVideoModalVisible(true)
+        } else {
+          Alert.alert("Error", "Video URL is not available")
+        }
       }}
     >
-      <Image source={{ uri: item.thumbnail }} style={styles.videoImage} />
+      <Image source={{ uri: item.thumbnail || item.thumbnail_url }} style={styles.videoImage} />
       <View style={styles.playIconOverlay}>
-        <AntDesign name="play" size={24} color={'#FFF'} />
+        <AntDesign name="play" size={24} color={"#FFF"} />
       </View>
-      {/* <Text style={styles.videoTitle}>{item.title}</Text> */}
     </TouchableOpacity>
-  );
+  )
 
   const onCheckInPress = async () => {
     await refreshLocation();
@@ -177,12 +187,35 @@ const HomeScreen = () => {
             renderItem={({ item }: any) => <VideoThumbnail item={item} />}
             keyExtractor={(item: any) => item.id.toString()}
           />
+          <Text style={styles.sectionTitle}>Technlogics Videos</Text>
+          <FlatList
+            horizontal
+            style={{ marginRight: 10 }}
+            showsHorizontalScrollIndicator={false}
+            data={technlogicsVideos}
+            renderItem={({ item }: any) => (
+              <VideoThumbnail
+                item={{
+                  ...item,
+                  thumbnail: item.thumbnail_url || "https://via.placeholder.com/200x112",
+                  video_file: item.youtube_url,
+                  youtube_video_id: item.youtube_video_id,
+                }}
+              />
+            )}
+            keyExtractor={(item: any) => item.id.toString()}
+          />
         </ScrollView>
 
         <VideoPlayerModal
           isVisible={isVideoModalVisible}
           onClose={() => setIsVideoModalVisible(false)}
           videoUrl={selectedVideoUrl}
+        />
+        <YouTubePlayerModal
+          isVisible={isYouTubeModalVisible}
+          onClose={() => setIsYouTubeModalVisible(false)}
+          videoId={selectedYouTubeId}
         />
       </View>
     </BaseLayout>

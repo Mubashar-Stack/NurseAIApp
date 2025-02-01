@@ -7,7 +7,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import { TaskListStyles } from './TaskList.style';
 import { Screen } from '../../navigation/appNavigation.type';
-
+import Clipboard from '@react-native-clipboard/clipboard';
+import { showErrorToast, showSuccessToast } from '@src/utils';
 const TaskListScreen = () => {
   const {
     color,
@@ -22,6 +23,15 @@ const TaskListScreen = () => {
 
   const styles = TaskListStyles(color);
 
+  const copyToClipboard = (task: any) => {
+    try {
+      const taskDetails = `Patient: ${task.patient_name}\nMedication: ${task.medication}\nTask Details: ${task?.task_details}`;
+      Clipboard.setString(taskDetails);
+      showSuccessToast('Task details copied to clipboard', 2000);
+    } catch (error) {
+      showErrorToast('Failed to copy task details', 2000);
+    }
+  };
 
 
   return (
@@ -91,13 +101,19 @@ const TaskListScreen = () => {
                     onPress={() => navigation.navigate(Screen.PATIENT_DETAIL, { taskId: task?.id })}
                   >
                     <Image
-                      source={{ uri: 'https://technlogics.co/api' + task?.patient_photo }}
+                      source={{ uri: task?.patient_photo }}
                       style={styles.avatar}
                     />
                     <View style={styles.taskDetails}>
                       <Text style={styles.patientName}>{task.patient_name}</Text>
                       <Text style={styles.medication}>{task.medication}</Text>
                     </View>
+                    <TouchableOpacity
+                      style={styles.copyButton}
+                      onPress={() => copyToClipboard(task)}
+                    >
+                      <Feather name="copy" size={20} color={color.textColor} />
+                    </TouchableOpacity>
                   </TouchableOpacity>
                 ))
               )}

@@ -27,7 +27,10 @@ const PatientLocationSetupScreen = ({ route }: any) => {
     fieldValidation,
     initialValues,
     handleSubmit,
-    navigation
+    navigation,
+    handleVoiceInput,
+    isListening,
+    activeField,
   } = usePatientLocationSetup(locationId);
 
   return (
@@ -40,7 +43,7 @@ const PatientLocationSetupScreen = ({ route }: any) => {
           <Header onPress={() => navigation.goBack()} title="Location" />
           <View style={styles.subView}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <Text preset="h1" style={styles.sectionTitle}>Address Details</Text>
+              {/* <Text preset="h1" style={styles.sectionTitle}>Address Detail</Text> */}
               <Formik
                 initialValues={initialValues}
                 validationSchema={fieldValidation}
@@ -49,79 +52,6 @@ const PatientLocationSetupScreen = ({ route }: any) => {
               >
                 {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
                   <View>
-                    {/* <View style={styles.inputContainer}>
-                      <View style={styles.textView}>
-                        <TextInput
-                          style={styles.input}
-                          placeholder="Building number"
-                          value={values.buildingNumber}
-                          onChangeText={handleChange('buildingNumber')}
-                          onBlur={handleBlur('buildingNumber')}
-                        />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
-                        </TouchableOpacity>
-                      </View>
-                      {touched.buildingNumber && errors.buildingNumber && (
-                        <Text style={styles.errorText}>{errors.buildingNumber}</Text>
-                      )}
-                    </View>
-
-                    <View style={styles.inputContainer}>
-                      <View style={styles.textView}>
-                        <TextInput
-                          style={styles.input}
-                          placeholder="Apartment number"
-                          value={values.apartmentNumber}
-                          onChangeText={handleChange('apartmentNumber')}
-                          onBlur={handleBlur('apartmentNumber')}
-                        />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
-                        </TouchableOpacity>
-                      </View>
-                      {touched.apartmentNumber && errors.apartmentNumber && (
-                        <Text style={styles.errorText}>{errors.apartmentNumber}</Text>
-                      )}
-                    </View>
-
-                    <View style={styles.inputContainer}>
-                      <View style={styles.textView}>
-                        <TextInput
-                          style={styles.input}
-                          placeholder="Floor number"
-                          value={values.floorNumber}
-                          onChangeText={handleChange('floorNumber')}
-                          onBlur={handleBlur('floorNumber')}
-                        />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
-                        </TouchableOpacity>
-                      </View>
-                      {touched.floorNumber && errors.floorNumber && (
-                        <Text style={styles.errorText}>{errors.floorNumber}</Text>
-                      )}
-                    </View> */}
-
-
-                    {/* <View style={styles.inputContainer}>
-                      <View style={styles.textView}>
-                        <TextInput
-                          style={styles.input}
-                          placeholder="Address"
-                          value={values.address}
-                          onChangeText={handleChange('address')}
-                          onBlur={handleBlur('address')}
-                        />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
-                        </TouchableOpacity>
-                      </View>
-                      {touched.address && errors.address && (
-                        <Text style={styles.errorText}>{errors.address}</Text>
-                      )}
-                    </View> */}
-
                     <View style={styles.inputContainer}>
                       <View style={styles.textView}>
                         <TextInput
@@ -131,8 +61,12 @@ const PatientLocationSetupScreen = ({ route }: any) => {
                           onChangeText={handleChange('city')}
                           onBlur={handleBlur('city')}
                         />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                        <TouchableOpacity onPress={() => handleVoiceInput('city')}>
+                          <Ionicons
+                            name={isListening && activeField === 'city' ? "mic" : "mic-outline"}
+                            color={color.textColor}
+                            size={24}
+                          />
                         </TouchableOpacity>
                       </View>
                       {touched.city && errors.city && (
@@ -149,8 +83,12 @@ const PatientLocationSetupScreen = ({ route }: any) => {
                           onChangeText={handleChange('state')}
                           onBlur={handleBlur('state')}
                         />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                        <TouchableOpacity onPress={() => handleVoiceInput('state')}>
+                          <Ionicons
+                            name={isListening && activeField === 'state' ? "mic" : "mic-outline"}
+                            color={color.textColor}
+                            size={24}
+                          />
                         </TouchableOpacity>
                       </View>
                       {touched.state && errors.state && (
@@ -167,8 +105,12 @@ const PatientLocationSetupScreen = ({ route }: any) => {
                           onChangeText={handleChange('postalCode')}
                           onBlur={handleBlur('postalCode')}
                         />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                        <TouchableOpacity onPress={() => handleVoiceInput('postalCode')}>
+                          <Ionicons
+                            name={isListening && activeField === 'postalCode' ? "mic" : "mic-outline"}
+                            color={color.textColor}
+                            size={24}
+                          />
                         </TouchableOpacity>
                       </View>
                       {touched.postalCode && errors.postalCode && (
@@ -185,8 +127,12 @@ const PatientLocationSetupScreen = ({ route }: any) => {
                           onChangeText={handleChange('country')}
                           onBlur={handleBlur('country')}
                         />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                        <TouchableOpacity onPress={() => handleVoiceInput('country')}>
+                          <Ionicons
+                            name={isListening && activeField === 'country' ? "mic" : "mic-outline"}
+                            color={color.textColor}
+                            size={24}
+                          />
                         </TouchableOpacity>
                       </View>
                       {touched.country && errors.country && (
@@ -201,7 +147,6 @@ const PatientLocationSetupScreen = ({ route }: any) => {
                       disabled={disabled}
                     >
                       {loading ? <ActivityIndicator size="small" color="#FFF" /> : <Text style={styles.saveButtonText}>Save</Text>}
-
                     </TouchableOpacity>
                   </View>
                 )}

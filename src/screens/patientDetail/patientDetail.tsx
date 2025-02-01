@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux'
 import { Icons } from '@src/assets'
 import Header from '@src/components/Header/Header'
 import { useAppContext, useColor } from '@src/context'
+import EmptyReviews from './empty-reviews'
 
 
 export default function PatientProfile(props: any) {
@@ -145,11 +146,11 @@ export default function PatientProfile(props: any) {
                                 </View>
                             ) : (
                                 <View>
-                                    {reviews?.map((review, index) => (
-                                        <View key={review.id || index} style={styles.reviewItem}>
+                                    {reviews?.length > 0 ? reviews?.map((review, index) => (
+                                        <View key={review?.id || index} style={styles.reviewItem}>
                                             <View style={{ flexDirection: 'row', alignContent: 'space-between', alignItems: 'center' }}>
                                                 <Text style={styles.reviewerName}>
-                                                    {review.nurse?.name || `Nurse ${index + 1}`}
+                                                    {review?.nurse?.name || `Nurse ${index + 1}`}
                                                 </Text>
                                                 <Text style={styles.reviewDate}>
                                                     {`Date: ${new Date().toLocaleDateString('en-US', {
@@ -160,11 +161,11 @@ export default function PatientProfile(props: any) {
                                                 </Text>
                                             </View>
                                             <Text style={styles.reviewText}>
-                                                {review.comment}
+                                                {review?.comment}
                                             </Text>
-                                            {renderStars(review.rating || 4)}
+                                            {renderStars(review?.rating || 4)}
                                         </View>
-                                    ))}
+                                    )) : <EmptyReviews />}
 
                                 </View>
                             )}

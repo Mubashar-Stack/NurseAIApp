@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "358717529893",
+    "project_id": "nurseproai-b2ab6",
+    "storage_bucket": "nurseproai-b2ab6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358717529893:android:eff242761bfa398d7cc4cc",
+        "android_client_info": {
+          "package_name": "com.nurseaipro.io"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl_La3Uo_ztS9BMPGLRgR9Xppi10hSFJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

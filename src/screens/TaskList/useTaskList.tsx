@@ -16,10 +16,10 @@ const useTaskList = () => {
 
   const loadTasks = useCallback(async () => {
     try {
-      const response = await fetchTodaysTasks(token);
+      const response: any = await fetchTodaysTasks(token);
       console.log("🚀 ~ loadTasks ~ response:", response)
-      if (response.status) {
-        setTasks(response.data);
+      if (response?.count) {
+        setTasks(response?.results);
       }
     } catch (error: any) {
       console.error('Error loading tasks:', error);

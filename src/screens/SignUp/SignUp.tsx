@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, ScrollView, TouchableOpacity, Platform, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, TextInput, ActivityIndicator } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -11,6 +11,7 @@ import { Text } from '@app/blueprints';
 import useSignUp from './useSignUp';
 import DropdownPicker from '@src/components/Dropdown/DropdownPicker';
 import { Screen } from '../../navigation/appNavigation.type';
+import { useVoiceInput } from '@src/context/VoiceInputContext';
 
 const SignUp = () => {
   const { color } = useColor();
@@ -22,6 +23,30 @@ const SignUp = () => {
     { label: 'Nurse', value: 'nurse' },
     { label: 'Patient', value: 'patient' },
   ];
+  const [activeField, setActiveField] = useState<any>(null);
+  const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput();
+  const emailRef = useRef<TextInput>(null);
+  const nameRef = useRef<TextInput>(null);
+  const phoneRef = useRef<TextInput>(null);
+
+
+  const formikRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (voiceInputText && activeField && formikRef.current) {
+      formikRef.current.setFieldValue(activeField, voiceInputText);
+      setActiveField(null);
+    }
+  }, [voiceInputText, activeField]);
+
+  const handleVoiceInput = async (field: any) => {
+    if (isListening) {
+      await stopVoiceInput();
+    } else {
+      setActiveField(field);
+      await startVoiceInput();
+    }
+  };
 
   return (
     <BaseLayout>
@@ -31,6 +56,7 @@ const SignUp = () => {
           <View style={design.subView}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <Formik
+                innerRef={formikRef}
                 initialValues={initialValues}
                 validationSchema={fieldValidation}
                 onSubmit={handleSubmit} >
@@ -40,6 +66,9 @@ const SignUp = () => {
                       <Text preset="h2">Name</Text>
                       <View style={design.textView}>
                         <TextInput
+                          ref={nameRef}
+                          contextMenuHidden={true}
+                          selectTextOnFocus={true}
                           style={design.inputText}
                           placeholder="Enter your name"
                           placeholderTextColor={color?.textColor}
@@ -49,9 +78,10 @@ const SignUp = () => {
                           onBlur={handleBlur('name')}
                           blurOnSubmit={false}
                           underlineColorAndroid="transparent"
+                          onFocus={() => setActiveField('name')}
                         />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                        <TouchableOpacity onPress={() => handleVoiceInput('name')}>
+                          <Ionicons name={isListening && activeField === 'name' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
                         </TouchableOpacity>
                       </View>
                       {touched.name && errors.name && (
@@ -62,6 +92,9 @@ const SignUp = () => {
                       <Text preset="h2">Mobile Number</Text>
                       <View style={design.textView}>
                         <TextInput
+                          ref={phoneRef}
+                          contextMenuHidden={true}
+                          selectTextOnFocus={true}
                           style={{ ...design.inputText, textAlign: 'left', width: '90%' }}
                           keyboardType="number-pad"
                           placeholder="Enter your phone number"
@@ -72,9 +105,10 @@ const SignUp = () => {
                           onBlur={handleBlur('phoneNumber')}
                           blurOnSubmit={false}
                           underlineColorAndroid="transparent"
+                          onFocus={() => setActiveField('phoneNumber')}
                         />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                        <TouchableOpacity onPress={() => handleVoiceInput('phoneNumber')}>
+                          <Ionicons name={isListening && activeField === 'phoneNumber' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
                         </TouchableOpacity>
                       </View>
                       {touched.phoneNumber && errors.phoneNumber && (
@@ -87,6 +121,9 @@ const SignUp = () => {
                       <Text preset="h2">Email</Text>
                       <View style={design.textView}>
                         <TextInput
+                          ref={emailRef}
+                          contextMenuHidden={true}
+                          selectTextOnFocus={true}
                           style={design.inputText}
                           keyboardType="email-address"
                           placeholder="Enter your email"
@@ -97,9 +134,10 @@ const SignUp = () => {
                           onBlur={handleBlur('email')}
                           blurOnSubmit={false}
                           underlineColorAndroid="transparent"
+                          onFocus={() => setActiveField('email')}
                         />
-                        <TouchableOpacity>
-                          <Ionicons name="mic-outline" color={color.textColor} size={24} />
+                        <TouchableOpacity onPress={() => handleVoiceInput('email')}>
+                          <Ionicons name={isListening && activeField === 'email' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
                         </TouchableOpacity>
                       </View>
                       {touched.email && errors.email && (

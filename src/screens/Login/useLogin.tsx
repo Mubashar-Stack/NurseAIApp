@@ -1,9 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
 import * as yup from 'yup';
-import { useAppContext } from '@src/context';
+import { storage, useAppContext } from '@src/context';
 import { loginStyles } from './Login.style';
 import { signinHandler } from '../../api/auth';
+import { Platform } from 'react-native';
+import { StorageKeys } from '../../constants/storageKeys';
 
 const useLogin = () => {
   const { color, navigation } = useAppContext();
@@ -22,15 +24,20 @@ const useLogin = () => {
   });
 
   const initialValues = {
-    email: 'hyhello57@gmail.com',
-    password: 'Hello@1234',
+    email: '',
+    password: '',
   };
 
   const handleSubmit = useCallback(
     async (values: typeof initialValues) => {
+      const deviceType = Platform.OS === 'ios' ? 'ios' : 'android';
+      let fcmToken = storage.getData(StorageKeys.FCM_TOKEN);
       const data = {
         email: values.email,
         password: values.password,
+        fcm_token: fcmToken,
+        device_id: fcmToken,
+        device_type: deviceType
       };
       console.log("🚀 ~ data:", data)
       signinHandler(data, setDisabled, setLoading, navigation,);

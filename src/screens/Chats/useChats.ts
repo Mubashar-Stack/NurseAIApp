@@ -5,6 +5,7 @@ import { Screen } from '../../navigation/appNavigation.type';
 import { fetchChats, ChatRoom } from '../../api/chat';
 import { showErrorToast } from '@src/utils';
 import { useSelector } from 'react-redux';
+import { useVoiceInput } from '@src/context/VoiceInputContext';
 
 const useChats = () => {
   const { color, navigation } = useAppContext();
@@ -13,7 +14,8 @@ const useChats = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const token = useSelector((state: any) => state.auth.isToken);
-
+  const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput();
+  const [activeField, setActiveField] = useState<'search' | null>(null);
 
   const loadChats = useCallback(async () => {
     try {
@@ -30,14 +32,30 @@ const useChats = () => {
       setIsLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     loadChats();
   }, [loadChats]);
 
+  useEffect(() => {
+    if (voiceInputText && activeField === 'search') {
+      setSearchQuery(voiceInputText);
+      setActiveField(null);
+    }
+  }, [voiceInputText, activeField]);
+
   const handleSearch = (text: string) => {
     setSearchQuery(text);
+  };
+
+  const handleVoiceSearch = async () => {
+    if (isListening) {
+      await stopVoiceInput();
+    } else {
+      setActiveField('search');
+      await startVoiceInput();
+    }
   };
 
   const filteredChats = chats.filter(chat =>
@@ -65,6 +83,9 @@ const useChats = () => {
     isLoading,
     refreshing,
     handleRefresh,
+    handleVoiceSearch,
+    isListening,
+    activeField,
   };
 };
 

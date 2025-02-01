@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, TextInput, FlatList, TouchableOpacity, Image, RefreshControl, ActivityIndicator } from 'react-native';
 import { Text } from '@app/blueprints';
 import useChats from './useChats';
@@ -16,7 +16,12 @@ const ChatsScreen = () => {
     isLoading,
     refreshing,
     handleRefresh,
+    handleVoiceSearch,
+    isListening,
+    activeField,
   } = useChats();
+
+  const searchInputRef = useRef<TextInput>(null);
 
   const renderChatItem = ({ item: chat }: any) => (
     <TouchableOpacity
@@ -58,28 +63,38 @@ const ChatsScreen = () => {
           <View style={styles.searchBar}>
             <Ionicons name="search" size={20} color="#8E8E93" />
             <TextInput
+              ref={searchInputRef}
               style={styles.searchInput}
               placeholder="Search"
               value={searchQuery}
               onChangeText={handleSearch}
               placeholderTextColor="#8E8E93"
+              onFocus={() => activeField === 'search'}
             />
-            <TouchableOpacity>
-              <Ionicons name="mic-outline" size={20} color="#8E8E93" />
+            <TouchableOpacity onPress={handleVoiceSearch}>
+              <Ionicons
+                name={isListening && activeField === 'search' ? "mic" : "mic-outline"}
+                color="#8E8E93"
+                size={20}
+              />
             </TouchableOpacity>
           </View>
         </View>
 
-        {isLoading ? <View style={[styles.container, styles.centerContent]}>
-          <ActivityIndicator size="large" color="#002A65" />
-        </View> : <FlatList
-          data={chats}
-          renderItem={renderChatItem}
-          keyExtractor={(item) => item.id.toString()}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-          }
-        />}
+        {isLoading ? (
+          <View style={[styles.container, styles.centerContent]}>
+            <ActivityIndicator size="large" color="#002A65" />
+          </View>
+        ) : (
+          <FlatList
+            data={chats}
+            renderItem={renderChatItem}
+            keyExtractor={(item) => item.id.toString()}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+            }
+          />
+        )}
       </View>
     </BaseLayout>
   );

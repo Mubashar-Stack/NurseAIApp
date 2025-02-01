@@ -26,6 +26,7 @@ const usePatientHome = () => {
   const [currentAddress, setCurrentAddress] = useState('');
   const [checkins, setCheckins] = useState([]);
   const [recommendedVideos, setRecommendedVideos] = useState([]);
+  const [technlogicsVideos, setTechnlogicsVideos] = useState([])
 
   const GOOGLE_PLACES_API_KEY = 'AIzaSyBNWQWVhRgKjAV0nNkMiYWEewCoLzptX8w';
 
@@ -146,6 +147,20 @@ const usePatientHome = () => {
     }
   };
 
+  const fetchTechnlogicsVideos = async () => {
+    try {
+      const response = await axios.get(`https://technlogics.co/api/youtube-videos/user/62`, {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Token ${token}`,
+        },
+      })
+      setTechnlogicsVideos(response.data.data)
+    } catch (error) {
+      console.error("Error fetching Technlogics videos:", error)
+    }
+  }
+
   const handleCheckIn = async () => {
     if (!currentLocation) {
       Alert.alert('Error', 'Unable to get current location. Please try again.');
@@ -206,6 +221,7 @@ const usePatientHome = () => {
     requestLocationPermission();
     fetchCheckins();
     fetchRecommendedVideos();
+    fetchTechnlogicsVideos()
   }, []);
 
   const loadData = async () => {
@@ -254,6 +270,7 @@ const usePatientHome = () => {
     currentAddress,
     checkins,
     recommendedVideos,
+    technlogicsVideos,
     requestLocationPermission,
     getCurrentLocation,
     handleCheckIn,

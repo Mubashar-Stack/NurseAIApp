@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Modal, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Modal, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
 import Video from 'react-native-video';
 import { X } from 'lucide-react-native';
 
@@ -29,7 +29,10 @@ const VideoPlayerModal: React.FC<VideoPlayerModalProps> = ({ isVisible, onClose,
                     controls={true}
                     paused={paused}
                     resizeMode="contain"
-                    onError={(error) => console.error('Video Error:', error)}
+                    onError={(error) => {
+                        console.error("Video Error:", error)
+                        Alert.alert("Video Playback Error", "Unable to play this video. Please try again later.")
+                    }}
                 />
                 {/* <TouchableOpacity style={styles.playPauseButton} onPress={() => setPaused(!paused)}>
                     {paused ? (

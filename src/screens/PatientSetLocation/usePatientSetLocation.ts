@@ -9,6 +9,7 @@ import { debounce } from 'lodash';
 import { Screen } from '../../navigation/appNavigation.type';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useVoiceInput } from '@src/context/VoiceInputContext';
 
 export interface LocationSuggestion {
   placeId: string;
@@ -24,6 +25,7 @@ export interface LocationSuggestion {
 const GOOGLE_PLACES_API_KEY = 'AIzaSyBNWQWVhRgKjAV0nNkMiYWEewCoLzptX8w';
 const usePatientSetLocation = () => {
   const { color, navigation }: any = useAppContext();
+  const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput();
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [hasLocationPermission, setHasLocationPermission] = useState(false);
@@ -32,6 +34,7 @@ const usePatientSetLocation = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [isSelectingSuggestion, setIsSelectingSuggestion] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<any>(null);
+  const [isVoiceSearchActive, setIsVoiceSearchActive] = useState(false);
   const token = useSelector((state: any) => state.auth?.isToken);
 
   const mapRef = useRef(null);
@@ -126,6 +129,24 @@ const usePatientSetLocation = () => {
       );
     });
   }, []);
+
+  useEffect(() => {
+    if (voiceInputText && isVoiceSearchActive) {
+      setSearchQuery(voiceInputText);
+      setIsVoiceSearchActive(false);
+      debouncedFetchSuggestions(voiceInputText);
+    }
+  }, [voiceInputText, isVoiceSearchActive]);
+
+  const handleVoiceSearch = async () => {
+    if (isListening) {
+      await stopVoiceInput();
+      setIsVoiceSearchActive(false);
+    } else {
+      setIsVoiceSearchActive(true);
+      await startVoiceInput();
+    }
+  };
 
   useEffect(() => {
     const initializeLocation = async () => {
@@ -332,7 +353,10 @@ const usePatientSetLocation = () => {
     requestLocationPermission,
     currentLocation,
     selectedPlace,
-    handleCurrentLocationClick
+    handleCurrentLocationClick,
+    handleVoiceSearch,
+    isListening,
+    isVoiceSearchActive,
   };
 };
 

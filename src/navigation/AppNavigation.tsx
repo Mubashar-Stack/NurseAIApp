@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavigationContainerRef } from '@react-navigation/native';
+import { CommonActions, NavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import {
   ForgotPassword,
@@ -35,6 +35,18 @@ import TabNurseNavigator from './TabNueseNavigation';
 
 export const navigationRef = React.createRef<NavigationContainerRef<NavStackParams>>();
 
+export class NavigationService {
+  static navigate(name: string, params?: any) {
+    if (navigationRef.current) {
+      navigationRef.current.dispatch(
+        CommonActions.navigate({
+          name,
+          params,
+        })
+      );
+    }
+  }
+}
 const Stack = createNativeStackNavigator<NavStackParams>();
 
 const screenOptions: NativeStackNavigationOptions = {
