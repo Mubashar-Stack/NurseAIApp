@@ -8,8 +8,8 @@ def node_require(script)
     )", __dir__]).strip
 end
 
-platform :ios, '12.0' # Specify the minimum iOS version explicitly
-prepare_react_native_project!
+platform :ios, '13.4' # Specify the minimum iOS version explicitly
+#prepare_react_native_project!
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil

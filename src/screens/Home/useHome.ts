@@ -61,6 +61,8 @@ const usePatientHome = () => {
       }
 
       const result = await request(permission);
+      console.log("🚀 ~ requestLocationPermission ~ result:", result)
+
       const granted = result === RESULTS.GRANTED;
       setHasLocationPermission(granted);
 
