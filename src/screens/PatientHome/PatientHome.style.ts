@@ -12,7 +12,7 @@ export const PatientHomeStyles = ({ textColor }: Palette) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: 16,
-      paddingVertical: 16,
+      paddingVertical: 30,
       backgroundColor: '#fff',
     },
     locationContainer: {

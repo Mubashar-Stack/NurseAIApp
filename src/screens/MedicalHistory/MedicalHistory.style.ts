@@ -11,6 +11,7 @@ export const MedicalHistoryStyles = ({ textColor, backgroundColor, Tertiary }: P
       flexDirection: "row",
       alignItems: "center",
       padding: 16,
+      marginTop: 35,
       backgroundColor: backgroundColor,
     },
     backButton: {

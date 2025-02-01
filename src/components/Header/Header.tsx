@@ -15,7 +15,7 @@ const Header: React.FC<HeaderBackButtonProps> = ({ onPress, title }) => {
   //@ts-ignore
   const isAuthScreen = ['Sign Up', 'Log In', 'Home', 'My profile'].includes(title);
   return (
-    <View style={{ flexDirection: 'row', alignSelf: 'center', marginVertical: 14, alignItems: 'center', width: '90%' }}>
+    <View style={{ flexDirection: 'row', alignSelf: 'center', marginVertical: 0, alignItems: 'center', width: '90%' }}>
       {isAuthScreen ? (
         <Text preset="h1">{title}</Text>
       ) : (

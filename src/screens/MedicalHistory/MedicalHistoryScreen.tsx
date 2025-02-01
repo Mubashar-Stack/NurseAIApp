@@ -41,7 +41,7 @@ const MedicalHistoryScreen = () => {
       <ScrollView style={styles.content}>
         <TextInput
           style={styles.textInput}
-          placeholder="Please mention all details related to your health issue here."
+          placeholder="Please mention all details related to your health issue here"
           placeholderTextColor="#999999"
           multiline
           value={healthDetails}
