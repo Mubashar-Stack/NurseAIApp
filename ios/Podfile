@@ -1,14 +1,27 @@
 # Resolve react_native_pods.rb with node to allow for hoisting
+# def node_require(script)
+#   # Resolve script with node to allow for hoisting
+#   require Pod::Executable.execute_command('node', ['-p',
+#     "require.resolve(
+#       '#{script}',
+#       {paths: [process.argv[1]]},
+#     )", __dir__]).strip
+# end
+
 def node_require(script)
-  # Resolve script with node to allow for hoisting
-  require Pod::Executable.execute_command('node', ['-p',
-    "require.resolve(
-      '#{script}',
-      {paths: [process.argv[1]]},
-    )", __dir__]).strip
+   # Resolve script with node to allow for hoisting
+   require Pod::Executable.execute_command('node', ['-p',
+     "require.resolve(
+       '#{script}',
+       {paths: [process.argv[1]]},
+     )", __dir__]).strip
 end
 
-platform :ios, '12.0' # Specify the minimum iOS version explicitly
+# Use it to require both react-native's and this package's scripts:
+node_require('react-native/scripts/react_native_pods.rb')
+node_require('react-native-permissions/scripts/setup.rb')
+
+platform :ios, '15.0' # Specify the minimum iOS version explicitly
 prepare_react_native_project!
 
 linkage = ENV['USE_FRAMEWORKS']
@@ -17,8 +30,6 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-node_require('react-native/scripts/react_native_pods.rb')
-node_require('react-native-permissions/scripts/setup.rb')
 
 setup_permissions([
   'Microphone',
@@ -31,7 +42,8 @@ setup_permissions([
 
 target 'NurseProAI' do
   config = use_native_modules!
-
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.

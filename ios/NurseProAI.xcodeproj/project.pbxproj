@@ -11,10 +11,10 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		189F9D652D122B5500B2B622 /* libReact-hermes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 189F9D642D122B5500B2B622 /* libReact-hermes.a */; };
+		189F9D652D122B5500B2B622 /* libReact-hermes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 189F9D642D122B5500B2B622 /* libReact-hermes.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		27C33189294146D5AE7BC0F6 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CDC7120CF3E14694BA997577 /* Roboto-LightItalic.ttf */; };
 		312D2376FBB74A4CA915A027 /* Roboto-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 653A0B6ADD9048BE986A2696 /* Roboto-BoldItalic.ttf */; };
-		3B616FD889106ED990F19740 /* libPods-NurseProAI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F0898C6FF5085B42C94DF95 /* libPods-NurseProAI.a */; };
+		3B616FD889106ED990F19740 /* libPods-NurseProAI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F0898C6FF5085B42C94DF95 /* libPods-NurseProAI.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		442767AAD204403E8A13C65B /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 412E6DC8DF344D84927257C5 /* Roboto-Bold.ttf */; };
 		50A29A7626D44314A12A7DBB /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 13C8EE42F96443C7B50E8668 /* Roboto-Black.ttf */; };
 		5624C9663D5846DD8F3FE56B /* Roboto-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A8C834D57654B488FEFA474 /* Roboto-BlackItalic.ttf */; };
@@ -52,6 +52,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NurseProAI/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = NurseProAI/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		13C8EE42F96443C7B50E8668 /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/assets/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
+		181C2BC92D5333D900278BE1 /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
 		189F9D642D122B5500B2B622 /* libReact-hermes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-hermes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		189F9D662D122D4C00B2B622 /* libReact-RuntimeHermes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RuntimeHermes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F800BEF8CD2465BB3AC6F50 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
@@ -132,6 +133,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				181C2BC92D5333D900278BE1 /* hermes.xcframework */,
 				189F9D662D122D4C00B2B622 /* libReact-RuntimeHermes.a */,
 				189F9D642D122B5500B2B622 /* libReact-hermes.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
