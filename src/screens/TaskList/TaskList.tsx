@@ -24,8 +24,10 @@ const TaskListScreen = () => {
   const styles = TaskListStyles(color);
 
   const copyToClipboard = (task: any) => {
+    console.log("🚀 ~ copyToClipboard ~ task:", task)
     try {
-      const taskDetails = `Patient: ${task.patient_name}\nMedication: ${task.medication}\nTask Details: ${task?.task_details}`;
+      const taskDetails = `Patient: ${task.patient_name}\nIssue: ${task.issue}\nMedication: ${task.medication}\nTask Details: ${task?.task_details}`;
+      console.log("🚀 ~ copyToClipboard ~ taskDetails:", taskDetails)
       Clipboard.setString(taskDetails);
       showSuccessToast('Task details copied to clipboard', 2000);
     } catch (error) {

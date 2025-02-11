@@ -5,6 +5,8 @@ import usePatientHome from './usePatientHome';
 import { MapPin, Bell, Star, Heart, Home, MessageSquare, Building2, User } from 'lucide-react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { BaseLayout } from '@src/components';
+import { BookingModal } from '../Hospitals/components/BookingModal';
+import useHospitals from '../Hospitals/useHospitals';
 
 const PatientHomeScreen = () => {
   const {
@@ -16,6 +18,22 @@ const PatientHomeScreen = () => {
     userProfile,
     news
   } = usePatientHome();
+  const {
+    styles: hospitalStyles,
+    handleEdit,
+    color,
+    handleBookNow,
+    showBookingModal,
+    setShowBookingModal,
+    selectedDate,
+    setSelectedDate,
+    selectedSpecialty,
+    setSelectedSpecialty,
+    handleConfirmBooking,
+    specialties,
+    isEditingBooking,
+    loadingBookings
+  } = useHospitals();
 
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, index) => (
@@ -143,7 +161,7 @@ const PatientHomeScreen = () => {
                     <View style={styles.ratingContainer}>
                       {renderStars(hospital?.rating)}
                     </View>
-                    <TouchableOpacity style={styles.bookButton}>
+                    <TouchableOpacity style={styles.bookButton} onPress={() => handleBookNow(hospital)}>
                       <Text style={styles.bookButtonText}>Book now</Text>
                     </TouchableOpacity>
                   </View>
@@ -160,6 +178,19 @@ const PatientHomeScreen = () => {
             </View>
           ))}
         </ScrollView>
+        <BookingModal
+          loadingBookings={loadingBookings}
+          visible={showBookingModal}
+          onClose={() => setShowBookingModal(false)}
+          styles={hospitalStyles}
+          color={color}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          selectedSpecialty={selectedSpecialty}
+          setSelectedSpecialty={setSelectedSpecialty}
+          onConfirm={isEditingBooking ? handleEdit : handleConfirmBooking}
+          specialties={specialties}
+        />
       </View>
     </BaseLayout>
   );

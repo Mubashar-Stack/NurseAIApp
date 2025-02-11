@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Text } from '@app/blueprints';
-import { BaseLayout } from '@src/components';
-import Feather from 'react-native-vector-icons/Feather';
+import React from "react"
+import { View, TouchableOpacity, ActivityIndicator } from "react-native"
+import { Text } from "@app/blueprints"
+import { BaseLayout } from "@src/components"
+import Feather from "react-native-vector-icons/Feather"
 import {
   Actionsheet,
   ActionsheetBackdrop,
@@ -11,9 +11,10 @@ import {
   ActionsheetDragIndicator,
   ActionsheetItem,
   ActionsheetItemText,
-} from '@gluestack-ui/themed';
-import useUploadDocuments from './useUploadDocuments';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+} from "@gluestack-ui/themed"
+import useUploadDocuments from "./useUploadDocuments"
+import MaterialIcons from "react-native-vector-icons/MaterialIcons"
+import AntDesign from "react-native-vector-icons/AntDesign"
 
 const UploadDocuments = () => {
   const {
@@ -26,7 +27,8 @@ const UploadDocuments = () => {
     isUploading,
     documents,
     uploadAllDocuments,
-  } = useUploadDocuments();
+    handleDocumentPicker,
+  } = useUploadDocuments()
 
   return (
     <BaseLayout style={styles.container}>
@@ -42,7 +44,7 @@ const UploadDocuments = () => {
         <TouchableOpacity
           //@ts-ignore
           style={[styles.uploadBox, documents.professional_license.uri && styles.uploadBoxSuccess]}
-          onPress={() => handleDocumentSelect('professional_license')}
+          onPress={() => handleDocumentSelect("professional_license")}
           disabled={isUploading}
         >
           {documents.professional_license.uri ? (
@@ -51,7 +53,7 @@ const UploadDocuments = () => {
             <Feather name="upload" size={24} color="#000000" />
           )}
           <Text style={styles.uploadText}>
-            {documents.professional_license.uri ? 'Document uploaded' : 'Upload your professional practice license'}
+            {documents.professional_license.uri ? "Document uploaded" : "Upload your professional practice license"}
           </Text>
         </TouchableOpacity>
 
@@ -59,7 +61,7 @@ const UploadDocuments = () => {
         <TouchableOpacity
           //@ts-ignore
           style={[styles.uploadBox, documents.experience_certificate.uri && styles.uploadBoxSuccess]}
-          onPress={() => handleDocumentSelect('experience_certificate')}
+          onPress={() => handleDocumentSelect("experience_certificate")}
           disabled={isUploading}
         >
           {documents.experience_certificate.uri ? (
@@ -68,13 +70,13 @@ const UploadDocuments = () => {
             <Feather name="upload" size={24} color="#000000" />
           )}
           <Text style={styles.uploadText}>
-            {documents.experience_certificate.uri ? 'Document uploaded' : 'Upload your work experience certificates'}
+            {documents.experience_certificate.uri ? "Document uploaded" : "Upload your work experience certificates"}
           </Text>
         </TouchableOpacity>
 
         <Text style={styles.description}>
-          Please upload clear and legible copies of your documents.
-          Ensure all information is visible and valid for verification.
+          Please upload clear and legible copies of your documents. Ensure all information is visible and valid for
+          verification.
         </Text>
 
         <TouchableOpacity
@@ -82,36 +84,35 @@ const UploadDocuments = () => {
           onPress={uploadAllDocuments}
           disabled={isUploading}
         >
-          {isUploading ? (
-            <ActivityIndicator color="#FFFFFF" />
-          ) : (
-            <Text style={styles.buttonText}>Save</Text>
-          )}
+          {isUploading ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.buttonText}>Save</Text>}
         </TouchableOpacity>
       </View>
 
-      <Actionsheet
-        isOpen={showActionsheet}
-        onClose={() => setShowActionsheet(false)}
-      >
+      <Actionsheet isOpen={showActionsheet} onClose={() => setShowActionsheet(false)}>
         <ActionsheetBackdrop />
         <ActionsheetContent>
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator />
           </ActionsheetDragIndicatorWrapper>
-          <ActionsheetItem onPress={() => handleImagePicker('camera')}>
+          <ActionsheetItem onPress={() => handleImagePicker("camera")}>
             <Feather name="camera" size={20} color="#000000" />
             <ActionsheetItemText>Take Picture</ActionsheetItemText>
           </ActionsheetItem>
-          <ActionsheetItem onPress={() => handleImagePicker('gallery')}>
+          <ActionsheetItem onPress={() => handleImagePicker("gallery")}>
             <Feather name="image" size={20} color="#000000" />
             <ActionsheetItemText>Upload from gallery</ActionsheetItemText>
+          </ActionsheetItem>
+          <ActionsheetItem
+            onPress={() => handleDocumentPicker()}
+          >
+            <AntDesign name="file1" size={20} color="#000000" />
+            <ActionsheetItemText>Upload document</ActionsheetItemText>
           </ActionsheetItem>
         </ActionsheetContent>
       </Actionsheet>
     </BaseLayout>
-  );
-};
+  )
+}
 
-export default React.memo(UploadDocuments);
+export default React.memo(UploadDocuments)
 

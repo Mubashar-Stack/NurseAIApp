@@ -5,7 +5,9 @@ export enum StorageKeys {
   PROFILE_DATA = 'PROFILE_DATA',
   USER_TOKEN = 'USER_TOKEN',
   USER_ID = 'USER_ID',
-  FCM_TOKEN = 'FCM_TOKEN'
+  FCM_TOKEN = 'FCM_TOKEN',
+  USER_ROLE = 'USER_ROLE',
+  USER_EMAIL = 'USER_EMAIL',
 }
 
 export type STORAGES_KEY = StorageKeys;

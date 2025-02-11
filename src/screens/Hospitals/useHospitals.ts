@@ -3,6 +3,7 @@ import { useAppContext } from '@src/context';
 import { hospitalsStyles } from './Hospitals.style';
 import { hospitalService } from '../../api/hospital';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 interface Hospital {
   id: number;
@@ -117,6 +118,7 @@ const useHospitals = () => {
     if (!selectedHospital || !selectedSpecialty) return;
 
     try {
+      setLoadingBookings(true);
       const userId = patientId;
       await hospitalService.createBooking(token, userId, selectedHospital.id, selectedSpecialty, selectedDate);
       await fetchData(); // Refresh data after booking
@@ -126,6 +128,8 @@ const useHospitals = () => {
       setSelectedHospital(null);
     } catch (error) {
       console.error('Error creating booking:', error);
+    } finally {
+      setLoadingBookings(false);
     }
   }, [selectedHospital, selectedSpecialty, selectedDate, fetchData]);
 
@@ -182,20 +186,20 @@ const useHospitals = () => {
   }, [bookings]);
 
   const handleCancel = useCallback(async (bookingId: number) => {
+    console.log("🚀 ~ handleCancel ~ bookingId:", `https://technlogics.co/api/bookings/${bookingId}`, {
+      'Authorization': `Token ${token}`
+    })
     try {
       setLoadingBookings(true);
-      const response = await fetch(`https://technlogics.co/api/bookings/${bookingId}`, {
-        method: 'DELETE',
+      const response = await axios.delete(`https://technlogics.co/api/bookings/${bookingId}`, {
         headers: {
           'Authorization': `Token ${token}`
         }
       });
-      if (response.ok) {
-        await fetchData(); // Refresh data after booking
-      }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error cancelling booking:', error);
     } finally {
+      await fetchData();
       setLoadingBookings(false);
     }
   }, [token]);

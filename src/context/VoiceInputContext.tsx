@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useCallback } from 'react';
 import Voice from '@react-native-voice/voice';
 import GlobalVoiceInput from '../components/GlobalVoiceInput/GlobalVoiceInput';
+import { PermissionsAndroid, Platform } from 'react-native';
 
 interface VoiceInputContextType {
     voiceInputText: string;
@@ -15,9 +16,37 @@ export const VoiceInputProvider: React.FC<React.PropsWithChildren<{}>> = ({ chil
     const [voiceInputText, setVoiceInputText] = useState('');
     const [isListening, setIsListening] = useState(false);
 
-    const startVoiceInput = useCallback(async () => {
-        setVoiceInputText('')
+    const requestAudioPermission = async () => {
+        if (Platform.OS !== 'android') return true;
+
         try {
+            const granted = await PermissionsAndroid.request(
+                //@ts-ignore
+                PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+                {
+                    title: 'Microphone Permission',
+                    message: 'This app needs access to your microphone to transcribe speech.',
+                    buttonNeutral: 'Ask Me Later',
+                    buttonNegative: 'Cancel',
+                    buttonPositive: 'OK',
+                }
+            );
+            return granted === PermissionsAndroid.RESULTS.GRANTED;
+        } catch (err) {
+            console.warn(err);
+            return false;
+        }
+    };
+
+    const startVoiceInput = useCallback(async () => {
+        setVoiceInputText('');
+        try {
+            const hasPermission = await requestAudioPermission();
+            if (!hasPermission) {
+                console.error('Microphone permission denied');
+                return;
+            }
+
             await Voice.start('en-US');
             setIsListening(true);
         } catch (e) {

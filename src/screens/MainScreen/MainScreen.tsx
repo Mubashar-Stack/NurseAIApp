@@ -1,16 +1,43 @@
 import { BaseLayout } from '@src/components';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@app/blueprints';
-import { useAppContext, useColor } from '@src/context';
+import { storage, useAppContext, useColor } from '@src/context';
 import mainStyle from '@src/constants/MainStyles';
 import { Screen } from '../../navigation/appNavigation.type';
 import { scaledSize } from '@src/utils';
+import store from '../../redux/store';
+import { setToken, setUserInfo } from '../../redux/slices/auth';
+import { StorageKeys } from '../../constants/storageKeys';
 
 const MainScreen = () => {
   const { color } = useColor();
   const design = mainStyle(color);
   const { navigation } = useAppContext();
+
+  useEffect(() => {
+    const checkUserData = async () => {
+      const userId = await storage.getData(StorageKeys.USER_ID);
+      const userToken = await storage.getData(StorageKeys.USER_TOKEN);
+      const email = await storage.getData(StorageKeys.USER_EMAIL);
+      const role = await storage.getData(StorageKeys.USER_ROLE);
+      console.log("🚀 ~ checkUserData ~ role:", await storage.getStorageKey(), role, email, userToken, userId)
+
+      if (userId && userToken) {
+        store.dispatch(
+          setUserInfo({
+            userId: userId,
+            email: email,
+            role: role || "patient",
+          }),
+        );
+        store.dispatch(setToken(userToken));
+        navigation.navigate(role === "nurse" ? Screen.NURSE_HOME : Screen.HOME);
+      }
+    };
+
+    checkUserData();
+  }, [navigation]);
 
   return (
     <BaseLayout>

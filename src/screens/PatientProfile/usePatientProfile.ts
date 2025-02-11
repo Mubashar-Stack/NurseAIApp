@@ -22,7 +22,7 @@ const usePatientProfile = () => {
     try {
       const response = await fetchUserProfile(token);
       if (response.status && response.data) {
-        const { name, email, mobile_no, user_photo, gender, mrn } = response.data;
+        const { name, email, mobile_no, userPhoto, gender, mrn } = response.data;
         const [firstName, lastName] = name.split(' ');
         setProfileData({
           firstName: firstName || '',
@@ -33,7 +33,7 @@ const usePatientProfile = () => {
           gender: gender,
           mrn
         });
-        setProfilePhoto(user_photo);
+        setProfilePhoto(userPhoto);
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to load profile data');

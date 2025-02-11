@@ -28,7 +28,7 @@ const usePatientHome = () => {
   const [recommendedVideos, setRecommendedVideos] = useState([]);
   const [technlogicsVideos, setTechnlogicsVideos] = useState([])
 
-  const GOOGLE_PLACES_API_KEY = 'AIzaSyBNWQWVhRgKjAV0nNkMiYWEewCoLzptX8w';
+  const GOOGLE_PLACES_API_KEY = 'AIzaSyCdi4AREW20Aqm-vuNlVwVVs5oKzLgpjW0';
 
   const checkLocationPermission = async () => {
     try {
@@ -162,16 +162,17 @@ const usePatientHome = () => {
   }
 
   const handleCheckIn = async () => {
+    console.log("🚀 ~ handleCheckIn ~ currentLocation:", currentLocation, currentAddress)
     if (!currentLocation) {
       Alert.alert('Error', 'Unable to get current location. Please try again.');
       return;
     }
-
+    setLoading(true)
     try {
       const response = await axios.post(
         'https://technlogics.co/api/checkins',
         {
-          location: currentAddress,
+          location: currentAddress || (defaultAddress ? `${defaultAddress.address}, ${defaultAddress.city}, ${defaultAddress.state} ${defaultAddress.postal_code}` : 'No address available'),
           latitude: currentLocation?.latitude?.toString(),
           longitude: currentLocation?.longitude?.toString(),
           description: 'Checked in via app'
@@ -185,15 +186,17 @@ const usePatientHome = () => {
       );
 
       if (response.data.status) {
+        setLoading(false)
         Alert.alert('Success', response.data.message);
         // Refresh the checkins list
         fetchCheckins();
       } else {
         Alert.alert('Error', 'Failed to check in. Please try again.');
       }
-    } catch (error) {
-      console.error('Error during check-in:', error);
+    } catch (error: any) {
+      console.error('Error during check-in:', error?.response.data);
       Alert.alert('Error', 'An error occurred while checking in. Please try again.');
+      setLoading(false)
     }
   };
 

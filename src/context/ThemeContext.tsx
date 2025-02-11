@@ -43,6 +43,7 @@ export const useColor = () => {
 
 export const ThemeProvider = ({ children }: React.PropsWithChildren) => {
   const colorScheme = useColorScheme();
+  console.log("🚀 ~ ThemeProvider ~ colorScheme:", colorScheme)
 
   const [appTheme, setTheme] = useState<Theme>(colorScheme);
 

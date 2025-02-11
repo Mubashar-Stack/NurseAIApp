@@ -2,10 +2,10 @@ import { ColorSchemeName } from 'react-native';
 
 export const color = {
   dark: {
-    backgroundColor: '#212121', // light grey
-    primaryColor: '#0a84ff', // bright blue
-    secondaryColor: '#dcdcdc', // dark grey
-    textColor: '#f8f9fa', // off-white
+    backgroundColor: '#f5f5f5', // grey screen background color
+    primaryColor: '#002A65', // blue button background color
+    secondaryColor: '#ffffff', // off-white button text color
+    textColor: '#000000', // dark grey
     Tertiary: '#E6E6E6', // input background color
     errorText: 'red'
   },

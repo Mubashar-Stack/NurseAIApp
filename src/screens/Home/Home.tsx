@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert } from 'react-native';
+import { View, ScrollView, TouchableOpacity, FlatList, Image, Alert, ActivityIndicator } from 'react-native';
 import { Text } from '@app/blueprints';
 import usePatientHome from './useHome';
 import { MapPin, Bell, CheckCircle } from 'lucide-react-native';
@@ -27,6 +27,7 @@ const HomeScreen = () => {
     getCurrentLocation,
     handleCheckIn,
     refreshLocation,
+    loading
   } = usePatientHome();
 
   const [isVideoModalVisible, setIsVideoModalVisible] = useState(false);
@@ -94,7 +95,12 @@ const HomeScreen = () => {
               style={[styles.button, styles.primaryButton]}
               onPress={onCheckInPress}
             >
-              <Text style={styles.buttonText}>Check In</Text>
+
+              {loading ? (
+                <View >
+                  <ActivityIndicator size="small" color="#fff" />
+                </View>
+              ) : <Text style={styles.buttonText}>Check In</Text>}
             </TouchableOpacity>
           </View>
 
@@ -187,7 +193,7 @@ const HomeScreen = () => {
             renderItem={({ item }: any) => <VideoThumbnail item={item} />}
             keyExtractor={(item: any) => item.id.toString()}
           />
-          <Text style={styles.sectionTitle}>Technlogics Videos</Text>
+          <Text style={styles.sectionTitle}>Medical Videos</Text>
           <FlatList
             horizontal
             style={{ marginRight: 10 }}

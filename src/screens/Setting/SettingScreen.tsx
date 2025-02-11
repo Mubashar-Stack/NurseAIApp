@@ -46,13 +46,13 @@ const SettingScreen = () => {
             </View>
             <AntDesign size={18} name={"right"} color={color.textColor} />
           </TouchableOpacity>
-          <View style={design.listView}>
+          {/* <View style={design.listView}>
             <View style={{ flexDirection: 'row' }}>
               <FontAwesome name={'moon-o'} size={24} color={color.textColor} />
               <Text preset='h2' style={{ marginLeft: scaledSize(18) }}>Dark mode</Text>
             </View>
             <Switch value={isDarkModeEnabled} onValueChange={handleToggleTheme} />
-          </View>
+          </View> */}
           <View style={design.listView}>
             <View style={{ flexDirection: 'row' }}>
               <Fontisto name={'world-o'} size={24} color={color.textColor} />

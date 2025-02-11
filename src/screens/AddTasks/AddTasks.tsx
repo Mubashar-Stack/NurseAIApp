@@ -136,7 +136,7 @@ const AddTaskScreen = () => {
                           searchPatients(text);
                         }}
                         onBlur={handleBlur('patientName')}
-                        onFocus={() => setActiveField('patientName')}
+                      // onFocus={() => setActiveField('patientName')}
                       />
                       {/* <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput('patientName')}>
                         <Ionicons name={isListening && activeField === 'patientName' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
@@ -153,7 +153,7 @@ const AddTaskScreen = () => {
                             style={styles.searchResultItem}
                             onPress={() => {
                               setFieldValue('patientName', patient.name);
-                              setFieldValue('patient', 36);
+                              setFieldValue('patient', patient.id);
                               // setFieldValue('sex', patient.gender);
                               setSearchResults([]);
                             }}
@@ -168,6 +168,9 @@ const AddTaskScreen = () => {
                     )}
                     {touched.patientName && errors.patientName && (
                       <Text style={styles.errorText}>{errors.patientName}</Text>
+                    )}
+                    {touched.patient && errors.patient && !errors.patientName && (
+                      <Text style={styles.errorText}>{errors.patient}</Text>
                     )}
                   </View>
 
@@ -239,7 +242,7 @@ const AddTaskScreen = () => {
                         contextMenuHidden={true}
                         selectTextOnFocus={true}
                         style={styles.input}
-                        placeholder="Medication1, Medication2, Medication3"
+                        placeholder="Medication1, Medication2"
                         placeholderTextColor="#999999"
                         value={values.medication}
                         onChangeText={handleChange('medication')}

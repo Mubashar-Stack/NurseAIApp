@@ -11,6 +11,7 @@ export const storageMmkv = new MMKV();
 export const getData = (key: STORAGES_KEY, _type?: dataStoreType) => {
   try {
     const data = storageMmkv.getString(key);
+    console.log("🚀 ~ getData ~ data:", key, data)
     if (data) {
       const parseData = JSON.parse(data);
       return parseData;

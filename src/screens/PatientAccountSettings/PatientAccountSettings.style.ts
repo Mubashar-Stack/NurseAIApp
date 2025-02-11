@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Palette } from '@src/utils';
+import { StyleSheet } from "react-native"
+import type { Palette } from "@src/utils"
 
 export const PatientAccountSettingsStyles = (color: Palette) =>
   StyleSheet.create({
@@ -12,7 +12,7 @@ export const PatientAccountSettingsStyles = (color: Palette) =>
       padding: 16,
     },
     avatarContainer: {
-      alignItems: 'center',
+      alignItems: "center",
       marginVertical: 24,
     },
     avatar: {
@@ -20,8 +20,8 @@ export const PatientAccountSettingsStyles = (color: Palette) =>
       height: 100,
       borderRadius: 50,
       backgroundColor: color.Tertiary,
-      overflow: 'hidden',
-      marginLeft: 10
+      overflow: "hidden",
+      marginLeft: 10,
     },
     editText: {
       marginTop: 12,
@@ -39,19 +39,19 @@ export const PatientAccountSettingsStyles = (color: Palette) =>
       marginTop: 8,
     },
     saveButton: {
-      backgroundColor: '#002A65',
+      backgroundColor: "#002A65",
       borderRadius: 8,
       padding: 12,
-      alignItems: 'center',
+      alignItems: "center",
       marginTop: 24,
     },
     saveButtonText: {
-      color: 'white',
+      color: "white",
       fontSize: 16,
-      fontWeight: '600',
+      fontWeight: "600",
     },
     deleteButton: {
-      alignItems: 'center',
+      alignItems: "center",
       marginTop: 16,
       padding: 16,
     },
@@ -60,18 +60,33 @@ export const PatientAccountSettingsStyles = (color: Palette) =>
       fontSize: 16,
     },
     nameContainer: {
-      flexDirection: 'row',
+      flexDirection: "row",
       gap: 16,
     },
     halfWidth: {
       flex: 1,
     },
     centerContent: {
-      justifyContent: 'center',
-      alignItems: 'center',
+      justifyContent: "center",
+      alignItems: "center",
     },
     disabledButton: {
       opacity: 0.7,
     },
+    phoneInputContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginTop: 8,
+    },
+    phoneInput: {
+      flex: 1,
+      marginLeft: 8,
+    },
+    countryCodeButton: {
+      backgroundColor: color.Tertiary,
+      borderRadius: 8,
+      padding: 12,
+      marginRight: 8,
+    },
+  })
 
-  });

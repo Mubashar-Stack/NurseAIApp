@@ -25,6 +25,10 @@ const GlobalVoiceInput: React.FC<GlobalVoiceInputProps> = ({ onTextReceived, isL
                 stopListening();
             }
         };
+        Voice.onSpeechError = (e: any) => {
+            console.error('Speech recognition error:', e);
+            stopListening();
+        };
 
         return () => {
             Voice.destroy().then(Voice.removeAllListeners);

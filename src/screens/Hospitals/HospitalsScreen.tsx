@@ -301,6 +301,7 @@ const HospitalsScreen = () => {
         </ScrollView>
 
         <BookingModal
+          loadingBookings={loadingBookings}
           visible={showBookingModal}
           onClose={() => setShowBookingModal(false)}
           styles={styles}

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Modal, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Modal, View, TouchableOpacity, TouchableWithoutFeedback, ActivityIndicator } from 'react-native';
 import { Text } from '@app/blueprints';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { Calendar } from 'react-native-calendars';
@@ -10,6 +10,7 @@ interface BookingModalProps {
     styles: any;
     color: any;
     selectedDate: string;
+    loadingBookings: boolean;
     setSelectedDate: (date: string) => void;
     selectedSpecialty: number | null;
     setSelectedSpecialty: (specialty: number | null) => void;
@@ -31,6 +32,7 @@ export const BookingModal = ({
     setSelectedSpecialty,
     onConfirm,
     specialties,
+    loadingBookings
 }: BookingModalProps) => {
     const [showCalendar, setShowCalendar] = useState(false);
     const [showSpecialties, setShowSpecialties] = useState(false);
@@ -168,10 +170,18 @@ export const BookingModal = ({
 
                             {(selectedDate && selectedSpecialty) && (
                                 <TouchableOpacity
-                                    style={styles.confirmButton}
+                                    style={[
+                                        styles.confirmButton,
+                                        loadingBookings && styles.confirmButtonDisabled
+                                    ]}
                                     onPress={onConfirm}
+                                    disabled={loadingBookings}
                                 >
-                                    <Text style={styles.confirmButtonText}>Confirm</Text>
+                                    {loadingBookings ? (
+                                        <ActivityIndicator size="small" color="#fff" />
+                                    ) : (
+                                        <Text style={styles.confirmButtonText}>Confirm</Text>
+                                    )}
                                 </TouchableOpacity>
                             )}
                         </View>

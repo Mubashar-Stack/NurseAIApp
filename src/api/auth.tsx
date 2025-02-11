@@ -39,6 +39,8 @@ export const signupHandler = async (data: any, setDisabled: any, setIsLoading: a
     );
     storage.setData(StorageKeys.USER_ID, response?.data?.data?.user_id);
     storage.setData(StorageKeys.USER_TOKEN, response?.data?.data?.token);
+    storage.setData(StorageKeys.USER_ROLE, response?.data?.data?.role);
+    storage.setData(StorageKeys.USER_EMAIL, response?.data?.data?.email);
     store.dispatch(setToken(response?.data?.data?.token));
     const { user: { role } } = response?.data?.data;
     navigation.navigate(
@@ -68,8 +70,11 @@ export const signinHandler = async (data: any, setDisabled: any, setLoading: any
         role: response?.data?.data?.role || "patient",
       }),
     );
-    storage.setData(StorageKeys.USER_ID, response?.data?.data?.user_id);
+    storage.setData(StorageKeys.USER_ID, `${response?.data?.data?.user_id}`);
     storage.setData(StorageKeys.USER_TOKEN, response?.data?.data?.token);
+    storage.setData(StorageKeys.USER_ROLE, response?.data?.data?.role);
+    storage.setData(StorageKeys.USER_EMAIL, response?.data?.data?.email);
+
     store.dispatch(setToken(response?.data?.data?.token));
     const { role } = response?.data?.data;
     navigation.navigate(role == "nurse" ? Screen.NURSE_HOME : Screen.HOME);

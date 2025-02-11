@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Palette } from '@src/utils';
+import { StyleSheet } from "react-native"
+import type { Palette } from "@src/utils"
 
 export const MedicalHistoryStyles = ({ textColor, backgroundColor, Tertiary }: Palette) =>
   StyleSheet.create({
@@ -8,8 +8,8 @@ export const MedicalHistoryStyles = ({ textColor, backgroundColor, Tertiary }: P
       backgroundColor: backgroundColor,
     },
     header: {
-      flexDirection: 'row',
-      alignItems: 'center',
+      flexDirection: "row",
+      alignItems: "center",
       padding: 16,
       backgroundColor: backgroundColor,
     },
@@ -18,7 +18,7 @@ export const MedicalHistoryStyles = ({ textColor, backgroundColor, Tertiary }: P
     },
     title: {
       fontSize: 18,
-      fontWeight: '600',
+      fontWeight: "600",
       color: textColor,
     },
     content: {
@@ -31,28 +31,28 @@ export const MedicalHistoryStyles = ({ textColor, backgroundColor, Tertiary }: P
       borderRadius: 12,
       padding: 16,
       color: textColor,
-      textAlignVertical: 'top',
+      textAlignVertical: "top",
     },
     sectionTitle: {
       fontSize: 16,
-      fontWeight: '600',
+      fontWeight: "600",
       color: textColor,
       marginTop: 24,
       marginBottom: 12,
     },
     uploadContainer: {
-      // flexDirection: 'co',
-      alignItems: 'center',
-      justifyContent: 'center',
+      alignItems: "center",
+      justifyContent: "center",
       borderWidth: 1,
-      borderStyle: 'dashed',
-      borderColor: '#000',
+      borderStyle: "dashed",
+      borderColor: "#000",
       borderRadius: 12,
-      padding: 60,
+      padding: 20,
+      minHeight: 120,
     },
     uploadContainerSuccess: {
-      borderColor: '#4CAF50',
-      borderStyle: 'solid',
+      borderColor: "#4CAF50",
+      borderStyle: "solid",
     },
     uploadIcon: {
       marginRight: 12,
@@ -62,11 +62,16 @@ export const MedicalHistoryStyles = ({ textColor, backgroundColor, Tertiary }: P
       color: textColor,
       marginLeft: 12,
     },
+    uploadTextContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginTop: 8,
+    },
     saveButton: {
-      backgroundColor: '#002A65',
+      backgroundColor: "#002A65",
       borderRadius: 12,
       padding: 16,
-      alignItems: 'center',
+      alignItems: "center",
       marginHorizontal: 16,
       marginBottom: 16,
     },
@@ -74,9 +79,9 @@ export const MedicalHistoryStyles = ({ textColor, backgroundColor, Tertiary }: P
       opacity: 0.5,
     },
     saveButtonText: {
-      color: '#FFFFFF',
+      color: "#FFFFFF",
       fontSize: 16,
-      fontWeight: '600',
+      fontWeight: "600",
     },
-  });
+  })
 

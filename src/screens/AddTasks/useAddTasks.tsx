@@ -66,7 +66,7 @@ const useAddTask = () => {
     age: yup.string().required('Age is required'),
     sex: yup.string().required('Gender is required'),
     describe: yup.string().required('Task details are required'),
-    patient: yup.number().optional()
+    patient: yup.number().required('Patient is required')
   });
 
   const initialValues = {

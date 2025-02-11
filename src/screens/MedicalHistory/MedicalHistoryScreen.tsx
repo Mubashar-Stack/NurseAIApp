@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from 'react-native';
-import { Text } from '@app/blueprints';
-import useMedicalHistory from './useMedicalHistory';
-import Feather from 'react-native-vector-icons/Feather';
+import React from "react"
+import { View, TextInput, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native"
+import { Text } from "@app/blueprints"
+import useMedicalHistory from "./useMedicalHistory"
+import Feather from "react-native-vector-icons/Feather"
 import {
   Actionsheet,
   ActionsheetBackdrop,
@@ -11,7 +11,7 @@ import {
   ActionsheetDragIndicator,
   ActionsheetItem,
   ActionsheetItemText,
-} from '@gluestack-ui/themed';
+} from "@gluestack-ui/themed"
 
 const MedicalHistoryScreen = () => {
   const {
@@ -26,15 +26,13 @@ const MedicalHistoryScreen = () => {
     showActionsheet,
     setShowActionsheet,
     document,
-  } = useMedicalHistory();
+    handleActionSheet
+  } = useMedicalHistory()
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Feather name="arrow-left" size={24} color="#000000" />
         </TouchableOpacity>
         <Text style={styles.title}>Medical History</Text>
@@ -54,7 +52,7 @@ const MedicalHistoryScreen = () => {
         <TouchableOpacity
           //@ts-ignore
           style={[styles.uploadContainer, document.uri && styles.uploadContainerSuccess]}
-          onPress={handleDocumentSelect}
+          onPress={handleActionSheet}
           activeOpacity={0.7}
         >
           {document.uri ? (
@@ -62,9 +60,7 @@ const MedicalHistoryScreen = () => {
           ) : (
             <Feather name="upload" size={35} color="#002A65" style={styles.uploadIcon} />
           )}
-          <Text style={styles.uploadText}>
-            {document.uri ? 'Document uploaded' : 'Upload your medical report'}
-          </Text>
+          <Text style={styles.uploadText}>{document.uri ? "Document uploaded" : "Upload your medical report"}</Text>
         </TouchableOpacity>
       </ScrollView>
 
@@ -74,35 +70,32 @@ const MedicalHistoryScreen = () => {
         disabled={isLoading}
         activeOpacity={0.7}
       >
-        {isLoading ? (
-          <ActivityIndicator color="#FFFFFF" />
-        ) : (
-          <Text style={styles.saveButtonText}>Save</Text>
-        )}
+        {isLoading ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.saveButtonText}>Save</Text>}
       </TouchableOpacity>
 
-      <Actionsheet
-        isOpen={showActionsheet}
-        onClose={() => setShowActionsheet(false)}
-      >
+      <Actionsheet isOpen={showActionsheet} onClose={() => setShowActionsheet(false)}>
         <ActionsheetBackdrop />
         <ActionsheetContent>
           <ActionsheetDragIndicatorWrapper>
             <ActionsheetDragIndicator />
           </ActionsheetDragIndicatorWrapper>
-          <ActionsheetItem onPress={() => handleImagePicker('camera')}>
+          <ActionsheetItem onPress={() => handleImagePicker("camera")}>
             <Feather name="camera" size={20} color="#000000" />
             <ActionsheetItemText>Take Picture</ActionsheetItemText>
           </ActionsheetItem>
-          <ActionsheetItem onPress={() => handleImagePicker('gallery')}>
+          <ActionsheetItem onPress={() => handleImagePicker("gallery")}>
             <Feather name="image" size={20} color="#000000" />
-            <ActionsheetItemText>Upload from gallery</ActionsheetItemText>
+            <ActionsheetItemText>Choose from gallery</ActionsheetItemText>
+          </ActionsheetItem>
+          <ActionsheetItem onPress={handleDocumentSelect}>
+            <Feather name="file" size={20} color="#000000" />
+            <ActionsheetItemText>Pick Document</ActionsheetItemText>
           </ActionsheetItem>
         </ActionsheetContent>
       </Actionsheet>
     </View>
-  );
-};
+  )
+}
 
-export default React.memo(MedicalHistoryScreen);
+export default React.memo(MedicalHistoryScreen)
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback, useState, useEffect } from 'react';
 import { storage, useAppContext } from '@src/context';
 import { PatientAccountSettingsStyles } from './PatientAccountSettings.style';
@@ -10,6 +12,48 @@ import store from '../../redux/store';
 import { StorageKeys } from '@src/constants/storageKeys';
 import { setToken, setUserInfo } from '../../redux/slices/auth';
 import { Screen } from '../../navigation/appNavigation.type';
+import { countryCodes } from '../../constants/countryCodes';
+
+const parsePhoneNumber = (fullNumber: string) => {
+  // Remove any spaces and ensure the number starts with '+'
+  const cleanNumber = fullNumber.replace(/\s+/g, '');
+  if (!cleanNumber.startsWith('+')) {
+    // Default to the first country in the list if invalid format
+    return {
+      callingCode: countryCodes[0].dial_code.replace('+', ''),
+      phoneNumber: cleanNumber,
+      countryCode: countryCodes[0].code
+    };
+  }
+
+  // Try to match the longest possible dial code
+  let matchedCountry: any;
+  let matchedPhoneNumber = cleanNumber;
+
+  // Sort dial codes by length (longest first) to ensure we match the most specific code
+  const sortedCodes = [...countryCodes].sort(
+    (a, b) => b.dial_code.length - a.dial_code.length
+  );
+
+  for (const country of sortedCodes) {
+    if (cleanNumber.startsWith(country.dial_code)) {
+      matchedCountry = country;
+      matchedPhoneNumber = cleanNumber.slice(country.dial_code.length);
+      break;
+    }
+  }
+
+  if (!matchedCountry) {
+    matchedCountry = countryCodes[0]; // Default to first country if no match found
+    matchedPhoneNumber = cleanNumber.slice(1); // Remove the '+' only
+  }
+
+  return {
+    callingCode: matchedCountry.dial_code.replace('+', ''),
+    phoneNumber: matchedPhoneNumber,
+    countryCode: matchedCountry.code
+  };
+};
 
 const usePatientAccountSettings = () => {
   const { color, navigation } = useAppContext();
@@ -19,29 +63,41 @@ const usePatientAccountSettings = () => {
   const [profileData, setProfileData] = useState<any>(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [countryCode, setCountryCode] = useState("US")
+  const [callingCode, setCallingCode] = useState("1")
 
   const fieldValidation = yup.object().shape({
     firstName: yup.string().required('First name is required'),
     lastName: yup.string().required('Last name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
+    countryCode: yup.string().required('Country code is required'),
     phone: yup.string().required('Phone number is required'),
   });
+
+
 
   const loadProfile = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await fetchUserProfile(token);
       if (response.status && response.data) {
-        const { name, email, mobile_no, user_photo, gender } = response.data;
+        const { name, email, mobile_no, userPhoto, gender } = response.data;
         const [firstName, lastName] = name.split(' ');
+        console.log("🚀 ~ loadProfile ~ mobile_no:", response.data)
+        const { callingCode: parsedCallingCode, phoneNumber, countryCode: parsedCountryCode } = parsePhoneNumber(mobile_no);
+
+        // Update the state
+        setCallingCode(parsedCallingCode);
+        setCountryCode(parsedCountryCode);
         setProfileData({
           firstName: firstName || '',
           lastName: lastName || '',
           email,
-          phone: mobile_no,
+          countryCode,
+          phone: phoneNumber,
           gender: gender
         });
-        setProfilePhoto(user_photo);
+        setProfilePhoto(userPhoto);
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to load profile data');
@@ -85,19 +141,19 @@ const usePatientAccountSettings = () => {
     }
   }, [token]);
 
+
   const handleSave = useCallback(async (values: any) => {
     try {
       setIsLoading(true);
+      console.log("🚀 ~ handleSave ~ values:", values)
       const updatedData = {
         name: `${values.firstName} ${values.lastName}`,
-        mobile_no: values.phone,
+        mobile_no: `+${callingCode}${values.phone}`,
         email: values.email,
         gender: profileData.gender || '',
         address: profileData.address || '',
       };
-      console.log("🚀 ~ handleSave ~ updatedData:", updatedData)
       const response = await updateUserProfile(token, updatedData);
-      console.log("🚀 ~ handleSave ~ response:", response)
       if (response.status) {
         Alert.alert('Success', 'Profile updated successfully');
         loadProfile(); // Reload the profile data
@@ -109,7 +165,7 @@ const usePatientAccountSettings = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [token, profileData, loadProfile]);
+  }, [token, profileData, loadProfile, callingCode]);
 
   const handleDeletePress = useCallback(() => {
     setShowDeleteModal(true);
@@ -146,6 +202,10 @@ const usePatientAccountSettings = () => {
     fieldValidation,
     handleSave,
     handleImagePicker,
+    countryCode,
+    setCountryCode,
+    callingCode,
+    setCallingCode,
     color,
     showDeleteModal,
     setShowDeleteModal,
@@ -155,4 +215,3 @@ const usePatientAccountSettings = () => {
 };
 
 export default usePatientAccountSettings;
-
