@@ -31,15 +31,15 @@ export const AddTaskStyles = ({ textColor, backgroundColor, Tertiary }: Palette)
             marginLeft: scaleWidth(10),
         },
         searchResults: {
-            position: 'absolute',
-            top: '100%',
+            position: "absolute",
+            top: 48, // Change this from 100% to 48
             left: 0,
             right: 0,
             backgroundColor: backgroundColor,
             borderRadius: 8,
             borderWidth: 1,
             borderColor: backgroundColor,
-            shadowColor: '#000',
+            shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.1,
             shadowRadius: 4,
@@ -95,7 +95,9 @@ export const AddTaskStyles = ({ textColor, backgroundColor, Tertiary }: Palette)
             marginBottom: 24,
         },
         inputContainer: {
-            marginBottom: 16,
+            marginBottom: 24, // Increase this from 16 to 24
+            position: "relative", // Add this line
+            zIndex: 2, // Add this line
         },
         label: {
             fontSize: 16,

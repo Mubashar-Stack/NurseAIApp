@@ -11,7 +11,7 @@ import Toast from 'react-native-toast-message';
 import { createConfig, GluestackUIProvider } from '@gluestack-ui/themed';
 import { config } from '@gluestack-ui/config';
 import { VoiceInputProvider } from './context/VoiceInputContext';
-import { NotificationService } from './utils/NotificationService';
+// import { NotificationService } from './utils/NotificationService';
 
 const gluestackUIConfig = createConfig({
   ...config,
@@ -23,38 +23,38 @@ const gluestackUIConfig = createConfig({
 });
 
 const AppContent: React.FC = () => {
-  useEffect(() => {
-    const initializeNotifications = async () => {
-      try {
-        // Initialize the notification service first
-        await NotificationService.initialize();
-
-        // Then request permissions and setup listeners
-        const permission = await NotificationService.requestUserPermission();
-        if (permission.status) {
-          await NotificationService.setupNotificationListeners();
-          console.log('Notifications configured successfully');
-
-          // Handle initial notification if app was launched from notification
-          const initialNotification = await NotificationService.getInitialNotification();
-          if (initialNotification) {
-            NotificationService.handleNotificationNavigation(initialNotification.data);
-          }
-        } else {
-          console.log('Notification permission denied:', permission.error);
-        }
-      } catch (error) {
-        console.error('Error setting up notifications:', error);
-      }
-    };
-
-    initializeNotifications();
-
-    // Cleanup notification listeners when component unmounts
-    return () => {
-      NotificationService.cleanup();
-    };
-  }, []);
+  /*  useEffect(() => {
+     const initializeNotifications = async () => {
+       try {
+         // Initialize the notification service first
+         await NotificationService.initialize();
+ 
+         // Then request permissions and setup listeners
+         const permission = await NotificationService.requestUserPermission();
+         if (permission.status) {
+           await NotificationService.setupNotificationListeners();
+           console.log('Notifications configured successfully');
+ 
+           // Handle initial notification if app was launched from notification
+           const initialNotification = await NotificationService.getInitialNotification();
+           if (initialNotification) {
+             NotificationService.handleNotificationNavigation(initialNotification.data);
+           }
+         } else {
+           console.log('Notification permission denied:', permission.error);
+         }
+       } catch (error) {
+         console.error('Error setting up notifications:', error);
+       }
+     };
+ 
+     initializeNotifications();
+ 
+     // Cleanup notification listeners when component unmounts
+     return () => {
+       NotificationService.cleanup();
+     };
+   }, []); */
 
   return (
     <>
