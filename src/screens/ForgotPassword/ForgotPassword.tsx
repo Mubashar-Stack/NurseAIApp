@@ -78,7 +78,7 @@ const ForgotPassword = () => {
                       onChangeText={handleChange('phoneNumber')}
                       onBlur={handleBlur('phoneNumber')}
                       editable={!isLoading}
-                      onFocus={() => setActiveField('phoneNumber')}
+                    // onFocus={() => setActiveField('phoneNumber')}
                     />
                     <TouchableOpacity onPress={() => handleVoiceInput('phoneNumber')}>
                       <Ionicons name={isListening && activeField === 'phoneNumber' ? "mic" : "mic-outline"} color={color.textColor} size={24} />

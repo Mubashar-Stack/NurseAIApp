@@ -24,6 +24,7 @@ interface ResetPasswordResponse {
 
 
 export const signupHandler = async (data: any, setDisabled: any, setIsLoading: any, navigation: any) => {
+  console.log("🚀 ~ signupHandler ~ data:", baseURL + '/api/signup', data)
   setDisabled(true);
   setIsLoading(true);
   try {
@@ -48,6 +49,7 @@ export const signupHandler = async (data: any, setDisabled: any, setIsLoading: a
       role !== "nurse" ? { fromPage: 'signup' } : {},
     );
   } catch (error: any) {
+    console.log("🚀 ~ signupHandler ~ error:", error)
     showErrorToast(error?.response?.data?.errors[0]?.message, 2000);
   } finally {
     setDisabled(false);
@@ -60,6 +62,8 @@ export const signinHandler = async (data: any, setDisabled: any, setLoading: any
   setDisabled(true);
   setLoading(true);
   try {
+    console.log("🚀 ~ signupHandler ~ data:", baseURL + '/api/signin', data)
+
     const response = await axios.post(baseURL + '/api/signin', data);
     console.log("🚀 ~ signinHandler ~ response?.data:", response?.data)
     showSuccessToast(response?.data?.message, 2000);

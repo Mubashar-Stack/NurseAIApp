@@ -247,7 +247,7 @@ const AddTaskScreen = () => {
                         value={values.medication}
                         onChangeText={handleChange('medication')}
                         onBlur={handleBlur('medication')}
-                        onFocus={() => setActiveField('medication')}
+                      // onFocus={() => setActiveField('medication')}
                       />
                       <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput('medication')}>
                         <Ionicons name={isListening && activeField === 'medication' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
@@ -272,7 +272,7 @@ const AddTaskScreen = () => {
                         onChangeText={handleChange('describe')}
                         onBlur={handleBlur('describe')}
                         multiline
-                        onFocus={() => setActiveField('describe')}
+                      // onFocus={() => setActiveField('describe')}
                       />
                       <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput('describe')}>
                         <Ionicons name={isListening && activeField === 'describe' ? "mic" : "mic-outline"} color={color.textColor} size={24} />

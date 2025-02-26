@@ -73,7 +73,7 @@ const LoginScreen = () => {
                           onBlur={handleBlur('email')}
                           blurOnSubmit={false}
                           underlineColorAndroid="transparent"
-                          onFocus={() => setActiveField('email')}
+                        // onFocus={() => setActiveField('email')}
                         />
                         <TouchableOpacity onPress={() => handleVoiceInput('email')}>
                           <Ionicons name={isListening && activeField === 'email' ? "mic" : "mic-outline"} color={color.textColor} size={24} />

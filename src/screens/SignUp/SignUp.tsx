@@ -95,7 +95,7 @@ const SignUp = () => {
                           onBlur={handleBlur("name")}
                           blurOnSubmit={false}
                           underlineColorAndroid="transparent"
-                          onFocus={() => setActiveField("name")}
+                        // onFocus={() => setActiveField("name")}
                         />
                         <TouchableOpacity onPress={() => handleVoiceInput("name")}>
                           <Ionicons
@@ -144,7 +144,7 @@ const SignUp = () => {
                           onBlur={handleBlur("phoneNumber")}
                           blurOnSubmit={false}
                           underlineColorAndroid="transparent"
-                          onFocus={() => setActiveField("phoneNumber")}
+                        // onFocus={() => setActiveField("phoneNumber")}
                         />
                         <TouchableOpacity onPress={() => handleVoiceInput("phoneNumber")}>
                           <Ionicons
@@ -177,7 +177,7 @@ const SignUp = () => {
                           onBlur={handleBlur("email")}
                           blurOnSubmit={false}
                           underlineColorAndroid="transparent"
-                          onFocus={() => setActiveField("email")}
+                        // onFocus={() => setActiveField("email")}
                         />
                         <TouchableOpacity onPress={() => handleVoiceInput("email")}>
                           <Ionicons

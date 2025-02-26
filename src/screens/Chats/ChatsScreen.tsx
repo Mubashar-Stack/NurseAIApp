@@ -69,7 +69,7 @@ const ChatsScreen = () => {
               value={searchQuery}
               onChangeText={handleSearch}
               placeholderTextColor="#8E8E93"
-              onFocus={() => activeField === 'search'}
+            // onFocus={() => activeField === 'search'}
             />
             <TouchableOpacity onPress={handleVoiceSearch}>
               <Ionicons
