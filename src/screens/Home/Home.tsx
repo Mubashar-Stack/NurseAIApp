@@ -31,6 +31,7 @@ const HomeScreen = () => {
     refreshLocation,
     loading
   } = usePatientHome();
+  console.log("🚀 ~ HomScreen ~ userProfile:", userProfile)
 
   const [isVideoModalVisible, setIsVideoModalVisible] = useState(false);
   const [selectedVideoUrl, setSelectedVideoUrl] = useState('');
@@ -110,8 +111,8 @@ const HomeScreen = () => {
           <View style={styles.welcomeSection}>
             <Image
               //@ts-ignore
-              source={userProfile?.user_photo
-                ? { uri: userProfile.user_photo }
+              source={userProfile?.userPhoto
+                ? { uri: userProfile?.userPhoto }
                 : "require('../assets/default-avatar.png')"
               }
               style={styles.avatar}

@@ -80,8 +80,8 @@ const PatientHomeScreen = () => {
           <View style={styles.welcomeSection}>
             <Image
               //@ts-ignore
-              source={userProfile?.user_photo
-                ? { uri: userProfile.user_photo }
+              source={userProfile?.userPhoto
+                ? { uri: userProfile?.userPhoto }
                 : '' //require('../assets/default-avatar.png')
               }
               style={styles.avatar}
