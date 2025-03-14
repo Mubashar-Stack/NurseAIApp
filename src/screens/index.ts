@@ -36,4 +36,9 @@ export { default as UploadIDScreen } from './UploadID/UploadIDScreen';
 export { default as MedicalHistoryScreen } from './MedicalHistory/MedicalHistoryScreen';
 export { default as PatientCreditCardsScreen } from './PatientCreditCards/PatientCreditCardsScreen';
 export { default as FavoriteHospitalsScreen } from './favoriteHospitals/favorite-hospitals';
+export { default as YoutubeVideos } from './YoutubeVideos/videos-list';
+export { default as ChatbotScreen } from './Home/chatbotScreen';
+export { default as DetailedResponseScreen } from './Home/DetailedResponseScreen';
+
+
 

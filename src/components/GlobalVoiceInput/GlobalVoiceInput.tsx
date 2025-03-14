@@ -23,6 +23,9 @@ const GlobalVoiceInput: React.FC<GlobalVoiceInputProps> = ({ onTextReceived, isL
             if (e.value) {
                 onTextReceived(e.value[0]);
                 stopListening();
+                setTimeout(() => {
+                    onTextReceived('');
+                }, 1500);
             }
         };
         Voice.onSpeechError = (e: any) => {

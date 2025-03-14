@@ -27,7 +27,10 @@ import {
   PatientAccountSettingsScreen,
   MedicalHistoryScreen,
   PatientDetail,
-  PatientCreditCardsScreen
+  PatientCreditCardsScreen,
+  YoutubeVideos,
+  ChatbotScreen,
+  DetailedResponseScreen
 } from '@src/screens';
 import { NavStackParams, Screen } from './appNavigation.type';
 import TabNavigator from './TabNavigation';
@@ -84,7 +87,9 @@ export const AppNavigation = () => {
       <Stack.Screen name={Screen.COMPLETE_TASKS} component={CompleteTasks} />
       <Stack.Screen name={Screen.PATIENT_DETAIL} component={PatientDetail} />
       <Stack.Screen name={Screen.PATIENT_CREDIT_CARD} component={PatientCreditCardsScreen} />
-
+      <Stack.Screen name={Screen.YOUTUBE_VIDEOS} component={YoutubeVideos} />
+      <Stack.Screen name={Screen.CHATBOT_SCREEN} component={ChatbotScreen} />
+      <Stack.Screen name={Screen.DETAIL_RESPONSE_SCREEN} component={DetailedResponseScreen} />
 
 
       {__DEV__ && (

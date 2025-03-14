@@ -4,12 +4,14 @@ import { Text } from '@app/blueprints';
 import usePatientHome from './useHome';
 import { MapPin, Bell, CheckCircle } from 'lucide-react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import VideoPlayerModal from './VideoPlayerModal';
 import { BaseLayout } from '@src/components';
 import YouTubePlayerModal from './youtube-player-modal';
+import VideoSectionHeader from './video-section-header';
+import { Screen } from '../../navigation/appNavigation.type';
 
 const HomeScreen = () => {
   const {
+    navigation,
     styles,
     hospitals,
     defaultAddress,
@@ -167,33 +169,9 @@ const HomeScreen = () => {
             </View>
           </View>
 
-          {/* Recent Check-ins */}
-          {/* <Text style={styles.sectionTitle}>Recent Check-ins</Text>
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          data={checkins}
-          renderItem={({ item }: any) => (
-            <View style={styles.checkinCard}>
-              <CheckCircle size={24} color="#002B49" />
-              <Text style={styles.checkinLocation}>{item?.location}</Text>
-              <Text style={styles.checkinDate}>{new Date(item?.created_at).toLocaleDateString()}</Text>
-            </View>
-          )}
-          keyExtractor={(item: any) => item.id.toString()}
-        /> */}
+          {/* Medical Videos Section */}
 
-          {/* Recommended Videos */}
-          <Text style={styles.sectionTitle}>Recommended Videos</Text>
-          <FlatList
-            horizontal
-            style={{ marginRight: 10 }}
-            showsHorizontalScrollIndicator={false}
-            data={recommendedVideos}
-            renderItem={({ item }: any) => <VideoThumbnail item={item} />}
-            keyExtractor={(item: any) => item.id.toString()}
-          />
-          <Text style={styles.sectionTitle}>Medical Videos</Text>
+          <VideoSectionHeader title="Medical Videos" onViewAllPress={() => navigation.navigate(Screen.YOUTUBE_VIDEOS)} />
           <FlatList
             horizontal
             style={{ marginRight: 10 }}
@@ -213,11 +191,30 @@ const HomeScreen = () => {
           />
         </ScrollView>
 
-        <VideoPlayerModal
-          isVisible={isVideoModalVisible}
-          onClose={() => setIsVideoModalVisible(false)}
-          videoUrl={selectedVideoUrl}
-        />
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            bottom: 70,
+            right: 20,
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            backgroundColor: "#002B49",
+            justifyContent: "center",
+            alignItems: "center",
+            elevation: 5,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+            zIndex: 999,
+          }}
+          onPress={() => navigation.navigate(Screen.CHATBOT_SCREEN)}
+        >
+          <View style={{ position: "relative" }}>
+            <AntDesign name="message1" size={24} color="#FFF" />
+          </View>
+        </TouchableOpacity>
         <YouTubePlayerModal
           isVisible={isYouTubeModalVisible}
           onClose={() => setIsYouTubeModalVisible(false)}
