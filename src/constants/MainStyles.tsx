@@ -198,7 +198,7 @@ const mainStyle = (color: any) => StyleSheet.create({
     },
     imagePlaceholder: {
         width: '100%',
-        height: '50%',
+        height: '65%',
         backgroundColor: '#e0e0e0',
         justifyContent: 'center',
         alignItems: 'center',

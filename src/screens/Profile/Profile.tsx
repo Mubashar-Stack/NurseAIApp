@@ -15,6 +15,7 @@ import { StorageKeys } from '@src/constants/storageKeys';
 import { setToken, setUserInfo } from '../../redux/slices/auth';
 import { useSelector } from 'react-redux';
 import { fetchUserProfile } from '../../api/profile';
+import { Images } from '@src/assets';
 
 interface MenuItemProps {
   icon: JSX.Element;
@@ -37,6 +38,7 @@ const Profile = () => {
       if (response.status && response.data) {
         const { name, email, mobile_no, userPhoto, gender, mrn } = response.data;
         const [firstName, lastName] = name.split(' ');
+        console.log("🚀 ~ loadProfile ~ response.data:", response.data)
         setProfileData({
           firstName: firstName || '',
           lastName: lastName || '',
@@ -85,6 +87,7 @@ const Profile = () => {
         <View style={design.subView}>
           <View style={styles.profileInfo}>
             <Image
+              defaultSource={Images.PLACEHOLDER_IMAGE}
               source={{ uri: profilePhoto }}
               style={styles.avatar}
             />

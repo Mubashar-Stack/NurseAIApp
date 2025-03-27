@@ -1,6 +1,6 @@
 import { BaseLayout } from '@src/components';
 import React, { useEffect } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { Text } from '@app/blueprints';
 import { storage, useAppContext, useColor } from '@src/context';
 import mainStyle from '@src/constants/MainStyles';
@@ -9,6 +9,7 @@ import { scaledSize } from '@src/utils';
 import store from '../../redux/store';
 import { setToken, setUserInfo } from '../../redux/slices/auth';
 import { StorageKeys } from '../../constants/storageKeys';
+import { Images } from '@src/assets';
 
 const MainScreen = () => {
   const { color } = useColor();
@@ -45,7 +46,14 @@ const MainScreen = () => {
         <View style={design.subView} >
           <Text preset='h2' style={{ textAlign: 'center', padding: scaledSize(20) }} >Let's take the next step toward a healthier you!</Text>
           <View style={design.imagePlaceholder}>
-            <Text preset='h2' >Image</Text>
+            <Image
+              defaultSource={Images.DOCTOR_IMAGE}
+              resizeMode="contain"
+              height={scaledSize(150)}
+              width={scaledSize(200)}
+              source={Images.DOCTOR_IMAGE}
+              style={{ marginTop: 10, height: scaledSize(450), width: scaledSize(200), alignItems: 'center', marginLeft: 40 }}
+            />
           </View>
           <TouchableOpacity style={design.footerBtn} onPress={() => navigation.navigate(Screen.SIGNUP)} >
             <Text style={design.footerBtnTxt}>Get Start</Text>

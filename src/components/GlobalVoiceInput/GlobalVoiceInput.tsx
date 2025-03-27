@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { View, TouchableOpacity, StyleSheet, Modal, Animated, Easing } from 'react-native';
-import Voice from '@react-native-voice/voice';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, TouchableOpacity, StyleSheet, Modal, Animated, Easing, Platform, PermissionsAndroid } from 'react-native';
+import Voice, { SpeechResultsEvent, SpeechErrorEvent } from '@react-native-voice/voice';
 import { Text } from '@app/blueprints';
 import { useColor } from '@src/context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,29 +13,95 @@ interface GlobalVoiceInputProps {
 
 const GlobalVoiceInput: React.FC<GlobalVoiceInputProps> = ({ onTextReceived, isListening, stopListening }) => {
     const [partialResults, setPartialResults] = useState<string[]>([]);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const { color } = useColor();
     const slideAnim = useRef(new Animated.Value(0)).current;
     const pulseAnim = useRef(new Animated.Value(1)).current;
 
+
+    // Comprehensive error handling and permission check
+    const requestSpeechRecognitionPermission = async () => {
+        if (Platform.OS === 'android') {
+            try {
+                const granted = await PermissionsAndroid.request(
+                    //@ts-ignore
+                    PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+                    {
+                        title: "Microphone Permission",
+                        message: "App needs access to your microphone for speech recognition.",
+                        buttonNeutral: "Ask Me Later",
+                        buttonNegative: "Cancel",
+                        buttonPositive: "OK"
+                    }
+                );
+                return granted === PermissionsAndroid.RESULTS.GRANTED;
+            } catch (err) {
+                console.error("Permission request error:", err);
+                return false;
+            }
+        }
+        return true; // For iOS, permissions are handled differently
+    };
+
     useEffect(() => {
-        Voice.onSpeechPartialResults = (e) => setPartialResults(e.value ?? []);
-        Voice.onSpeechResults = (e: any) => {
-            if (e.value) {
-                onTextReceived(e.value[0]);
+        // Verbose error handling and logging
+        const onSpeechError = async (e: SpeechErrorEvent) => {
+            const errorDetails = e.error ? JSON.stringify(e.error) : 'Unknown error';
+            console.error('Detailed Speech Recognition Error:', errorDetails);
+
+            // Specific error handling
+            if (e.error?.code === '5') {
+                // Client-side error often relates to permissions or device setup
+                const hasPermission = await requestSpeechRecognitionPermission();
+
+                if (!hasPermission) {
+                    setErrorMessage("Microphone access is required for speech recognition.");
+                } else {
+                    setErrorMessage("An unexpected error occurred. Please try again.");
+                }
+            } else {
+                setErrorMessage("Speech recognition failed. Please check your device settings.");
+            }
+
+            // Cleanup and stop listening
+            stopListening();
+
+            try {
+                await Voice.destroy();
+                Voice.removeAllListeners();
+            } catch (destroyError) {
+                console.error('Error destroying voice recognition:', destroyError);
+            }
+        };
+
+        // Setup listeners
+        Voice.onSpeechError = onSpeechError;
+
+        const onSpeechPartialResults = (e: SpeechResultsEvent) => {
+            setPartialResults(e.value ?? []);
+            // Clear any previous error messages
+            setErrorMessage(null);
+        };
+
+        const onSpeechResults = (e: SpeechResultsEvent) => {
+            if (e.value && e.value.length > 0) {
+                const recognizedText: any = e.value[0];
+                onTextReceived(recognizedText);
                 stopListening();
+
                 setTimeout(() => {
                     onTextReceived('');
                 }, 1500);
             }
         };
-        Voice.onSpeechError = (e: any) => {
-            console.error('Speech recognition error:', e);
-            stopListening();
-            Voice.destroy().then(Voice.removeAllListeners).catch(e => console.error(e));
-        };
 
+        Voice.onSpeechPartialResults = onSpeechPartialResults;
+        Voice.onSpeechResults = onSpeechResults;
+
+        // Cleanup
         return () => {
-            Voice.destroy().then(Voice.removeAllListeners).catch(e => console.error(e));
+            Voice.destroy().catch(console.error);
+            Voice.removeAllListeners();
         };
     }, [onTextReceived, stopListening]);
 

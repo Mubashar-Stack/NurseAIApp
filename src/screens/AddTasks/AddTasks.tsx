@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+"use client"
+
+import React, { useEffect, useRef, useState } from "react"
 import {
   View,
   TouchableOpacity,
@@ -9,17 +11,17 @@ import {
   Keyboard,
   Platform,
   ActivityIndicator,
-} from 'react-native';
-import { Text } from '@app/blueprints';
-import { BaseLayout } from '@src/components';
-import useAddTask from './useAddTasks';
-import { AddTaskStyles } from './AddTask.style';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
-import { Formik } from 'formik';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import DropdownPicker from '@src/components/Dropdown/DropdownPicker';
-import { useVoiceInput } from '@src/context/VoiceInputContext';
+} from "react-native"
+import { Text } from "@app/blueprints"
+import { BaseLayout } from "@src/components"
+import useAddTask from "./useAddTasks"
+import { AddTaskStyles } from "./AddTask.style"
+import AntDesign from "react-native-vector-icons/AntDesign"
+import Feather from "react-native-vector-icons/Feather"
+import { Formik } from "formik"
+import Ionicons from "react-native-vector-icons/Ionicons"
+import DropdownPicker from "@src/components/Dropdown/DropdownPicker"
+import { useVoiceInput } from "@src/context/VoiceInputContext"
 
 const AddTaskScreen = () => {
   const {
@@ -33,90 +35,73 @@ const AddTaskScreen = () => {
     searchPatients,
     searchResults,
     isSearching,
-    setSearchResults
-  } = useAddTask();
+    setSearchResults,
+    symptoms,
+    isLoadingSymptoms,
+  } = useAddTask()
 
-  const styles = AddTaskStyles(color);
-  const [activeField, setActiveField] = useState<any>(null);
+  const styles = AddTaskStyles(color)
+  const [activeField, setActiveField] = useState<any>(null)
 
-  const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput();
-  const nameRef = useRef<TextInput>(null);
-  const medicationRef = useRef<TextInput>(null);
-  const describeRef = useRef<TextInput>(null);
+  const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput()
+  const nameRef = useRef<TextInput>(null)
+  const medicationRef = useRef<TextInput>(null)
+  const describeRef = useRef<TextInput>(null)
 
-  const formikRef = useRef<any>(null);
+  const formikRef = useRef<any>(null)
 
   useEffect(() => {
     if (voiceInputText && activeField && formikRef.current) {
-      formikRef.current.setFieldValue(activeField, voiceInputText);
-      setActiveField(null);
+      formikRef.current.setFieldValue(activeField, voiceInputText)
+      setActiveField(null)
     }
-  }, [voiceInputText, activeField]);
+  }, [voiceInputText, activeField])
 
   const handleVoiceInput = async (field: any) => {
     if (isListening) {
-      await stopVoiceInput();
+      await stopVoiceInput()
     } else {
-      setActiveField(field);
-      await startVoiceInput();
+      setActiveField(field)
+      await startVoiceInput()
     }
-  };
+  }
+
+  // Generate age options from 1 to 110
+  const ageOptions = Array.from({ length: 110 }, (_, i) => ({
+    label: (i + 1).toString(),
+    value: (i + 1).toString(),
+  }))
 
   return (
     <BaseLayout>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <KeyboardAvoidingView
-          style={styles.container}
-          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        >
+        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : undefined}>
           <View style={styles.header}>
             <View style={styles.headerLeft}>
-              <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => navigation.goBack()}
-              >
+              <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
                 <AntDesign name="left" size={24} color={color.textColor} />
               </TouchableOpacity>
               <View style={styles.shiftInfo}>
                 <Feather name="clock" color={color.textColor} size={24} />
                 <View style={styles.shiftDetails}>
-                  <Text style={{ fontSize: 12, color: color.textColor }}>
-                    Shift timing
-                  </Text>
-                  <Text style={{ fontSize: 12, fontWeight: '500', color: color.textColor }}>
-                    09:00 AM - 05:00 PM
-                  </Text>
+                  <Text style={{ fontSize: 12, color: color.textColor }}>Shift timing</Text>
+                  <Text style={{ fontSize: 12, fontWeight: "500", color: color.textColor }}>09:00 AM - 05:00 PM</Text>
                 </View>
               </View>
             </View>
-            <TouchableOpacity
-              style={styles.completeTaskButton}
-              onPress={completeTask}
-            >
+            <TouchableOpacity style={styles.completeTaskButton} onPress={completeTask}>
               <Text style={styles.completeTaskText}>Complete Task</Text>
             </TouchableOpacity>
           </View>
 
-          <ScrollView
-            style={styles.content}
-            showsVerticalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled"
-          >
+          <ScrollView style={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
             <Formik
               innerRef={formikRef}
               initialValues={initialValues}
               validationSchema={fieldValidation}
               onSubmit={handleSubmit}
             >
-              {({
-                handleChange,
-                handleBlur,
-                setFieldValue,
-                handleSubmit,
-                values,
-                errors,
-                touched,
-              }) => (
+              {({ handleChange, handleBlur, setFieldValue, handleSubmit, values, errors, touched }) => (
                 <View>
                   <Text style={styles.title}>Add Task</Text>
 
@@ -132,19 +117,13 @@ const AddTaskScreen = () => {
                         placeholderTextColor="#999999"
                         value={values.patientName}
                         onChangeText={(text) => {
-                          setFieldValue('patientName', text);
-                          searchPatients(text);
+                          setFieldValue("patientName", text)
+                          searchPatients(text)
                         }}
-                        onBlur={handleBlur('patientName')}
-                      // onFocus={() => setActiveField('patientName')}
+                        onBlur={handleBlur("patientName")}
                       />
-                      {/* <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput('patientName')}>
-                        <Ionicons name={isListening && activeField === 'patientName' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
-                      </TouchableOpacity> */}
                     </View>
-                    {isSearching && (
-                      <ActivityIndicator style={styles.searchLoader} color={color.textColor} />
-                    )}
+                    {isSearching && <ActivityIndicator style={styles.searchLoader} color={color.textColor} />}
                     {searchResults.length > 0 && (
                       <View style={styles.searchResults}>
                         {searchResults.map((patient) => (
@@ -152,10 +131,9 @@ const AddTaskScreen = () => {
                             key={patient.id}
                             style={styles.searchResultItem}
                             onPress={() => {
-                              setFieldValue('patientName', patient.name);
-                              setFieldValue('patient', patient.id);
-                              // setFieldValue('sex', patient.gender);
-                              setSearchResults([]);
+                              setFieldValue("patientName", patient.name)
+                              setFieldValue("patient", patient.id)
+                              setSearchResults([])
                             }}
                           >
                             <Text style={styles.patientName}>{patient.name}</Text>
@@ -179,19 +157,16 @@ const AddTaskScreen = () => {
                     <View style={{ marginTop: -30 }}>
                       <DropdownPicker
                         label=""
-                        options={[
-                          { label: 'Kidney issue', value: 'Kidney issue' },
-                          { label: 'Stomach issue', value: 'Stomach issue' },
-                          { label: 'Liver issue', value: 'Liver issue' },
-                        ]}
+                        options={
+                          isLoadingSymptoms || symptoms.length === 0
+                            ? [{ label: "Loading...", value: "" }]
+                            : symptoms.map((symptom) => ({ label: symptom.name, value: symptom.name }))
+                        }
                         selectedValue={values.issue}
-                        onValueChange={(value) => setFieldValue('issue', value)}
+                        onValueChange={(value) => setFieldValue("issue", value)}
                       />
                     </View>
-
-                    {touched.issue && errors.issue && (
-                      <Text style={styles.errorText}>{errors.issue}</Text>
-                    )}
+                    {touched.issue && errors.issue && <Text style={styles.errorText}>{errors.issue}</Text>}
                   </View>
 
                   <View style={styles.rowContainer}>
@@ -200,18 +175,12 @@ const AddTaskScreen = () => {
                       <View style={{ marginTop: -30 }}>
                         <DropdownPicker
                           label=""
-                          options={[
-                            { label: '10-20', value: '10-20' },
-                            { label: '20-30', value: '20-30' },
-                            { label: '30-40', value: '30-40' },
-                          ]}
+                          options={ageOptions}
                           selectedValue={values.age}
-                          onValueChange={(value) => setFieldValue('age', value)}
+                          onValueChange={(value) => setFieldValue("age", value)}
                         />
                       </View>
-                      {touched.age && errors.age && (
-                        <Text style={styles.errorText}>{errors.age}</Text>
-                      )}
+                      {touched.age && errors.age && <Text style={styles.errorText}>{errors.age}</Text>}
                     </View>
 
                     <View style={styles.halfWidth}>
@@ -220,17 +189,15 @@ const AddTaskScreen = () => {
                         <DropdownPicker
                           label=""
                           options={[
-                            { label: 'Male', value: 'Male' },
-                            { label: 'Female', value: 'Female' },
-                            { label: 'Other', value: 'Other' },
+                            { label: "Male", value: "Male" },
+                            { label: "Female", value: "Female" },
+                            { label: "Other", value: "Other" },
                           ]}
                           selectedValue={values.sex}
-                          onValueChange={(value) => setFieldValue('sex', value)}
+                          onValueChange={(value) => setFieldValue("sex", value)}
                         />
                       </View>
-                      {touched.sex && errors.sex && (
-                        <Text style={styles.errorText}>{errors.sex}</Text>
-                      )}
+                      {touched.sex && errors.sex && <Text style={styles.errorText}>{errors.sex}</Text>}
                     </View>
                   </View>
 
@@ -245,12 +212,15 @@ const AddTaskScreen = () => {
                         placeholder="Medication1, Medication2"
                         placeholderTextColor="#999999"
                         value={values.medication}
-                        onChangeText={handleChange('medication')}
-                        onBlur={handleBlur('medication')}
-                      // onFocus={() => setActiveField('medication')}
+                        onChangeText={handleChange("medication")}
+                        onBlur={handleBlur("medication")}
                       />
-                      <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput('medication')}>
-                        <Ionicons name={isListening && activeField === 'medication' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
+                      <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput("medication")}>
+                        <Ionicons
+                          name={isListening && activeField === "medication" ? "mic" : "mic-outline"}
+                          color={color.textColor}
+                          size={24}
+                        />
                       </TouchableOpacity>
                     </View>
                     {touched.medication && errors.medication && (
@@ -260,7 +230,7 @@ const AddTaskScreen = () => {
 
                   <View style={styles.inputContainer}>
                     <Text style={styles.label}>Describe in detail</Text>
-                    <View style={[styles.inputWrapper, { height: 120, alignItems: 'flex-start' }]}>
+                    <View style={[styles.inputWrapper, { height: 120, alignItems: "flex-start" }]}>
                       <TextInput
                         ref={describeRef}
                         contextMenuHidden={true}
@@ -269,18 +239,19 @@ const AddTaskScreen = () => {
                         placeholder="Type here..."
                         placeholderTextColor="#999999"
                         value={values.describe}
-                        onChangeText={handleChange('describe')}
-                        onBlur={handleBlur('describe')}
+                        onChangeText={handleChange("describe")}
+                        onBlur={handleBlur("describe")}
                         multiline
-                      // onFocus={() => setActiveField('describe')}
                       />
-                      <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput('describe')}>
-                        <Ionicons name={isListening && activeField === 'describe' ? "mic" : "mic-outline"} color={color.textColor} size={24} />
+                      <TouchableOpacity style={styles.micButton} onPress={() => handleVoiceInput("describe")}>
+                        <Ionicons
+                          name={isListening && activeField === "describe" ? "mic" : "mic-outline"}
+                          color={color.textColor}
+                          size={24}
+                        />
                       </TouchableOpacity>
                     </View>
-                    {touched.describe && errors.describe && (
-                      <Text style={styles.errorText}>{errors.describe}</Text>
-                    )}
+                    {touched.describe && errors.describe && <Text style={styles.errorText}>{errors.describe}</Text>}
                   </View>
 
                   <TouchableOpacity
@@ -289,11 +260,7 @@ const AddTaskScreen = () => {
                     onPress={handleSubmit}
                     disabled={isLoading}
                   >
-                    {isLoading ? (
-                      <ActivityIndicator color="#FFFFFF" />
-                    ) : (
-                      <Text style={styles.addButtonText}>Add</Text>
-                    )}
+                    {isLoading ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.addButtonText}>Add</Text>}
                   </TouchableOpacity>
                 </View>
               )}
@@ -302,8 +269,8 @@ const AddTaskScreen = () => {
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </BaseLayout>
-  );
-};
+  )
+}
 
-export default React.memo(AddTaskScreen);
+export default React.memo(AddTaskScreen)
 

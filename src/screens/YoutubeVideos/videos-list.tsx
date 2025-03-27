@@ -6,6 +6,9 @@ import { Search, ArrowLeft, RefreshCw } from "lucide-react-native"
 import AntDesign from "react-native-vector-icons/AntDesign"
 import YouTubePlayerModal from "../Home/youtube-player-modal"
 import { useVideosScreen } from "./useVideosScreen"
+import { useVoiceInput } from '@src/context/VoiceInputContext';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const VideosListScreen = () => {
     const {
@@ -24,6 +27,7 @@ const VideosListScreen = () => {
 
     const [isYouTubeModalVisible, setIsYouTubeModalVisible] = useState(false)
     const [selectedYouTubeId, setSelectedYouTubeId] = useState("")
+    const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput();
 
     const handleVideoPress = (videoId: any) => {
         setSelectedYouTubeId(videoId)
@@ -35,6 +39,20 @@ const VideosListScreen = () => {
             searchVideos()
         }
     }
+
+    useEffect(() => {
+        if (voiceInputText) {
+            setSearchQuery(voiceInputText);
+        }
+    }, [voiceInputText]);
+
+    const handleVoiceInput = async () => {
+        if (isListening) {
+            await stopVoiceInput();
+        } else {
+            await startVoiceInput();
+        }
+    };
 
     const renderVideoItem = ({ item }: any) => (
         <TouchableOpacity style={styles.videoItem} onPress={() => handleVideoPress(item.video_id)}>
@@ -103,6 +121,9 @@ const VideosListScreen = () => {
                             onSubmitEditing={handleSearch}
                         />
                         {isSearching && <ActivityIndicator size="small" color="#002B49" style={styles.searchingIndicator} />}
+                        <TouchableOpacity onPress={() => handleVoiceInput()}>
+                            <Ionicons name={isListening ? "mic" : "mic-outline"} color={'#666'} size={20} />
+                        </TouchableOpacity>
                     </View>
                 </View>
 

@@ -37,6 +37,7 @@ const PatientAccountSettingsScreen = () => {
     callingCode,
     setCallingCode,
   } = usePatientAccountSettings()
+  console.log("🚀 ~ PatientAccountSettingsScreen ~ profilePhoto:", profilePhoto)
   const [showCountryPicker, setShowCountryPicker] = useState(false)
 
   return (

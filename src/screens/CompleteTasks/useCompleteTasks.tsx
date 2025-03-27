@@ -14,11 +14,10 @@ const useCompleteTask = () => {
     const loadTasks = useCallback(async (showLoader = true) => {
         try {
             if (showLoader) setIsLoading(true);
-            const response = await fetchCompletedTasks(token);
-            if (response.status) {
-                setTasks(response.data);
-            } else {
-                showErrorToast(response.message || 'Failed to load tasks', 2000);
+            const response: any = await fetchCompletedTasks(token);
+            console.log("🚀 ~ loadTasks ~ response:", response)
+            if (response?.count) {
+                setTasks(response?.results);
             }
         } catch (error: any) {
             console.error('Error loading tasks:', error);

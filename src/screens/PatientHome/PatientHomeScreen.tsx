@@ -7,6 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { BaseLayout } from '@src/components';
 import { BookingModal } from '../Hospitals/components/BookingModal';
 import useHospitals from '../Hospitals/useHospitals';
+import { Images } from '@src/assets';
 
 const PatientHomeScreen = () => {
   const {
@@ -18,6 +19,7 @@ const PatientHomeScreen = () => {
     userProfile,
     news
   } = usePatientHome();
+  console.log("🚀 ~ PatientHomeScreen ~ userProfile:", userProfile)
   const {
     styles: hospitalStyles,
     handleEdit,
@@ -84,6 +86,7 @@ const PatientHomeScreen = () => {
                 ? { uri: userProfile?.userPhoto }
                 : '' //require('../assets/default-avatar.png')
               }
+              defaultSource={Images.PLACEHOLDER_IMAGE}
               style={styles.avatar}
             />
             <View style={styles.welcomeInfo}>

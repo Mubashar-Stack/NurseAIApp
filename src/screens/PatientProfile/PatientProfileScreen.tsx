@@ -9,6 +9,7 @@ import { Screen } from '../../navigation/appNavigation.type';
 
 const PatientProfileScreen = () => {
   const { profilePhoto, profileData, styles, color, handleMenuItemPress, handleLogout } = usePatientProfile();
+  console.log("🚀 ~ PatientProfileScreen ~ profilePhoto:", profilePhoto)
 
   const menuItems = [
     { icon: 'person-outline', label: 'Account Settings', screen: Screen.PATIENT_ACCOUNT_SETTINGS },

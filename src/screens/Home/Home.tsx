@@ -124,8 +124,8 @@ const HomeScreen = () => {
           </View>
 
           {/* Updates Section */}
-          <Text style={styles.sectionTitle}>New Updates</Text>
-          <View style={{ backgroundColor: '#fff' }}>
+          {/* <Text style={styles.sectionTitle}>New Updates</Text> */}
+          {/* <View style={{ backgroundColor: '#fff' }}>
             <FlatList
               horizontal
               style={{ marginRight: 10 }}
@@ -168,7 +168,7 @@ const HomeScreen = () => {
                 />
               ))}
             </View>
-          </View>
+          </View> */}
 
           {/* Medical Videos Section */}
 

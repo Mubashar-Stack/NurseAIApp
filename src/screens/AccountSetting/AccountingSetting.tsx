@@ -17,6 +17,7 @@ import DeleteAccountModal from "./Components/DeleteAccountModal"
 import DropdownPicker from "@src/components/Dropdown/DropdownPicker"
 import { BaseLayout } from "@src/components"
 import CountryPicker from "react-native-country-picker-modal"
+import { Images } from "@src/assets"
 
 const PatientAccountSettingsScreen = () => {
   const {
@@ -39,6 +40,7 @@ const PatientAccountSettingsScreen = () => {
     callingCode,
     setCallingCode,
   } = useAccountSettings()
+  console.log("🚀 ~ PatientAccountSettingsScreen ~ profilePhoto:", profilePhoto)
 
   const [showCountryPicker, setShowCountryPicker] = useState(false)
 
@@ -56,9 +58,9 @@ const PatientAccountSettingsScreen = () => {
               <TouchableOpacity onPress={handleImagePicker}>
                 {profilePhoto ? (
                   <Image
+                    defaultSource={Images.PLACEHOLDER_IMAGE}
                     source={{ uri: profilePhoto }}
                     style={styles.avatar}
-                    defaultSource={require("@src/assets/images/placeholder.webp")}
                   />
                 ) : (
                   <View style={styles.avatar} />
