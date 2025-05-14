@@ -554,7 +554,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U5FTH4YC86;
+				DEVELOPMENT_TEAM = Y862P8ZK2R;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = NurseProAI/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Nurse Pro AI";
@@ -562,14 +562,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.15;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 					"-lReact-hermes",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nurseaipro.io;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nurseproai.io;
 				PRODUCT_NAME = NurseProAI;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -585,21 +585,21 @@
 				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = U5FTH4YC86;
+				DEVELOPMENT_TEAM = Y862P8ZK2R;
 				INFOPLIST_FILE = NurseProAI/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Nurse Pro AI";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.15;
+				MARKETING_VERSION = 1.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 					"-lReact-hermes",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.nurseaipro.io;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nurseproai.io;
 				PRODUCT_NAME = NurseProAI;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

@@ -112,7 +112,8 @@ export const HomeStyles = ({ textColor }: Palette) =>
       width: 160,
       height: 170,
       backgroundColor: '#F0F0F0',
-      marginRight: 8
+      marginRight: 8,
+
     },
     updateContent: {
       padding: 10,

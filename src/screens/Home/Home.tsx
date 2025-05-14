@@ -124,8 +124,8 @@ const HomeScreen = () => {
           </View>
 
           {/* Updates Section */}
-          {/* <Text style={styles.sectionTitle}>New Updates</Text> */}
-          {/* <View style={{ backgroundColor: '#fff' }}>
+          <Text style={styles.sectionTitle}>APP Updates</Text>
+          <View style={{ backgroundColor: '#fff' }}>
             <FlatList
               horizontal
               style={{ marginRight: 10 }}
@@ -134,15 +134,15 @@ const HomeScreen = () => {
               renderItem={({ item, index }: any) => (
                 <View style={styles.updateCard}>
                   <View style={styles.updateContent}>
-                    <Text style={styles.discountText}>{item.title}</Text>
+                    {/* <Text style={styles.discountText}>{item.title}</Text> */}
                     <Text style={styles.updateDescription}>
                       {item?.description.length > 50
-                        ? `${item?.description.substring(0, 50)}...`
+                        ? `${item?.description.substring(0, 80)}...`
                         : item?.description}
                     </Text>
-                    <TouchableOpacity style={styles.readMoreButton}>
+                    {/* <TouchableOpacity style={styles.readMoreButton}>
                       <Text style={styles.readMoreText}>Read more</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                   <Image
                     source={{ uri: item.photo }}
@@ -168,7 +168,7 @@ const HomeScreen = () => {
                 />
               ))}
             </View>
-          </View> */}
+          </View>
 
           {/* Medical Videos Section */}
 
