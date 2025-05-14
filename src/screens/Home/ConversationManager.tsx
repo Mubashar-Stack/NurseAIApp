@@ -8,6 +8,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import Clipboard from "@react-native-clipboard/clipboard"
 import { showSuccessToast, showErrorToast } from "@src/utils"
 import Markdown from "react-native-markdown-display"
+import { useSelector } from "react-redux"
 
 interface ConversationItem {
     id: string
@@ -26,12 +27,15 @@ const ConversationManager: React.FC<ConversationManagerProps> = ({ initialQuesti
     const [conversation, setConversation] = useState<ConversationItem[]>([])
     const [currentRound, setCurrentRound] = useState(0)
     const [isProcessing, setIsProcessing] = useState(false)
+    const token = useSelector((state: any) => state.auth.isToken);
+
     const [error, setError] = useState<string | null>(null)
     const { voiceInputText, isListening, startVoiceInput, stopVoiceInput } = useVoiceInput()
     const scrollViewRef = useRef<ScrollView>(null)
 
     // Process initial question on component mount
     useEffect(() => {
+        console.log("🚀 ~ useEffect ~ initialQuestion:", initialQuestion)
         if (initialQuestion) {
             processQuestion(initialQuestion)
         }
@@ -65,7 +69,7 @@ const ConversationManager: React.FC<ConversationManagerProps> = ({ initialQuesti
                 {
                     headers: {
                         Accept: "application/json",
-                        Authorization: "Token b9b28943d8e92fa4e77c8fa26da4bfdef0d48f78",
+                        Authorization: "Token " + token,
                         Test: "yes",
                         "Content-Type": "application/json",
                     },
@@ -89,8 +93,8 @@ const ConversationManager: React.FC<ConversationManagerProps> = ({ initialQuesti
             } else {
                 setError("Failed to get a valid response from the API")
             }
-        } catch (error) {
-            console.error("Error processing question:", error)
+        } catch (error: any) {
+            console.error("Error processing question:", error.response)
             setError("An error occurred while processing your question")
         } finally {
             setIsProcessing(false)

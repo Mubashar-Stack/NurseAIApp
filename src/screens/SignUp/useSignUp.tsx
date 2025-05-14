@@ -36,6 +36,7 @@ const useSignUp = () => {
       setIsLoading(true)
       const response = await fetch("https://technlogics.co/api/specialities")
       const result = await response.json()
+      console.log("🚀 ~ fetchSpecialities ~ result:", result)
       if (result.status && result.data) {
         setSpecialities(
           result.data.map((item: any) => ({
@@ -44,8 +45,8 @@ const useSignUp = () => {
           })),
         )
       }
-    } catch (error) {
-      console.error("Error fetching specialities:", error)
+    } catch (error: any) {
+      console.error("Error fetching specialities:", error.message)
     } finally {
       setIsLoading(false)
     }

@@ -66,7 +66,7 @@ export const AppNavigation = () => {
       <Stack.Screen name={Screen.SELFI_SCREEN} component={SelfiScreen} />
       <Stack.Screen name={Screen.UPLOAD_ID} component={UploadId} />
       <Stack.Screen name={Screen.HOME} component={TabNavigator} />
-      <Stack.Screen name={Screen.PATIENT_LOCATION_SETUP} component={PatientLocationSetupScreen} />
+      <Stack.Screen name={Screen.PATIENT_LOCATION_SETUP} component={PatientLocationSetupScreen} options={{ gestureEnabled: false }} />
       <Stack.Screen name={Screen.PATIENT_SET_LOCATION} component={PatientSetLocationScreen} />
       <Stack.Screen name={Screen.LOGIN} component={LoginScreen} />
       <Stack.Screen name={Screen.SIGNUP} component={SignUp} />

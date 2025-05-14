@@ -16,6 +16,8 @@ import Header from '@src/components/Header/Header';
 import { Formik } from 'formik';
 import usePatientLocationSetup from './usePatientLocationSetup';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { BackHandler } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 const PatientLocationSetupScreen = ({ route }: any) => {
   const locationId = route.params?.locationId;
@@ -33,6 +35,21 @@ const PatientLocationSetupScreen = ({ route }: any) => {
     activeField,
   } = usePatientLocationSetup(locationId);
 
+  // This disables the Android back button
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        // Simply return true to prevent default behavior
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [])
+  );
+
   return (
     <BaseLayout>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -40,7 +57,7 @@ const PatientLocationSetupScreen = ({ route }: any) => {
           style={styles.mainView}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-          <Header onPress={() => navigation.goBack()} title="Location" />
+          <Header onPress={() => { }} title="Location" />
           <View style={styles.subView}>
             <ScrollView showsVerticalScrollIndicator={false}>
               {/* <Text preset="h1" style={styles.sectionTitle}>Address Detail</Text> */}

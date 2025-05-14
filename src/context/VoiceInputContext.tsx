@@ -1,5 +1,5 @@
+// VoiceInputContext.tsx
 import React, { createContext, useState, useContext, useCallback } from 'react';
-import Voice from '@react-native-voice/voice';
 import GlobalVoiceInput from '../components/GlobalVoiceInput/GlobalVoiceInput';
 import { PermissionsAndroid, Platform } from 'react-native';
 
@@ -47,7 +47,6 @@ export const VoiceInputProvider: React.FC<React.PropsWithChildren<{}>> = ({ chil
                 return;
             }
 
-            await Voice.start('en-US');
             setIsListening(true);
         } catch (e) {
             console.error(e);
@@ -55,8 +54,8 @@ export const VoiceInputProvider: React.FC<React.PropsWithChildren<{}>> = ({ chil
     }, []);
 
     const stopVoiceInput = useCallback(async () => {
+        console.log("🚀 ~ stopVoiceInput ~ isListening:", isListening)
         try {
-            await Voice.stop();
             setIsListening(false);
         } catch (e) {
             console.error(e);
@@ -87,4 +86,3 @@ export const useVoiceInput = () => {
     }
     return context;
 };
-

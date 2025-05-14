@@ -88,7 +88,7 @@ const usePatientHome = () => {
       },
       (error) => {
         console.error('Error getting current location:', error);
-        Alert.alert('Error', 'Failed to get your current location');
+        // Alert.alert('Error', 'Failed to get your current location');
       },
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
     );

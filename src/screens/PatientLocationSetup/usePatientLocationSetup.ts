@@ -53,7 +53,7 @@ const usePatientLocationSetup = (locationId: number) => {
         console.log("🚀 ~ response:", response)
         navigation.navigate(Screen.HOME);
       } catch (error: any) {
-        console.error("Error updating location:", error);
+        console.error("Error updating location:", error.response);
       } finally {
         setDisabled(false);
       }

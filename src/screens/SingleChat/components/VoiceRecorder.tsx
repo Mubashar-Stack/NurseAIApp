@@ -23,12 +23,12 @@ const VoiceRecorder = ({ isRecording, duration, onStop, styles }: VoiceRecorderP
                         Animated.timing(anim, {
                             toValue: Math.random(),
                             duration: 500 + Math.random() * 500,
-                            useNativeDriver: true,
+                            useNativeDriver: false, // Changed to false to support height animation
                         }),
                         Animated.timing(anim, {
                             toValue: 0,
                             duration: 500 + Math.random() * 500,
-                            useNativeDriver: true,
+                            useNativeDriver: false, // Changed to false to support height animation
                         }),
                     ])
                 ).start();
@@ -49,13 +49,12 @@ const VoiceRecorder = ({ isRecording, duration, onStop, styles }: VoiceRecorderP
                         key={i}
                         style={[
                             styles.waveformBar,
-                            // {
-                            //     //@ts-ignore
-                            //     height: animations[i].interpolate({
-                            //         inputRange: [0, 1],
-                            //         outputRange: [10, 30],
-                            //     }),
-                            // },
+                            {
+                                height: animations[i].interpolate({
+                                    inputRange: [0, 1],
+                                    outputRange: [10, 30],
+                                }),
+                            },
                         ]}
                     />
                 ))}
@@ -69,4 +68,3 @@ const VoiceRecorder = ({ isRecording, duration, onStop, styles }: VoiceRecorderP
 };
 
 export default VoiceRecorder;
-

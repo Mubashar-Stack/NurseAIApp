@@ -202,7 +202,7 @@ const usePatientSetLocation = () => {
       }
     } catch (error: any) {
       console.error('Error setting location:', error.response.data);
-      Alert.alert('Error', 'Failed to set location. Please try again.');
+      Alert.alert('Error', error.response.data?.detail || error.response.data?.non_field_errors || 'Failed to set location');
     } finally {
       setIsLoading(false);
     }

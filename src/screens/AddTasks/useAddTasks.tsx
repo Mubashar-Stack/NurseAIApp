@@ -7,6 +7,7 @@ import * as yup from "yup"
 import { showErrorToast, showSuccessToast } from "@src/utils"
 import { useSelector } from "react-redux"
 import debounce from "lodash/debounce"
+import { useRoute } from "@react-navigation/native"
 
 interface PatientData {
   id: number
@@ -22,6 +23,15 @@ interface Symptom {
   name: string
 }
 
+interface PatientInfo {
+  patient_name: string
+  gender: string
+  age: number
+  issue: string
+  medication: string
+  task_details: string
+}
+
 const useAddTask = () => {
   const { color, navigation } = useAppContext()
   const [isLoading, setIsLoading] = useState(false)
@@ -31,6 +41,21 @@ const useAddTask = () => {
   const token = useSelector((state: any) => state.auth?.isToken)
   const [symptoms, setSymptoms] = useState<Symptom[]>([])
   const [isLoadingSymptoms, setIsLoadingSymptoms] = useState(false)
+
+  // Get route params to check if we have patient info
+  const route: any = useRoute()
+  const patientInfo = route.params?.patientInfo as PatientInfo | undefined
+
+  // Set initial values based on patient info if available
+  const initialValues = {
+    patientName: patientInfo?.patient_name || "",
+    issue: patientInfo?.issue || "",
+    medication: patientInfo?.medication || "",
+    age: patientInfo?.age ? patientInfo.age.toString() : "",
+    sex: patientInfo?.gender || "",
+    describe: patientInfo?.task_details || "",
+    patient: "",
+  }
 
   // Fetch symptoms from API
   const fetchSymptoms = useCallback(async () => {
@@ -54,7 +79,7 @@ const useAddTask = () => {
     } finally {
       setIsLoadingSymptoms(false)
     }
-  }, [])
+  }, [token])
 
   // Call fetchSymptoms when component mounts
   useEffect(() => {
@@ -102,16 +127,6 @@ const useAddTask = () => {
     describe: yup.string().required("Task details are required"),
     patient: yup.mixed(), // Make patient optional
   })
-
-  const initialValues = {
-    patientName: "",
-    issue: "",
-    medication: "",
-    age: "",
-    sex: "",
-    describe: "",
-    patient: "",
-  }
 
   const handleSubmit = useCallback(
     async (values: typeof initialValues) => {
@@ -196,4 +211,3 @@ const useAddTask = () => {
 }
 
 export default useAddTask
-
